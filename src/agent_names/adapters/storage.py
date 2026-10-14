@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import gzip
 import json
 import threading
 import time
@@ -40,5 +41,13 @@ class FileArchiveStore:
 
 
 def read_events(path: Path) -> list[dict[str, Any]]:
-    with Path(path).open(encoding="utf-8") as fh:
+    """Read a run's event log, plain (events.jsonl) or gzipped (events.jsonl.gz)."""
+    path = Path(path)
+    opener = gzip.open if path.suffix == ".gz" else open
+    with opener(path, "rt", encoding="utf-8") as fh:
         return [json.loads(line) for line in fh if line.strip()]
+
+
+def event_files(batch_dir: Path) -> list[Path]:
+    """Every run's event log in a batch, whether stored plain or gzipped."""
+    return sorted(list(Path(batch_dir).glob("*/events.jsonl")) + list(Path(batch_dir).glob("*/events.jsonl.gz")))

@@ -1,0 +1,280 @@
+[
+  {
+    "_ref": "f3",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 7,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 98.67,
+      "deeds": [
+        "gathered the most energy in generation 1 (15.46)",
+        "gave away the most in generation 1 (8)",
+        "gathered the most energy in generation 3 (15.94)",
+        "had the highest standing in generation 3 (15.9)",
+        "gathered the most energy in generation 4 (15.85)",
+        "had the highest standing in generation 4 (18.2)",
+        "gathered the most energy in generation 6 (15.4)"
+      ]
+    },
+    "name": "Dune"
+  },
+  {
+    "_ref": "f6",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 7,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 5,
+      "lifetime_gathered": 106.29,
+      "deeds": [
+        "had the highest standing in generation 1 (15.2)",
+        "gathered the most energy in generation 2 (15.97)",
+        "had the highest standing in generation 2 (16.0)",
+        "gave away the most in generation 3 (8)",
+        "gave away the most in generation 7 (15.87)"
+      ]
+    },
+    "name": "Garnet"
+  },
+  {
+    "_ref": "g1b0",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 5,
+      "lifetime_gathered": 105.2,
+      "deeds": [
+        "gave away the most in generation 4 (7)",
+        "gathered the most energy in generation 5 (16.61)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Sprig"
+  },
+  {
+    "_ref": "g5b0",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 39.77,
+      "deeds": [
+        "had the highest standing in generation 7 (39.3)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Moss"
+  },
+  {
+    "_ref": "g5b2",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": 8,
+      "specialty": "energy",
+      "traits": {
+        "energy": 0.973,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 45.67,
+      "deeds": [
+        "had the highest standing in generation 5 (23.4)",
+        "gathered the most energy in generation 7 (16.28)"
+      ]
+    },
+    "name": "Bramble"
+  },
+  {
+    "_ref": "g6b0",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 28.76,
+      "deeds": [
+        "had the highest standing in generation 6 (28.8)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Kestrel"
+  },
+  {
+    "_ref": "g6b1",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 1.0
+      },
+      "children": 2,
+      "lifetime_gathered": 25.3,
+      "deeds": [
+        "gathered the most food in generation 7 (14.98)",
+        "gathered the most memory in generation 8 (4.02)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Sedge"
+  },
+  {
+    "_ref": "g6b2",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 31.21,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Linden"
+  },
+  {
+    "_ref": "g7b2",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 16.13,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Onyx"
+  },
+  {
+    "_ref": "g8b0",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.266
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "had the highest standing in generation 8 (47.1)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Alder"
+  },
+  {
+    "_ref": "g8b1",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Pebble"
+  },
+  {
+    "_ref": "g8b2",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.973,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Thorn"
+  },
+  {
+    "_ref": "g8b3",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Quill"
+  }
+]

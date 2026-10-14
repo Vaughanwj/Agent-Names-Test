@@ -159,6 +159,8 @@ adds nothing. Details and alternatives are in [docs/cost-estimate.md](docs/cost-
 - **Second pilot** (archive known from the start, guarding, per-generation archivist offer): 6 runs, $1.18. Results are in [docs/pilot2-results.md](docs/pilot2-results.md) and raw data in [data/pilot2-20261014/](data/pilot2-20261014/).
 - **Scale-up** (10 more seeds per arm, archivist priced at 10% and 5%, pooled to 13 seed pairs): 20 runs, $3.88. Results are in [docs/scale-results.md](docs/scale-results.md) and raw data in [data/scale-20261014/](data/scale-20261014/).
 
+- **Confirmatory run** (pre-registered in [docs/preregistration.md](docs/preregistration.md), 30 fresh seed pairs): **names increased coordination**. Couples per generation and pair hunts were both higher in the named arm (Holm-adjusted p < 0.001); gathering per forager was not significantly higher. Named parents also invested more in their children (exploratory). Results are in [docs/confirmatory-results.md](docs/confirmatory-results.md), data in [data/confirm-20261014/](data/confirm-20261014/), cost $12.07.
+
 To pool batches and run the paired tests yourself:
 
 ```bash

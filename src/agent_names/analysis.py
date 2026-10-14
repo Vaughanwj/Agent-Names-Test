@@ -9,7 +9,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
-from .adapters.storage import read_events
+from .adapters.storage import event_files, read_events
 
 
 def _mean(xs: list[float]) -> float | None:
@@ -188,7 +188,7 @@ def summarize_batch(batch_dirs: list[Path] | Path) -> dict[str, Any]:
         batch_dirs = [batch_dirs]
     runs: dict[str, dict] = {}
     for batch in batch_dirs:
-        for ev in sorted(Path(batch).glob("*/events.jsonl")):
+        for ev in event_files(batch):
             s = summarize_run(read_events(ev))
             cfg_path = ev.parent / "config.json"
             if cfg_path.exists():

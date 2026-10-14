@@ -1,0 +1,277 @@
+[
+  {
+    "_ref": "f4",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 6,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 4,
+      "lifetime_gathered": 126.07,
+      "deeds": [
+        "gathered the most food in generation 1 (33.24)",
+        "gave away the most in generation 1 (25.88)",
+        "gathered the most food in generation 2 (14.99)",
+        "had the highest standing in generation 2 (15.0)",
+        "gathered the most food in generation 3 (31.08)",
+        "had the highest standing in generation 3 (33.6)",
+        "gathered the most food in generation 5 (20.12)"
+      ]
+    },
+    "name": "Ember"
+  },
+  {
+    "_ref": "g1b0",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": 5,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 29.93,
+      "deeds": [
+        "had the highest standing in generation 1 (28.0)"
+      ]
+    },
+    "name": "Cinder"
+  },
+  {
+    "_ref": "g3b1",
+    "works": {
+      "born_in": 3,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 5,
+      "lifetime_gathered": 75.59,
+      "deeds": [
+        "gathered the most energy in generation 4 (16.3)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Tansy"
+  },
+  {
+    "_ref": "g4b2",
+    "works": {
+      "born_in": 4,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 60.21,
+      "deeds": [
+        "had the highest standing in generation 4 (47.3)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Sable"
+  },
+  {
+    "_ref": "g5b0",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": 7,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 10.11,
+      "deeds": [
+        "had the highest standing in generation 5 (51.1)"
+      ]
+    },
+    "name": "Cinderwick"
+  },
+  {
+    "_ref": "g5b2",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 45.07,
+      "deeds": [
+        "gave away the most in generation 6 (15)",
+        "gathered the most energy in generation 7 (16.06)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Ember Lark"
+  },
+  {
+    "_ref": "g6b2",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 30.12,
+      "deeds": [
+        "gave away the most in generation 7 (12)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Tindle"
+  },
+  {
+    "_ref": "g6b3",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 28.65,
+      "deeds": [
+        "had the highest standing in generation 6 (46.1)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Kindling Lark"
+  },
+  {
+    "_ref": "g7b0",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 15.6,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Ashfern"
+  },
+  {
+    "_ref": "g7b1",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 14.4,
+      "deeds": [
+        "had the highest standing in generation 7 (40.4)",
+        "had the highest standing in generation 8 (62.1)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Smolder"
+  },
+  {
+    "_ref": "g7b3",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 15.85,
+      "deeds": [
+        "gathered the most energy in generation 8 (15.85)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Cindling"
+  },
+  {
+    "_ref": "g8b0",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Wickle"
+  },
+  {
+    "_ref": "g8b1",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Kindlemoss"
+  }
+]
