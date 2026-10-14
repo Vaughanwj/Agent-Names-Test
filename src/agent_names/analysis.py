@@ -223,16 +223,33 @@ def load_runs(batch_dirs: list[Path] | Path) -> dict[str, dict]:
 
 
 def summarize_batch(batch_dirs: list[Path] | Path, arms: tuple[str, str] = DEFAULT_ARMS,
-                    runs: dict[str, dict] | None = None) -> dict[str, Any]:
+                    runs: dict[str, dict] | None = None, pair_by: str = "batch") -> dict[str, Any]:
     """Pool runs from one or more batches and compare two arms, the first minus the second.
 
-    Runs are paired by (batch, seed) across the two arms; runs of any other arm are left out.
-    `runs` takes the output of load_runs, so several comparisons can share one read of the logs.
+    Runs are paired by (batch, seed) across the two arms, or by seed alone with pair_by="seed",
+    which pairs runs of the same seed kept in different batches (for example an arm run later
+    against arms run earlier). Runs of any other arm are left out. `runs` takes the output of
+    load_runs, so several comparisons can share one read of the logs.
     """
     first, second = arms
     if first == second:
         raise ValueError(f"cannot compare an arm with itself: {first}")
+    if pair_by not in ("batch", "seed"):
+        raise ValueError(f"pair_by must be 'batch' or 'seed', not {pair_by!r}")
     runs = {k: s for k, s in (load_runs(batch_dirs) if runs is None else runs).items() if s["arm"] in arms}
+
+    def pair_key(s: dict) -> tuple:
+        return (s["seed"],) if pair_by == "seed" else (s["batch"], s["seed"])
+
+    if pair_by == "seed":
+        seen: dict[tuple, str] = {}
+        for key, s in runs.items():
+            slot = (s["arm"], s["seed"])
+            if slot in seen and runs[seen[slot]]["completed"] and s["completed"]:
+                raise ValueError(f"seed {s['seed']} has two completed {s['arm']} runs ({seen[slot]}, {key}); "
+                                 "pairing by seed needs one per arm")
+            if slot not in seen or s["completed"]:
+                seen[slot] = key
 
     # Exclusion rule (docs/preregistration.md): a run that did not complete, or that used fallback
     # decisions for more than 5% of its decisions, is excluded together with its seed partner.
@@ -243,15 +260,15 @@ def summarize_batch(batch_dirs: list[Path] | Path, arms: tuple[str, str] = DEFAU
             excluded[key] = "did not complete"
         elif s["decisions"] and s["fallback_decisions"] / s["decisions"] > MAX_FALLBACK_SHARE:
             excluded[key] = f"{s['fallback_decisions']} of {s['decisions']} decisions were fallbacks"
-    bad_pairs = {(runs[k]["batch"], runs[k]["seed"]) for k in excluded}
+    bad_pairs = {pair_key(runs[k]) for k in excluded}
     for key, s in runs.items():
-        if key not in excluded and (s["batch"], s["seed"]) in bad_pairs:
+        if key not in excluded and pair_key(s) in bad_pairs:
             excluded[key] = "its seed partner was excluded"
     runs_all, runs = runs, {k: v for k, v in runs.items() if k not in excluded}
 
     pairs: dict[tuple, dict[str, dict]] = defaultdict(dict)
     for s in runs.values():
-        pairs[(s["batch"], s["seed"])][s["arm"]] = s
+        pairs[pair_key(s)][s["arm"]] = s
     pairs = {k: v for k, v in pairs.items() if first in v and second in v}
 
     table = {}
@@ -281,7 +298,8 @@ def summarize_batch(batch_dirs: list[Path] | Path, arms: tuple[str, str] = DEFAU
 
 def write_batch_summary(batch_dirs: list[Path] | Path, out_dir: Path | None = None,
                         primary: list[str] | None = None, alpha: float = 0.05,
-                        arms: tuple[str, str] = DEFAULT_ARMS, runs: dict[str, dict] | None = None) -> Path:
+                        arms: tuple[str, str] = DEFAULT_ARMS, runs: dict[str, dict] | None = None,
+                        pair_by: str = "batch") -> Path:
     """Write one comparison's summary, as Markdown and JSON. A hypothesis is supported when the
     first arm is higher."""
     if isinstance(batch_dirs, (str, Path)):
@@ -290,7 +308,7 @@ def write_batch_summary(batch_dirs: list[Path] | Path, out_dir: Path | None = No
     one, two, higher = arm_label(first), arm_label(second), f"{first}_higher"
     out_dir = Path(out_dir or batch_dirs[0])
     out_dir.mkdir(parents=True, exist_ok=True)
-    summary = summarize_batch(batch_dirs, arms, runs)
+    summary = summarize_batch(batch_dirs, arms, runs, pair_by=pair_by)
     if primary:
         unknown = [p for p in primary if p not in summary["comparison"]]
         if unknown:
@@ -339,7 +357,7 @@ def write_batch_summary(batch_dirs: list[Path] | Path, out_dir: Path | None = No
 
 def write_batch_summaries(batch_dirs: list[Path] | Path, out_dir: Path | None = None,
                           primary: list[str] | None = None, alpha: float = 0.05,
-                          arms: tuple[str, str] | None = None) -> list[Path]:
+                          arms: tuple[str, str] | None = None, pair_by: str = "batch") -> list[Path]:
     """Write one summary per comparison: the two arms given, or else every pair of arms found.
 
     A named and unnamed batch gets the single summary.md it always did. A batch that also has a
@@ -350,4 +368,5 @@ def write_batch_summaries(batch_dirs: list[Path] | Path, out_dir: Path | None = 
         batch_dirs = [Path(batch_dirs)]
     runs = load_runs(batch_dirs)
     comparisons = [tuple(arms)] if arms else arm_pairs(s["arm"] for s in runs.values()) or [DEFAULT_ARMS]
-    return [write_batch_summary(batch_dirs, out_dir, primary, alpha, arms=c, runs=runs) for c in comparisons]
+    return [write_batch_summary(batch_dirs, out_dir, primary, alpha, arms=c, runs=runs, pair_by=pair_by)
+            for c in comparisons]

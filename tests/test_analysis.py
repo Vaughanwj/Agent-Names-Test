@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 
+import pytest
 import yaml
 
 from agent_names import analysis, app, cli
@@ -140,3 +141,17 @@ def test_a_config_can_list_three_arms(tmp_path, capsys):
     cli.main(["summarize", str(batch), "--arms", "stable_id,unnamed", "--out", str(tmp_path / "one")])
     assert sorted(p.name for p in (tmp_path / "one").iterdir()) == ["summary-stable_id-vs-unnamed.json",
                                                                    "summary-stable_id-vs-unnamed.md"]
+
+
+def test_pairing_by_seed_across_batches(tmp_path):
+    old = app.run_batch(pilot_doc(seeds=[1, 2], arms=["named", "unnamed"], generations=1, rounds=1), "old",
+                        out_root=str(tmp_path))
+    new = app.run_batch(pilot_doc(seeds=[1, 2], arms=["stable_id"], generations=1, rounds=1), "new",
+                        out_root=str(tmp_path))
+    by_batch = analysis.summarize_batch([old, new], arms=("named", "stable_id"))
+    by_seed = analysis.summarize_batch([old, new], arms=("named", "stable_id"), pair_by="seed")
+    assert by_batch["pairs"] == 0 and by_seed["pairs"] == 2
+    with pytest.raises(ValueError, match="two completed"):
+        again = app.run_batch(pilot_doc(seeds=[1], arms=["stable_id"], generations=1, rounds=1), "again",
+                              out_root=str(tmp_path))
+        analysis.summarize_batch([old, new, again], arms=("named", "stable_id"), pair_by="seed")

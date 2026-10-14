@@ -65,7 +65,7 @@ def cmd_summarize(args) -> None:
         arms = tuple(a.strip() for a in args.arms.split(","))
         if len(arms) != 2 or arms[0] == arms[1]:
             raise SystemExit(f"--arms expects two different arms, e.g. named,stable_id; got {args.arms!r}")
-    for summary in analysis.write_batch_summaries(batches, out, primary=primary, arms=arms):
+    for summary in analysis.write_batch_summaries(batches, out, primary=primary, arms=arms, pair_by=args.pair_by):
         print(summary.read_text(encoding="utf-8"))
 
 
@@ -104,6 +104,8 @@ def main(argv: list[str] | None = None) -> None:
     ss.add_argument("--primary", help="comma-separated pre-registered primary measures, tested with a Holm correction")
     ss.add_argument("--arms", help="the two arms to compare, first minus second, e.g. named,stable_id "
                                    "(default: every pair of arms in the batches)")
+    ss.add_argument("--pair-by", choices=["batch", "seed"], default="batch",
+                    help="pair runs by (batch, seed), the default, or by seed alone across batches")
     ss.set_defaults(func=cmd_summarize)
 
     se = sub.add_parser("estimate", help="estimate cost from a dry-run plan and a real calibration batch")
