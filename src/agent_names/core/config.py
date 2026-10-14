@@ -1,5 +1,5 @@
 """Run configuration. The arm switch lives here and touches only naming, archivist rendering
-and archive contents; everything else is shared by both arms."""
+and archive contents; everything else is shared by all arms."""
 
 from __future__ import annotations
 
@@ -52,7 +52,19 @@ class RunConfig:
 
     @property
     def named(self) -> bool:
+        """Parents name their children (the named arm only)."""
         return self.arm == Arm.NAMED
+
+    @property
+    def shows_handles(self) -> bool:
+        """Every agent has a stable handle shown beside every reference to it: a name in the named
+        arm, a world-assigned ID in the stable_id arm. The unnamed arm has none."""
+        return self.arm in (Arm.NAMED, Arm.STABLE_ID)
+
+    @property
+    def max_agents(self) -> int:
+        """The most agents a run can ever create: the founders plus a full set of couples each generation."""
+        return self.population + self.max_couples * self.generations
 
     def archive_stage(self, generation: int) -> str:
         if self.reveal_full is not None and generation >= self.reveal_full:

@@ -47,8 +47,8 @@ def cmd_pilot(args) -> None:
     doc = _doc(args)
     batch = app.run_batch(doc, args.name, parallel=args.parallel, out_root=args.out,
                           batch_budget_usd=args.batch_budget)
-    summary = analysis.write_batch_summary([batch], batch)
-    print(summary.read_text(encoding="utf-8"))
+    for summary in analysis.write_batch_summaries([batch], batch):
+        print(summary.read_text(encoding="utf-8"))
     events = sorted(batch.glob("*/events.jsonl"))
     spent = cost.actual(events, doc.get("pricing"))
     (batch / "cost.json").write_text(json.dumps(spent, indent=2), encoding="utf-8")
@@ -60,7 +60,13 @@ def cmd_summarize(args) -> None:
     batches = [Path(b) for b in args.batch]
     out = Path(args.out) if args.out else batches[0]
     primary = [p.strip() for p in args.primary.split(",")] if args.primary else None
-    print(analysis.write_batch_summary(batches, out, primary=primary).read_text(encoding="utf-8"))
+    arms = None
+    if args.arms:
+        arms = tuple(a.strip() for a in args.arms.split(","))
+        if len(arms) != 2 or arms[0] == arms[1]:
+            raise SystemExit(f"--arms expects two different arms, e.g. named,stable_id; got {args.arms!r}")
+    for summary in analysis.write_batch_summaries(batches, out, primary=primary, arms=arms):
+        print(summary.read_text(encoding="utf-8"))
 
 
 def cmd_estimate(args) -> None:
@@ -83,7 +89,7 @@ def main(argv: list[str] | None = None) -> None:
     sp.add_argument("--generations", type=int)
     sp.add_argument("--rounds", type=int)
     sp.add_argument("--seeds", help="comma-separated, e.g. 1,2,3")
-    sp.add_argument("--arms", help="comma-separated, e.g. named,unnamed")
+    sp.add_argument("--arms", help="comma-separated, from named, unnamed and stable_id")
     sp.add_argument("--parallel", type=int, default=1, help="runs to execute at once")
     sp.add_argument("--out", help="output root (default: config output_dir)")
     sp.add_argument("--batch-budget", type=float, metavar="USD",
@@ -96,6 +102,8 @@ def main(argv: list[str] | None = None) -> None:
     ss.add_argument("batch", nargs="+")
     ss.add_argument("--out", help="where to write summary.md/json (default: the first batch)")
     ss.add_argument("--primary", help="comma-separated pre-registered primary measures, tested with a Holm correction")
+    ss.add_argument("--arms", help="the two arms to compare, first minus second, e.g. named,stable_id "
+                                   "(default: every pair of arms in the batches)")
     ss.set_defaults(func=cmd_summarize)
 
     se = sub.add_parser("estimate", help="estimate cost from a dry-run plan and a real calibration batch")

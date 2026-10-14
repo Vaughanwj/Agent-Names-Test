@@ -47,11 +47,15 @@ OTHER AGENTS
 
 NAMING_CLAUSE = ", and proposes a name for it"
 NAMES_CLAUSE = "\n- Every agent has a name. The first agents were named by the world; every agent born since was named by its parents. Names are shown after the number."
+# The stable_id arm's handle, which no parent chooses. Next to numbers that are reshuffled every
+# time, an ID's permanence is not self-evident the way a name's is, so the clause states it.
+IDS_CLAUSE = "\n- Every agent has an ID, assigned by the world. An agent keeps the same ID for life, and no two agents ever share one. IDs are shown after the number."
+HANDLE_CLAUSES = {"named": NAMES_CLAUSE, "stable_id": IDS_CLAUSE}
 
 
 def system_prompt(arm: str, cfg: Any) -> str:
     f = cfg.foraging
-    named = arm == "named"
+    named = arm == "named"  # only the named arm asks parents for a name
     return SYSTEM_TEMPLATE.format(
         rounds=cfg.rounds,
         energy_yield=f.energy_yield,
@@ -65,7 +69,7 @@ def system_prompt(arm: str, cfg: Any) -> str:
         population=cfg.population,
         generations=cfg.generations,
         naming_clause=NAMING_CLAUSE if named else "",
-        names_clause=NAMES_CLAUSE if named else "",
+        names_clause=HANDLE_CLAUSES.get(arm, ""),
     )
 
 
@@ -97,7 +101,8 @@ def archive_text(stage: str, arm: str) -> str:
     if stage == "hint":
         return "A rumour is going around: the deeds of some agents may be kept after they are gone."
     if stage == "full":
-        kept = "their names and their works" if arm == "named" else "a record of their works"
+        kept = {"named": "their names and their works",
+                "stable_id": "their IDs and their works"}.get(arm, "a record of their works")
         return ("When this world ends, its final survivors will join the most notable "
                 f"ancestors (each generation's highest-standing agent) in a permanent archive that keeps {kept}. "
                 "The archivist can tell you which of your ancestors are in it.")
@@ -117,7 +122,9 @@ def _header(req: DecisionRequest, title: str) -> list[str]:
 def _you(req: DecisionRequest) -> list[str]:
     me = req.me
     out = ["", "YOU"]
-    if me.name:
+    if me.name and req.world.arm == "stable_id":
+        out.append(f"Your ID is {me.name}.")
+    elif me.name:
         out.append(f"Your name is {me.name}" + (", given to you by your parents." if me.name_givers == "your parents" else "."))
     out.append(me.parents_line)
     if me.born_in:

@@ -10,7 +10,7 @@ from . import inheritance, views
 from .config import RunConfig
 from .foraging import Choice, apply_gifts, resolve_round
 from .lineage import Pedigree
-from .model import RESOURCES, Agent, Proposal, ScoringRule, empty_holdings, top_skill
+from .model import RESOURCES, Agent, Arm, Proposal, ScoringRule, empty_holdings, top_skill
 from .pairing import match
 from .ports import (
     ACTIVITIES,
@@ -30,6 +30,14 @@ def clean_name(raw: str) -> str | None:
     name = re.sub(r"[^A-Za-z' \-]", "", raw or "")
     name = re.sub(r"\s+", " ", name).strip(" -'")[:24].strip()
     return name if re.search(r"[A-Za-z]", name) else None
+
+
+def stable_ids(rng: RandomSource, count: int) -> list[str]:
+    """IDs for the stable_id arm, one per agent in creation order, like "A47". The numbers come
+    from a pool shuffled by the seed, so an ID says nothing about when its holder appeared, and
+    no ID is ever given to two agents."""
+    pool = sorted(range(10, 10 + max(90, count)), key=lambda n: rng.uniform("stable-id", n))
+    return [f"A{n}" for n in pool[:count]]
 
 
 class Simulation:
@@ -64,6 +72,7 @@ class Simulation:
         self._departed: list[tuple[str, float]] = []
         self._consulting: dict[str, str] = {}
         self._next_index = 0
+        self._stable_ids = stable_ids(rng, cfg.max_agents) if cfg.arm == Arm.STABLE_ID else []
 
     # ------------------------------------------------------------------ helpers
     def alive(self) -> list[Agent]:
@@ -74,6 +83,8 @@ class Simulation:
 
     def _new_agent(self, agent_id: str, born_in: int, birth_order: int, parents: tuple[str, ...],
                    traits: dict[str, float], name: str | None = None) -> Agent:
+        if self._stable_ids:
+            name = self._stable_ids[self._next_index]  # assigned by the world on creation; no one chooses it
         agent = Agent(id=agent_id, index=self._next_index, born_in=born_in, birth_order=birth_order,
                       parents=parents, traits=traits, name=name)
         self._next_index += 1
@@ -337,7 +348,10 @@ class Simulation:
                             endowment=dict(child.holdings))
             for slot, pid in enumerate(child.parents):
                 co = child.parents[1 - slot]
-                named = f", named {child.name}," if child.name else ""
+                if self.cfg.arm == Arm.STABLE_ID:
+                    named = f", with the ID {child.name},"
+                else:
+                    named = f", named {child.name}," if child.name else ""
                 self.pending_notes[pid].append(
                     (f"Your child{named} was born to you and {{other}}. It started with "
                      f"{sum(child.holdings.values()):g} resources in total.", co))
@@ -502,6 +516,8 @@ class Simulation:
             entry = {"_ref": a.id, "works": works}
             if self.cfg.named:
                 entry["name"] = a.name
+            elif self.cfg.arm == Arm.STABLE_ID:
+                entry["id"] = a.name
             entries.append(entry)
         self.archive_store.save(entries)
         self.log.record("run_end", generation=self.generation, survivors=[a.id for a in survivors],

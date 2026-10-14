@@ -42,7 +42,7 @@ def run_one(cfg: RunConfig, run_dir: Path) -> Path:
     sim = Simulation(
         cfg,
         mind=build_mind(cfg, system_text, log),
-        archivist=LineageArchivist(named=cfg.named),
+        archivist=LineageArchivist(show_handles=cfg.shows_handles),
         rng=KeyedRandom(cfg.seed),
         scorer=RulesScorer(),
         log=log,

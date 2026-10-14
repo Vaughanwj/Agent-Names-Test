@@ -9,8 +9,9 @@ RESOURCES = ("energy", "food", "memory")
 
 
 class Arm(str, Enum):
-    NAMED = "named"
-    UNNAMED = "unnamed"
+    NAMED = "named"  # parents name their child
+    UNNAMED = "unnamed"  # no handle; others are pointed at by reshuffled bracket numbers only
+    STABLE_ID = "stable_id"  # the world assigns a neutral ID that never changes; parents choose nothing
 
 
 def empty_holdings() -> dict[str, float]:
@@ -30,7 +31,7 @@ class Agent:
     birth_order: int  # position among births in that generation (founder slot for founders)
     parents: tuple[str, ...]  # elder parent first; empty for founders
     traits: dict[str, float]
-    name: str | None = None  # always None in the unnamed arm
+    name: str | None = None  # the shown handle: a name, a world-assigned ID (stable_id arm), or None (unnamed)
     holdings: dict[str, float] = field(default_factory=empty_holdings)
     gathered: dict[str, float] = field(default_factory=empty_holdings)  # this generation
     given: float = 0.0  # resources given away this generation (gifts, endowments)

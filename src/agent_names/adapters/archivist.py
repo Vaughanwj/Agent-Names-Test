@@ -1,8 +1,9 @@
 """Archivist adapter: answers lineage questions from the core's pedigree.
 
-Both arms get the same facts. The named arm hears names; the unnamed arm hears relations only
-("your elder parent", "a grandparent on your younger parent's side") and is never given an ID
-it could adopt as a name.
+Every arm gets the same facts. The named arm hears names and the stable_id arm hears the
+world-assigned IDs in the same places. The unnamed arm hears relations only ("your elder
+parent", "a grandparent on your younger parent's side") and is never given an ID it could adopt
+as a name.
 """
 
 from __future__ import annotations
@@ -15,8 +16,8 @@ MAX_DESCENDANT_DEPTH = 2
 
 
 class LineageArchivist:
-    def __init__(self, named: bool) -> None:
-        self.named = named
+    def __init__(self, show_handles: bool) -> None:
+        self.show_handles = show_handles  # a name or an ID beside each relation; RunConfig.shows_handles
 
     def consult(self, asker: Agent, topic: str, world: Pedigree, stage: str) -> str:
         if topic == "descendants":
@@ -29,7 +30,7 @@ class LineageArchivist:
 
     # -- rendering ------------------------------------------------------------
     def _who(self, words: str, agent: Agent) -> str:
-        return f"{words}, {agent.name}," if self.named and agent.name else words
+        return f"{words}, {agent.name}," if self.show_handles and agent.name else words
 
     def _facts(self, agent: Agent, stage: str) -> str:
         born = "was one of the first agents" if agent.is_founder else f"was born in generation {agent.born_in}"

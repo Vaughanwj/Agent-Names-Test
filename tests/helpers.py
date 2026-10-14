@@ -25,7 +25,7 @@ def run_sim(tmp_path: Path, arm: str, seed: int = 1, mind_cls=ScriptedMind, **ov
     log = JsonlEventLog(tmp_path / f"{arm}-{seed}.jsonl", cfg.run_id, arm, seed)
     system = prompting.system_prompt(arm, cfg)
     mind = mind_cls(system, log, seed=seed)
-    sim = Simulation(cfg, mind, LineageArchivist(cfg.named), KeyedRandom(seed), RulesScorer(), log,
+    sim = Simulation(cfg, mind, LineageArchivist(cfg.shows_handles), KeyedRandom(seed), RulesScorer(), log,
                      FileArchiveStore(tmp_path / f"{arm}-{seed}-archive.json"))
     sim.run()
     log.close()

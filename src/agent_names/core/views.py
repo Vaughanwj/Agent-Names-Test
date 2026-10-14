@@ -1,6 +1,7 @@
 """What each agent is shown. This is where the arm switch reaches agents: in the named arm a
-name is shown beside every reference; in the unnamed arm it is not. All other information
-(relations, skills, holdings, shared history) is identical in both arms."""
+name is shown beside every reference, in the stable_id arm a world-assigned ID is shown in the
+same places, and in the unnamed arm nothing is. All other information (relations, skills,
+holdings, shared history) is identical in all arms."""
 
 from __future__ import annotations
 
@@ -31,7 +32,7 @@ def describe(sim: "Simulation", viewer: Agent, other_id: str, book: LabelBook | 
     """A reference to another agent as the viewer sees it, e.g. '[3] Ash (your sibling)'."""
     other = sim.pedigree.agent(other_id)
     relation = sim.pedigree.relation(viewer.id, other_id)
-    name = other.name if sim.cfg.named else None
+    name = other.name if sim.cfg.shows_handles else None
     if book and other_id in book.by_id:
         head = f"[{book.by_id[other_id]}]" + (f" {name}" if name else "")
         return f"{head} ({relation})"
@@ -73,7 +74,7 @@ def parents_line(sim: "Simulation", me: Agent, book: LabelBook) -> str:
     for slot, pid in enumerate(me.parents):
         p = sim.pedigree.agent(pid)
         role = "elder" if slot == 0 else "younger"
-        name = f" {p.name}" if sim.cfg.named and p.name else ""
+        name = f" {p.name}" if sim.cfg.shows_handles and p.name else ""
         if p.alive and pid in book.by_id:
             parts.append(f"your {role} parent{name} is alive (listed below as [{book.by_id[pid]}])")
         elif p.alive:
@@ -87,10 +88,12 @@ def parents_line(sim: "Simulation", me: Agent, book: LabelBook) -> str:
 def self_view(sim: "Simulation", me: Agent, book: LabelBook, standing: float | None) -> SelfView:
     if sim.cfg.named:
         givers = "the world" if me.is_founder else "your parents"
+    elif sim.cfg.shows_handles:
+        givers = "the world"  # stable_id: every ID is assigned by the world, newborns' included
     else:
         givers = ""
     return SelfView(
-        name=me.name if sim.cfg.named else None,
+        name=me.name if sim.cfg.shows_handles else None,
         name_givers=givers,
         born_in=me.born_in,
         age=me.age(sim.generation),
@@ -108,7 +111,7 @@ def other_view(sim: "Simulation", me: Agent, other: Agent, label: int, standing:
     theirs = sim.ledger.get((other.id, me.id), {})
     return OtherView(
         label=label,
-        name=other.name if sim.cfg.named else None,
+        name=other.name if sim.cfg.shows_handles else None,
         relation=sim.pedigree.relation(me.id, other.id),
         age=other.age(sim.generation),
         traits=dict(other.traits),
