@@ -62,6 +62,7 @@ def apply_gifts(
             giver.holdings[resource] = round(giver.holdings[resource] - amount, 2)
             agents[to].holdings[resource] = round(agents[to].holdings[resource] + amount, 2)
             giver.given = round(giver.given + amount, 2)
+            agents[to].received = round(agents[to].received + amount, 2)
             executed.append({"giver": gid, "receiver": to, "resource": resource, "amount": amount})
             notes.setdefault(gid, []).append((f"You gave {amount:g} {resource} to {{other}}.", to))
             notes.setdefault(to, []).append((f"{{other}} gave you {amount:g} {resource}.", gid))

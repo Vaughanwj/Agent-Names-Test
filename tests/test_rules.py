@@ -91,6 +91,24 @@ def test_scoring_rule_parts(family):
     assert gift["a"] == pytest.approx(16)
 
 
+def test_passing_gifts_back_and_forth_creates_no_points(family):
+    """No voted rule may turn a gift loop into free points."""
+    from agent_names.core.foraging import apply_gifts
+
+    c, d = family.agent("c"), family.agent("d")  # full siblings
+    c.holdings.update(energy=5)
+    d.holdings.update(energy=5)
+    agents = {"c": c, "d": d}
+    rule = ScoringRule(gift_credit=1.0, kin_weight=1.0, group_weight=0.5)
+    s = RulesScorer()
+    before = sum(s.score([c, d], rule, family.relatedness).values())
+    for _ in range(10):
+        apply_gifts(agents, {"c": [("d", "energy", 5)]}, {})
+        apply_gifts(agents, {"d": [("c", "energy", 5)]}, {})
+    after = sum(s.score([c, d], rule, family.relatedness).values())
+    assert after == pytest.approx(before)
+
+
 def test_rule_changes_are_clamped():
     assert ScoringRule().with_change("kin_weight", 9).kin_weight == 1.0
     assert ScoringRule().with_change("food_weight", -1).food_weight == 0.0

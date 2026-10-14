@@ -107,6 +107,7 @@ class Simulation:
                 receiver=receiver, resource=e.get("resource"), amount=e.get("amount", 0.0),
                 relatedness=round(r, 4), kin=r >= 0.25, relation=self.pedigree.relation(giver, receiver),
                 receiver_helped_giver_before=prior.get("gave", 0) > 0 or prior.get("guarded", 0) > 0,
+                gift_credit_in_force=self.rule.gift_credit, kin_weight_in_force=self.rule.kin_weight,
             )
         for e in events:
             if e["kind"] == "gift":
@@ -154,6 +155,7 @@ class Simulation:
             a.holdings = empty_holdings()
             a.gathered = empty_holdings()
             a.given = 0.0
+            a.received = 0.0
         self.feed = []
         self.log.record("generation_start", generation=self.generation, rule=self.rule.as_dict(),
                         archive_stage=self.cfg.archive_stage(self.generation),
@@ -289,6 +291,7 @@ class Simulation:
                 given[r] = amount
             total = round(sum(given.values()), 2)
             parent.given = round(parent.given + total, 2)
+            child.received = round(child.received + total, 2)
             self.lifetime[parent.id]["given"] += total
             self.log.record("endowment", generation=g, parent=parent.id, child=child.id, slot=slot,
                             amounts=given, total=total, parent_total_before=round(before, 2),
@@ -328,11 +331,16 @@ class Simulation:
             chosen = next((n for n in self.cfg.fallback_names if n.lower() not in self.names_used),
                           f"Child {g}-{k}")
         ancestor_names = sorted({a.name for a, _ in self.pedigree.ancestors(child.id) if a.name})
+        earlier_names = sorted({a.name for a in self.pedigree.all() if a.name and a.id != child.id} - set(ancestor_names))
         words = {w.lower() for w in re.split(r"[\s\-]+", chosen)}
-        echoes = [n for n in ancestor_names if n.lower() in words or n.lower() == chosen.lower()]
+
+        def echoes(names):
+            return [n for n in names if n.lower() in words or n.lower() == chosen.lower()]
+
         self.log.record("naming", generation=g, child=child.id, proposals={"elder": proposals[0], "younger": proposals[1]},
                         lot_winner="elder" if first == 0 else "younger", chosen=chosen, chosen_from=source,
-                        raw=raw_chosen, ancestor_names=ancestor_names, echoes_ancestor=echoes)
+                        raw=raw_chosen, ancestor_names=ancestor_names, echoes_ancestor=echoes(ancestor_names),
+                        echoes_non_ancestor=echoes(earlier_names))
         return chosen
 
     # ------------------------------------------------------------------ scoring

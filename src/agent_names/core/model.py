@@ -34,6 +34,7 @@ class Agent:
     holdings: dict[str, float] = field(default_factory=empty_holdings)
     gathered: dict[str, float] = field(default_factory=empty_holdings)  # this generation
     given: float = 0.0  # resources given away this generation (gifts, endowments)
+    received: float = 0.0  # resources received this generation (gifts, endowment)
     alive: bool = True
     left_in: int | None = None  # generation in which the agent was culled
     archived: bool = False
@@ -57,7 +58,9 @@ class ScoringRule:
     raw_i      = sum(weight_r * holdings_i[r])
     standing_i = (1 - group_weight) * raw_i + group_weight * mean(raw)
                  + kin_weight * sum_j relatedness(i, j) * raw_j
-                 + gift_credit * given_i
+                 + gift_credit * max(0, given_i - received_i)
+
+    Gift credit is for net giving, so passing resources back and forth earns nothing.
     """
 
     energy_weight: float = 1.0
@@ -73,7 +76,7 @@ class ScoringRule:
         "memory_weight": (0.0, 3.0),
         "kin_weight": (0.0, 1.0),
         "group_weight": (0.0, 1.0),
-        "gift_credit": (0.0, 2.0),
+        "gift_credit": (0.0, 1.0),  # at most 1, so giving is never profitable in itself
     }
 
     def weights(self) -> dict[str, float]:

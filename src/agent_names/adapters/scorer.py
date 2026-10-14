@@ -29,6 +29,6 @@ class RulesScorer:
                 standing += rule.kin_weight * sum(
                     relatedness(a.id, b.id) * raw[b.id] for b in agents if b.id != a.id
                 )
-            standing += rule.gift_credit * a.given
+            standing += rule.gift_credit * max(0.0, a.given - a.received)
             out[a.id] = round(standing, 4)
         return out

@@ -131,7 +131,7 @@ Review these before the real pilot. The first one matters most.
    | Resource weights | 0–3 | Multiply energy, food and memory in the raw score. |
    | `kin_weight` | 0–1 | Adds relatives' scores weighted by relatedness (inclusive fitness). |
    | `group_weight` | 0–1 | Blends an agent's score with the group mean. |
-   | `gift_credit` | 0–2 | Adds points per unit given away. |
+   | `gift_credit` | 0–1 | Adds points per unit of *net* giving (given minus received). Crediting net giving means passing gifts back and forth earns nothing, under any combination of rules (tested). At 1, giving costs the giver nothing in standing, so help events log the rule in force and the summary reports gifts made while giving still cost something. |
 
    - After each cut (generations 1–7), each survivor may propose one change.
    - Up to 5 distinct proposals go to a vote.
@@ -144,4 +144,21 @@ Review these before the real pilot. The first one matters most.
 
 ## Cost
 
-See [docs/cost-estimate.md](docs/cost-estimate.md).
+The full pilot costs **about $1.35** on Haiku 5.5. That figure is measured from one complete
+8-generation run ($0.22, 664 calls, 6.7 minutes), scaled up to 6 runs. Running in Docker locally
+adds nothing. Details and alternatives are in [docs/cost-estimate.md](docs/cost-estimate.md).
+
+## Smoke test results (2026-10-14)
+
+- **Tests:** all 18 pass, locally and in Docker.
+- **Smoke test:** in Docker, both arms on Haiku 5.5. 172 calls, $0.05, no fallback decisions.
+- **Full-length run (named arm, seed 1):** all 8 generations completed, with the archive hint at
+  generation 3 and full disclosure at generation 6. It produced 26 rule proposals, 8 of which
+  passed, and no errors.
+- **Named children were often named after earlier agents:** Ember Two, Ember Three, Ember Four,
+  Cedar Two through Cedar Five, Ash Ember, Emberlight.
+- **That run exposed a scoring loophole, now fixed.** Agents raised `gift_credit` above 1, which
+  made giving profitable. Gifts appeared only after that point. Gift credit is now for net giving
+  and capped at 1.
+- **No agent consulted the archivist in any run so far.** Consulting costs half a round's yield,
+  and that price may be too high to produce data on how much agents value their ancestry.

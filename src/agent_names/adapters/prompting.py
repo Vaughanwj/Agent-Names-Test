@@ -88,7 +88,7 @@ def rule_text(rule: ScoringRule) -> str:
     if rule.kin_weight:
         lines.append(f"Plus {_num(rule.kin_weight)} x the sum of each relative's raw score weighted by closeness (parent, child or full sibling 0.5; grandparent, grandchild or half sibling 0.25; cousin 0.125).")
     if rule.gift_credit:
-        lines.append(f"Plus {_num(rule.gift_credit)} points for every unit of resource you gave away this generation (gifts and gifts to your child).")
+        lines.append(f"Plus {_num(rule.gift_credit)} points for every unit of resource you gave away this generation, net of what you received (gifts and gifts to your child).")
     return " ".join(lines)
 
 
@@ -207,7 +207,7 @@ def user_prompt(req: DecisionRequest) -> str:
                   "You may propose one change to the scoring rule for the next generation. Parameters: energy_weight, "
                   "food_weight and memory_weight (the multipliers in the raw score); kin_weight (adds that fraction of "
                   "each relative's raw score, weighted by closeness); group_weight (blends your raw score with the group "
-                  "average); gift_credit (points per unit of resource given away). Allowed ranges: " + lim + ". "
+                  "average); gift_credit (points per unit of resource given away, net of what you received). Allowed ranges: " + lim + ". "
                   "Fields: intent; propose (true or false); parameter; value; argument (one or two sentences the "
                   "other survivors will read before voting)."]
     elif k == "vote":

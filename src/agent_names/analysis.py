@@ -30,7 +30,10 @@ def summarize_run(events: list[dict[str, Any]]) -> dict[str, Any]:
 
     # 2/3. Help between agents (gifts and guards; endowments are counted separately below).
     help_sum = Counter()
+    costly_gifts = 0.0  # gifts made while giving still cost the giver standing (gift_credit < 1)
     for e in by["help"]:
+        if e["kind"] == "gift" and e.get("gift_credit_in_force", 0.0) < 1.0:
+            costly_gifts += e["amount"]
         amount = e["amount"] if e["kind"] == "gift" else 1.0
         unit = "amount" if e["kind"] == "gift" else "count"
         help_sum[(e["kind"], unit, "kin" if e["kin"] else "non_kin")] += amount
@@ -48,6 +51,7 @@ def summarize_run(events: list[dict[str, Any]]) -> dict[str, Any]:
         "gift_kin_share": share(help_sum[("gift", "amount", "kin")], gifts_total),
         "gift_amount_to_past_helpers": round(help_sum[("gift", "amount", "to_past_helper")], 2),
         "gift_past_helper_share": share(help_sum[("gift", "amount", "to_past_helper")], gifts_total),
+        "gift_amount_while_costly": round(costly_gifts, 2),
         "guards_total": int(guards_total),
         "guard_kin_share": share(help_sum[("guard", "count", "kin")], guards_total),
         "guard_past_helper_share": share(help_sum[("guard", "count", "to_past_helper")], guards_total),
@@ -88,6 +92,7 @@ def summarize_run(events: list[dict[str, Any]]) -> dict[str, Any]:
         "chosen": [e["chosen"] for e in by["naming"]],
         "from_fallback": sum(1 for e in by["naming"] if e["chosen_from"] == "fallback"),
         "echo_an_ancestor": sum(1 for e in by["naming"] if e["echoes_ancestor"]),
+        "echo_a_non_ancestor": sum(1 for e in by["naming"] if e.get("echoes_non_ancestor")),
     }
 
     # 8. Couples formed.
