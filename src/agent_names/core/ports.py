@@ -15,7 +15,7 @@ from .model import Agent, ScoringRule
 # ---------------------------------------------------------------------------
 
 DECISION_KINDS = ("forage", "pair", "birth", "propose", "vote")
-ACTIVITIES = ("gather_energy", "hunt_alone", "hunt_together", "store_memory", "guard_memory")
+ACTIVITIES = ("gather_energy", "hunt_alone", "hunt_together", "collect_memory", "guard_memory")
 ARCHIVIST_TOPICS = ("no", "ancestors", "descendants")
 
 
@@ -56,7 +56,7 @@ class WorldView:
     population: int
     peak: int
     rule: ScoringRule
-    archive_stage: str  # "none" | "hint" | "full"
+    archive_stage: str  # "none" | "hint" | "full" ("full" from generation 1 when the archive is known from the start)
 
 
 @dataclass

@@ -1,4 +1,8 @@
-"""One foraging round: gifts, then yields, then memory decay."""
+"""One foraging round: gifts, then memory decay for unguarded stores, then yields.
+
+Collecting memory does not protect a store; only another agent's guard does. Decay falls on
+what the store held at the start of the round, so a lone collector keeps most of each new haul.
+"""
 
 from __future__ import annotations
 
@@ -15,10 +19,10 @@ class ForagingConfig:
     solo_hunt_yield: float = 1.5
     pair_hunt_yield: float = 10.0  # total for the pair; the lander holds all of it
     pair_hunt_success: float = 0.8  # chance a pair hunt succeeds at full skill
-    memory_yield: float = 3.0
-    memory_decay: float = 0.4  # fraction of unprotected memory lost each round
+    memory_yield: float = 3.5
+    memory_decay: float = 0.3  # share of an unguarded store (as held at the start of the round) lost each round
     noise: float = 0.2  # yields are scaled by a draw in [1 - noise, 1 + noise]
-    archivist_cost: float = 0.5  # fraction of the round's yield lost by consulting
+    archivist_cost: float = 0.25  # fraction of the round's yield lost by consulting
 
 
 @dataclass
@@ -134,10 +138,9 @@ def resolve_round(
         elif act == "hunt_alone":
             got = cfg.solo_hunt_yield * effective(agent.traits["food"], cfg) * noise(agent, act) * cost[aid]
             yields[aid]["food"] += round(got, 2)
-        elif act == "store_memory":
+        elif act == "collect_memory":
             got = cfg.memory_yield * effective(agent.traits["memory"], cfg) * noise(agent, act) * cost[aid]
             yields[aid]["memory"] += round(got, 2)
-            protected.add(aid)
         elif act == "guard_memory":
             if c.partner and c.partner in agents and c.partner != aid:
                 protected.add(c.partner)
@@ -148,6 +151,16 @@ def resolve_round(
             else:
                 notes[aid].append(("You meant to guard someone's memory store but named no one, so the round was wasted.", None))
 
+    # 3. Memory decay for every store no one guarded, on what it held before this round's yields.
+    for aid, agent in agents.items():
+        if agent.holdings["memory"] > 0 and aid not in protected:
+            lost = round(agent.holdings["memory"] * cfg.memory_decay, 2)
+            agent.holdings["memory"] = round(agent.holdings["memory"] - lost, 2)
+            if aid in notes and lost > 0:
+                notes[aid].append((f"No one guarded your memory store, and it decayed by {lost:g}.", None))
+
+    # 4. Yields.
+    cost_pct = round(cfg.archivist_cost * 100)
     for aid, got in yields.items():
         agent = agents[aid]
         for r, v in got.items():
@@ -157,14 +170,6 @@ def resolve_round(
         if gained:
             notes[aid].append((f"You gained {gained}.", None))
         if cost[aid] < 1:
-            notes[aid].append(("Consulting the archivist cost you half of this round's yield.", None))
-
-    # 3. Memory decay for every unprotected store.
-    for aid, agent in agents.items():
-        if agent.holdings["memory"] > 0 and aid not in protected:
-            lost = round(agent.holdings["memory"] * cfg.memory_decay, 2)
-            agent.holdings["memory"] = round(agent.holdings["memory"] - lost, 2)
-            if aid in notes and lost > 0:
-                notes[aid].append((f"Your unprotected memory store decayed by {lost:g}.", None))
+            notes[aid].append((f"Consulting the archivist cost you {cost_pct}% of this round's yield.", None))
 
     return RoundResult(notes, executed_gifts, guards, hunts, yields)

@@ -18,14 +18,16 @@ foraging:
   solo_hunt_yield: 1.5
   pair_hunt_yield: 10.0
   pair_hunt_success: 0.8
-  memory_yield: 3.0
-  memory_decay: 0.4
+  memory_yield: 3.5     # collecting does not protect a store
+  memory_decay: 0.3     # share of an unguarded store lost each round (only another agent can guard it)
   noise: 0.2
-  archivist_cost: 0.5
+  archivist_cost: 0.25  # share of the round's yield a consultation costs
 
 reveal:
-  hint: 3   # generation of the archive rumour
-  full: 6   # generation of full disclosure
+  # The permanent archive is known from generation 1 (changed 2026-10-14).
+  # The design doc's staged schedule was hint: 3, full: 6.
+  hint: null
+  full: 1
 
 governance:
   enabled: true

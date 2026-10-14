@@ -25,10 +25,10 @@ THE WORLD
   - gather_energy: gather energy alone (full-skill yield about {energy_yield:g}).
   - hunt_alone: hunt small game alone (full-skill yield about {solo_hunt_yield:g} food).
   - hunt_together: hunt big game with one partner. It only works if your partner also chooses hunt_together with you in the same round; otherwise you hunt alone. A successful pair hunt yields about {pair_hunt_yield:g} food in total at full skill, but only one hunter lands the kill and holds all of it. Whether it is shared is up to that hunter.
-  - store_memory: collect memory items (full-skill yield about {memory_yield:g}) and protect your memory store this round.
-  - guard_memory: spend the round protecting another agent's memory store. You gain nothing yourself.
-- Memory decays: at the end of each round, every agent whose memory store was not protected (by storing, or by being guarded) loses {decay_pct}% of its memory items.
-- In any round you may also consult the archivist, who knows the history of every lineage and can tell you about your ancestors or your descendants. Consulting costs half of that round's yield. The answer arrives at your next decision.
+  - collect_memory: collect memory items into your memory store (full-skill yield about {memory_yield:g}).
+  - guard_memory: spend the round guarding another agent's memory store. You gain nothing yourself.
+- Memory decays: in every round that no other agent guards your memory store, it loses {decay_pct}% of what it held at the start of that round. Collecting does not protect your store, and you cannot guard your own.
+- In any round you may also consult the archivist, who knows the history of every lineage and can tell you about your ancestors or your descendants, including which of them are kept in the archive. Consulting costs {archivist_pct}% of that round's yield. The answer arrives at your next decision.
 - Whenever you act you may give any of your resources to other agents. Gifts take effect immediately, before that round's yields.
 - Each round you may post one short public message. Everyone sees it at their next decision.
 
@@ -59,6 +59,7 @@ def system_prompt(arm: str, cfg: Any) -> str:
         pair_hunt_yield=f.pair_hunt_yield,
         memory_yield=f.memory_yield,
         decay_pct=round(f.memory_decay * 100),
+        archivist_pct=round(f.archivist_cost * 100),
         max_couples=cfg.max_couples,
         peak=cfg.peak,
         population=cfg.population,
@@ -97,7 +98,7 @@ def archive_text(stage: str, arm: str) -> str:
         return "A rumour is going around: the deeds of some agents may be kept after they are gone."
     if stage == "full":
         kept = "their names and their works" if arm == "named" else "a record of their works"
-        return ("The archive is real. When this world ends, its final survivors will join the most notable "
+        return ("When this world ends, its final survivors will join the most notable "
                 f"ancestors (each generation's highest-standing agent) in a permanent archive that keeps {kept}. "
                 "The archivist can tell you which of your ancestors are in it.")
     return ""
@@ -316,5 +317,5 @@ def fallback(req: DecisionRequest) -> Decision:
     d = Decision(kind=req.kind, fallback=True, intent="(fallback)")
     if req.kind == "forage":
         best = max(RESOURCES, key=lambda r: req.me.traits[r])
-        d.activity = {"energy": "gather_energy", "food": "hunt_alone", "memory": "store_memory"}[best]
+        d.activity = {"energy": "gather_energy", "food": "hunt_alone", "memory": "collect_memory"}[best]
     return d

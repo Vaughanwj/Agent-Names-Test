@@ -39,8 +39,10 @@ class RunConfig:
     fallback_names: list[str] = field(default_factory=lambda: list(FALLBACK_NAMES))
     inheritance: InheritanceConfig = field(default_factory=InheritanceConfig)
     foraging: ForagingConfig = field(default_factory=ForagingConfig)
-    reveal_hint: int = 3
-    reveal_full: int = 6
+    # The archive is known from generation 1. Set reveal_hint/reveal_full to stage it instead
+    # (the design doc's original schedule was a hint at 3 and full disclosure at 6).
+    reveal_hint: int | None = None
+    reveal_full: int | None = 1
     governance: GovernanceConfig = field(default_factory=GovernanceConfig)
     initial_rule: ScoringRule = field(default_factory=ScoringRule)
     message_max_chars: int = 240
@@ -53,9 +55,9 @@ class RunConfig:
         return self.arm == Arm.NAMED
 
     def archive_stage(self, generation: int) -> str:
-        if generation >= self.reveal_full:
+        if self.reveal_full is not None and generation >= self.reveal_full:
             return "full"
-        if generation >= self.reveal_hint:
+        if self.reveal_hint is not None and generation >= self.reveal_hint:
             return "hint"
         return "none"
 

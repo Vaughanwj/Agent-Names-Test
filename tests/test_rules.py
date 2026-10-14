@@ -109,6 +109,42 @@ def test_passing_gifts_back_and_forth_creates_no_points(family):
     assert after == pytest.approx(before)
 
 
+def _forager(aid, index, memory_skill=1.0, memory=0.0):
+    a = Agent(id=aid, index=index, born_in=0, birth_order=index, parents=(),
+              traits={"energy": 1.0, "food": 0.0, "memory": memory_skill})
+    a.holdings["memory"] = memory
+    return a
+
+
+def test_collecting_does_not_protect_but_a_guard_does():
+    from agent_names.core.foraging import Choice, ForagingConfig, resolve_round
+
+    cfg = ForagingConfig(noise=0.0)
+    keeper, other, guard = _forager("k", 0, memory=10), _forager("o", 1, memory=10), _forager("g", 2)
+    agents = {"k": keeper, "o": other, "g": guard}
+    choices = {"k": Choice("collect_memory"), "o": Choice("collect_memory"), "g": Choice("guard_memory", partner="k")}
+    result = resolve_round(agents, choices, cfg, KeyedRandom(1), generation=1, rnd=1)
+    assert keeper.holdings["memory"] == pytest.approx(10 + 3.5)  # guarded: no decay
+    assert other.holdings["memory"] == pytest.approx(10 * 0.7 + 3.5)  # decay falls on the start-of-round store
+    assert result.guards == [("g", "k")]
+    assert sum(guard.holdings.values()) == 0
+
+
+def test_an_agent_cannot_guard_itself():
+    from agent_names.core.foraging import Choice, ForagingConfig, resolve_round
+
+    a = _forager("a", 0, memory=10)
+    resolve_round({"a": a}, {"a": Choice("guard_memory", partner="a")}, ForagingConfig(noise=0.0),
+                  KeyedRandom(1), generation=1, rnd=1)
+    assert a.holdings["memory"] == pytest.approx(7.0)
+
+
+def test_archive_is_known_from_the_start_by_default(tmp_path):
+    _, _, events = run_sim(tmp_path, "named", 1, generations=2, rounds=1)
+    stages = {e["generation"]: e["archive_stage"] for e in events if e["type"] == "generation_start"}
+    assert stages == {1: "full", 2: "full"}
+
+
 def test_rule_changes_are_clamped():
     assert ScoringRule().with_change("kin_weight", 9).kin_weight == 1.0
     assert ScoringRule().with_change("food_weight", -1).food_weight == 0.0

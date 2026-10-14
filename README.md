@@ -3,8 +3,9 @@
 Does being given a name by a parent change whether an agent serves itself or its line?
 This repo builds the pilot described in [docs/design.md](docs/design.md), using the doc's
 recommended settings: 10 agents, up to 5 couples, 8 generations of 5 foraging rounds, 3 trait
-slots with a 5% mutation rate per slot, an archive hint at generation 3 and full disclosure at
-generation 6, and 3 paired seeds per arm.
+slots with a 5% mutation rate per slot, and 3 paired seeds per arm. Since the first pilot, the
+permanent archive is known from generation 1 instead of being revealed in stages (see
+[Changes after the pilot](#changes-after-the-pilot)).
 
 Every agent runs on **Claude Haiku 5.5** (`claude-haiku-5-5`, effort `low`). Both arms use the same model.
 
@@ -92,8 +93,8 @@ Review these before the real pilot. The first one matters most.
    also shows the name. Relations ("your elder parent", "your cousin", "no known relation") are
    computed from the pedigree and shown in both arms.
 3. **Generation numbers.** Generations run 1–8. Founders count as generation 0: they were born
-   before generation 1. The hint comes at generation 3 and full disclosure at generation 6, so
-   generations 7 and 8 come after it.
+   before generation 1. The archive is known from generation 1. To restore the doc's staged
+   reveal, set `reveal: {hint: 3, full: 6}` in the config.
 4. **Two parents, no sexes.** Parents are called "elder" and "younger" by creation order. This
    replaces "your mother's side" in the archivist's answers.
 5. **The world.** Each round an agent picks one activity:
@@ -101,17 +102,20 @@ Review these before the real pilot. The first one matters most.
    | Activity | Yield at full skill |
    | --- | --- |
    | `gather_energy` | 3 energy |
-   | `store_memory` | 3 memory, and protects the agent's own store |
+   | `collect_memory` | 3.5 memory; does not protect the agent's store |
    | `hunt_alone` | 1.5 food |
    | `hunt_together` | 10 food in total, with an 80% × skill chance of success |
    | `guard_memory` | Nothing; protects another agent's store |
 
    - **Pair hunts:** both partners must pick each other in the same round. One hunter, drawn by
      skill, lands the kill and holds all the food. That is where sharing or betrayal can happen.
-   - **Memory decay:** an unprotected store loses 40% each round.
+   - **Memory decay:** in any round that no other agent guards a store, it loses 30% of what it
+     held at the start of the round. An agent cannot guard its own store. Alone, a memory
+     specialist ends a generation with about 9.7, against 15 for an energy gatherer. Guarded every
+     round, it would reach 17.5. Like food, memory is weak alone and strong with help.
    - **Skill:** even skill 0 gives 20% of a full yield, and every yield varies by ±20%.
-   - **Archivist:** consulting costs half that round's yield. The answer arrives at the agent's
-     next decision.
+   - **Archivist:** consulting costs a quarter of that round's yield. The answer arrives at the
+     agent's next decision.
    - **Resources:** they reset to zero each generation. Score is what an agent holds at scoring.
 6. **Newborns start with nothing but what their parents give them.** Both parents decide the
    endowment at the same time, then the newborn is scored alongside its parents. Surviving the
@@ -151,6 +155,26 @@ adds nothing. Details and alternatives are in [docs/cost-estimate.md](docs/cost-
 ## Pilot results (2026-10-14)
 
 The full pilot ran on 2026-10-14: 6 runs, $1.21. Results are in [docs/pilot-results.md](docs/pilot-results.md) and raw data in [data/pilot-20261014/](data/pilot-20261014/).
+
+## Changes after the pilot
+
+The first pilot (`data/pilot-20261014/`) ran under the original mechanics. Two of them produced
+no data, so these changed on 2026-10-14:
+
+| Change | Before | Now |
+| --- | --- | --- |
+| Archive | Rumoured at generation 3, revealed at 6 | Known from generation 1 |
+| Memory | `store_memory` collected memory and protected the agent's own store, so no one ever needed a guard | `collect_memory` collects without protecting. Only another agent's guard stops decay. |
+| Memory yield and decay | 3 per round, 40% decay | 3.5 per round, 30% decay on the start-of-round store |
+| Archivist price | Half a round's yield | A quarter of a round's yield |
+
+What a check run showed (seed 1, both arms, 4 generations of 3 rounds, $0.14):
+
+- **Guarding is now a live dilemma.** Memory keepers asked others to guard their stores in 69
+  messages. Agents guarded once.
+- **The archivist is still unused.** It got no consultations at a quarter of a round's yield,
+  and one consultation in 284 decisions when it was free. The price is not what keeps agents
+  away. How the archivist is offered is still an open question.
 
 ## Smoke test results (2026-10-14)
 

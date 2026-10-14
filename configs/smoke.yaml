@@ -10,8 +10,8 @@ generations: 2
 rounds: 2
 
 reveal:
-  hint: 1   # pulled forward so the smoke test exercises both reveal stages
-  full: 2
+  hint: null
+  full: 1   # the archive is known from the start, as in the pilot
 
 mind:
   kind: anthropic

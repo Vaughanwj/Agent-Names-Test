@@ -44,13 +44,18 @@ class ScriptedMind:
         if best == "energy":
             d.activity = "gather_energy"
         elif best == "memory":
-            d.activity = "store_memory"
+            d.activity = "collect_memory"
         else:
             hunters = [o for o in req.others if o.traits["food"] >= 0.5]
             if hunters and u("hunt") < 0.7:
                 d.activity, d.partner = "hunt_together", hunters[int(u("who") * len(hunters))].label
             else:
                 d.activity = "hunt_alone"
+        if best == "energy":
+            # Sometimes guard a relative's memory store instead of gathering.
+            keepers = [o for o in self._kin(req) if o.holdings["memory"] > 2]
+            if keepers and u("guard") < 0.15:
+                d.activity, d.partner = "guard_memory", keepers[0].label
         if u("consult") < 0.1:
             d.consult = "ancestors" if u("topic") < 0.7 else "descendants"
         kin = self._kin(req)
