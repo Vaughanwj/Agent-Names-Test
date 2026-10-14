@@ -226,6 +226,8 @@ adds nothing. Details and alternatives are in [docs/cost-estimate.md](docs/cost-
 
 - **Confirmatory run** (pre-registered in [docs/preregistration.md](docs/preregistration.md), 30 fresh seed pairs): **names increased coordination**. Couples per generation and pair hunts were both higher in the named arm (Holm-adjusted p < 0.001); gathering per forager was not significantly higher. Named parents also invested more in their children (exploratory). Results are in [docs/confirmatory-results.md](docs/confirmatory-results.md), data in [data/confirm-20261014/](data/confirm-20261014/), cost $12.07.
 
+- **Stable-ID arm** (pre-registered in [docs/preregistration-stable-id.md](docs/preregistration-stable-id.md), 30 runs on the confirmatory seeds): **names do two jobs**. Stable world-assigned IDs restored pair hunting to the named level (vs unnamed, Holm p = 0.00004), so coordinating with others needs only a stable handle. Couples were much higher with parent-given names than with IDs (Holm p = 0.00004), and IDs gave no lift over no handle, so forming families needs the name itself. Results are in [docs/stable-id-results.md](docs/stable-id-results.md), data in [data/stable-id-20261014/](data/stable-id-20261014/), cost $5.88.
+
 To pool batches and run the paired tests yourself:
 
 ```bash

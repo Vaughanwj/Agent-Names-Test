@@ -71,4 +71,5 @@ for different lengths and count tokens slightly differently.
 | Second pilot (6 runs, 4,274 calls) | $1.179 |
 | Scale-up (20 runs, 8,606 calls) | $3.878 |
 | Confirmatory run (64 runs, 44,174 calls) | $12.072 |
-| **Total** | **$19.09** |
+| Stable-ID arm (30 runs, 20,898 calls) | $5.880 |
+| **Total** | **$24.97** |

@@ -1,0 +1,14 @@
+{
+  "raw": {
+    "H1a stable_id>unnamed couples": 0.04602,
+    "H1b stable_id>unnamed pair hunts": 1e-05,
+    "H2a named>stable_id couples": 1e-05,
+    "H2b named>stable_id pair hunts": 0.86625
+  },
+  "holm_four_way": {
+    "H1b stable_id>unnamed pair hunts": 4e-05,
+    "H2a named>stable_id couples": 4e-05,
+    "H1a stable_id>unnamed couples": 0.09204,
+    "H2b named>stable_id pair hunts": 0.86625
+  }
+}
