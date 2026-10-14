@@ -1,7 +1,7 @@
 # What the pilot will cost
 
 **About $1.35 for the full pilot** (3 seeds × 2 arms, 8 generations of 5 rounds) on Claude Haiku
-5.5 at effort `low`. Budget **$2–3** to be safe. Running it in Docker on your own machine adds
+5.5 at effort `low`. The actual pilot came to **$1.21**. Budget **$2–3** to be safe. Running it in Docker on your own machine adds
 nothing: all of the cost is Claude API usage. Expect about 40 minutes run one after another, or
 about 15 minutes with `--parallel 3`.
 
@@ -66,4 +66,5 @@ for different lengths and count tokens slightly differently.
 | Docker smoke test | $0.049 |
 | Full-length budgeting run | $0.221 |
 | Final Docker smoke test | $0.051 |
-| **Total** | **$0.38** |
+| The pilot itself (6 runs, 3,936 calls) | $1.211 |
+| **Total** | **$1.59** |
