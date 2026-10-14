@@ -37,3 +37,36 @@ def test_pooled_summary_pairs_runs_by_batch_and_seed(tmp_path):
     assert summary["pairs"] == 4 and len(summary["runs"]) == 8
     assert set(summary["archivist_ladder"]) == {"0.05", "0.1"}
     assert "Named higher" in out.read_text(encoding="utf-8")
+
+
+def test_monte_carlo_paired_test_beyond_twenty_pairs():
+    assert analysis.paired_test([1.0] * 25) == round(1 / (analysis.MONTE_CARLO_DRAWS + 1), 5)
+    mixed = [1.0, -1.0] * 12
+    assert analysis.paired_test(mixed) == 1.0
+    assert analysis.paired_test(mixed) == analysis.paired_test(mixed)  # fixed seed: reproducible
+
+
+def test_holm_adjustment():
+    adj = analysis.holm({"a": 0.01, "b": 0.04, "c": 0.03})
+    assert adj == {"a": 0.03, "c": 0.06, "b": 0.06}
+
+
+def test_a_failed_run_does_not_stop_the_batch(tmp_path, monkeypatch):
+    real = app.run_one
+
+    def flaky(cfg, run_dir):
+        if cfg.seed == 2 and cfg.arm.value == "unnamed":
+            raise RuntimeError("boom")
+        return real(cfg, run_dir)
+
+    monkeypatch.setattr(app, "run_one", flaky)
+    batch = app.run_batch(pilot_doc(seeds=[1, 2], generations=1, rounds=1), "t", out_root=str(tmp_path))
+    outcomes = json.loads((batch / "outcomes.json").read_text(encoding="utf-8"))
+    assert outcomes["unnamed-s2"].startswith("failed") and outcomes["named-s1"] == "completed"
+    assert sum(v == "completed" for v in outcomes.values()) == 3
+
+
+def test_primary_measures_get_a_holm_table(tmp_path):
+    batch = app.run_batch(pilot_doc(seeds=[1, 2], generations=2, rounds=1), "t", out_root=str(tmp_path))
+    text = analysis.write_batch_summary([batch], batch, primary=["pair hunts", "couples per generation"]).read_text(encoding="utf-8")
+    assert "Primary measures (pre-registered" in text and "p (Holm)" in text

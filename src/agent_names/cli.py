@@ -45,7 +45,8 @@ def _doc(args) -> dict:
 
 def cmd_pilot(args) -> None:
     doc = _doc(args)
-    batch = app.run_batch(doc, args.name, parallel=args.parallel, out_root=args.out)
+    batch = app.run_batch(doc, args.name, parallel=args.parallel, out_root=args.out,
+                          batch_budget_usd=args.batch_budget)
     summary = analysis.write_batch_summary([batch], batch)
     print(summary.read_text(encoding="utf-8"))
     events = sorted(batch.glob("*/events.jsonl"))
@@ -58,7 +59,8 @@ def cmd_pilot(args) -> None:
 def cmd_summarize(args) -> None:
     batches = [Path(b) for b in args.batch]
     out = Path(args.out) if args.out else batches[0]
-    print(analysis.write_batch_summary(batches, out).read_text(encoding="utf-8"))
+    primary = [p.strip() for p in args.primary.split(",")] if args.primary else None
+    print(analysis.write_batch_summary(batches, out, primary=primary).read_text(encoding="utf-8"))
 
 
 def cmd_estimate(args) -> None:
@@ -84,6 +86,8 @@ def main(argv: list[str] | None = None) -> None:
     sp.add_argument("--arms", help="comma-separated, e.g. named,unnamed")
     sp.add_argument("--parallel", type=int, default=1, help="runs to execute at once")
     sp.add_argument("--out", help="output root (default: config output_dir)")
+    sp.add_argument("--batch-budget", type=float, metavar="USD",
+                    help="start no new run once finished runs have spent this much")
     sp.add_argument("--set", action="append", metavar="KEY=VALUE",
                     help="override any config value, e.g. --set foraging.archivist_cost=0.1 (repeatable)")
     sp.set_defaults(func=cmd_pilot)
@@ -91,6 +95,7 @@ def main(argv: list[str] | None = None) -> None:
     ss = sub.add_parser("summarize", help="recompute the measures for one or more batch directories, pooled")
     ss.add_argument("batch", nargs="+")
     ss.add_argument("--out", help="where to write summary.md/json (default: the first batch)")
+    ss.add_argument("--primary", help="comma-separated pre-registered primary measures, tested with a Holm correction")
     ss.set_defaults(func=cmd_summarize)
 
     se = sub.add_parser("estimate", help="estimate cost from a dry-run plan and a real calibration batch")

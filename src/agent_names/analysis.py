@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import random
 import statistics
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -144,21 +145,40 @@ METRICS = {
 }
 
 
+MONTE_CARLO_DRAWS = 100_000
+
+
 def paired_test(diffs: list[float]) -> float | None:
-    """Exact two-sided sign-flip permutation test on paired differences (named minus unnamed).
+    """Two-sided sign-flip permutation test on paired differences (named minus unnamed).
 
     Under no arm effect, each pair's difference is equally likely to have either sign, because
-    the two runs of a pair share a seed and differ only in names.
+    the two runs of a pair share a seed and differ only in names. Exact for up to 20 pairs;
+    beyond that, 100,000 random sign patterns from a fixed seed, with p = (k + 1) / (draws + 1).
     """
     n = len(diffs)
-    if n == 0 or n > 20:
+    if n == 0:
         return None
-    observed = abs(sum(diffs))
-    extreme = 0
-    for mask in range(1 << n):
-        total = sum(d if mask >> i & 1 else -d for i, d in enumerate(diffs))
-        extreme += abs(total) >= observed - 1e-12
-    return round(extreme / (1 << n), 4)
+    observed = abs(sum(diffs)) - 1e-12
+    if n <= 20:
+        extreme = 0
+        for mask in range(1 << n):
+            total = sum(d if mask >> i & 1 else -d for i, d in enumerate(diffs))
+            extreme += abs(total) >= observed
+        return round(extreme / (1 << n), 4)
+    rng = random.Random(0)
+    extreme = sum(abs(sum(d if rng.random() < 0.5 else -d for d in diffs)) >= observed
+                  for _ in range(MONTE_CARLO_DRAWS))
+    return round((extreme + 1) / (MONTE_CARLO_DRAWS + 1), 5)
+
+
+def holm(pvalues: dict[str, float]) -> dict[str, float]:
+    """Holm-Bonferroni adjusted p-values (step-down, monotone)."""
+    order = sorted(pvalues, key=lambda k: pvalues[k])
+    m, running, out = len(order), 0.0, {}
+    for i, k in enumerate(order):
+        running = max(running, min(1.0, (m - i) * pvalues[k]))
+        out[k] = round(running, 5)
+    return out
 
 
 def summarize_batch(batch_dirs: list[Path] | Path) -> dict[str, Any]:
@@ -205,20 +225,38 @@ def summarize_batch(batch_dirs: list[Path] | Path) -> dict[str, Any]:
             "archivist_ladder": {str(k): v for k, v in sorted(ladder.items())}}
 
 
-def write_batch_summary(batch_dirs: list[Path] | Path, out_dir: Path | None = None) -> Path:
+def write_batch_summary(batch_dirs: list[Path] | Path, out_dir: Path | None = None,
+                        primary: list[str] | None = None, alpha: float = 0.05) -> Path:
     if isinstance(batch_dirs, (str, Path)):
         batch_dirs = [Path(batch_dirs)]
     out_dir = Path(out_dir or batch_dirs[0])
     out_dir.mkdir(parents=True, exist_ok=True)
     summary = summarize_batch(batch_dirs)
+    if primary:
+        unknown = [p for p in primary if p not in summary["comparison"]]
+        if unknown:
+            raise ValueError(f"unknown primary measures: {unknown}")
+        adjusted = holm({p: summary["comparison"][p]["p"] for p in primary})
+        summary["primary"] = {p: {**summary["comparison"][p], "p_holm": adjusted[p],
+                                  "supported": adjusted[p] < alpha and summary["comparison"][p]["named"] > summary["comparison"][p]["unnamed"]}
+                              for p in primary}
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
     lines = ["# Batch summary", "",
              f"Batches: {', '.join(Path(b).name for b in batch_dirs)}. Runs: {len(summary['runs'])}. "
              f"Seed pairs (named and unnamed with the same seed): {summary['pairs']}.", "",
-             "p is an exact paired sign-flip test across seed pairs (two-sided). With few pairs it cannot go low: "
-             "3 pairs give at best 0.25.", "",
-             "| Measure (mean over runs) | Named | Unnamed | Named higher (of pairs) | p |",
-             "| --- | --- | --- | --- | --- |"]
+             "p is a two-sided paired sign-flip test across seed pairs: exact up to 20 pairs, 100,000 random "
+             "sign patterns above that. With few pairs it cannot go low: 3 pairs give at best 0.25.", "",
+             ]
+    if summary.get("primary"):
+        lines += [f"## Primary measures (pre-registered; Holm-adjusted across {len(summary['primary'])}, alpha {alpha})", "",
+                  "| Measure | Named | Unnamed | Named higher (of pairs) | p | p (Holm) | Hypothesis supported |",
+                  "| --- | --- | --- | --- | --- | --- | --- |"]
+        for name, v in summary["primary"].items():
+            lines.append(f"| {name} | {v['named']} | {v['unnamed']} | {v['named_higher']} of {v['pairs']} | {v['p']} | "
+                         f"{v['p_holm']} | {'yes' if v['supported'] else 'no'} |")
+        lines += ["", "## All measures (exploratory, unadjusted)", ""]
+    lines += ["| Measure (mean over runs) | Named | Unnamed | Named higher (of pairs) | p |",
+              "| --- | --- | --- | --- | --- |"]
     for name, v in summary["comparison"].items():
         ties = f", {v['ties']} tied" if v["ties"] else ""
         lines.append(f"| {name} | {v['named']} | {v['unnamed']} | {v['named_higher']} of {v['pairs']}{ties} | {v['p']} |")
