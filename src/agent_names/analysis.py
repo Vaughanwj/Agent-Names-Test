@@ -146,6 +146,7 @@ METRICS = {
 
 
 MONTE_CARLO_DRAWS = 100_000
+MAX_FALLBACK_SHARE = 0.05
 
 
 def paired_test(diffs: list[float]) -> float | None:
@@ -195,6 +196,20 @@ def summarize_batch(batch_dirs: list[Path] | Path) -> dict[str, Any]:
             s["batch"] = Path(batch).name
             runs[f"{Path(batch).name}/{ev.parent.name}" if len(batch_dirs) > 1 else ev.parent.name] = s
 
+    # Exclusion rule (docs/preregistration.md): a run that did not complete, or that used fallback
+    # decisions for more than 5% of its decisions, is excluded together with its seed partner.
+    excluded: dict[str, str] = {}
+    for key, s in runs.items():
+        if not s["completed"]:
+            excluded[key] = "did not complete"
+        elif s["decisions"] and s["fallback_decisions"] / s["decisions"] > MAX_FALLBACK_SHARE:
+            excluded[key] = f"{s['fallback_decisions']} of {s['decisions']} decisions were fallbacks"
+    bad_pairs = {(runs[k]["batch"], runs[k]["seed"]) for k in excluded}
+    for key, s in runs.items():
+        if key not in excluded and (s["batch"], s["seed"]) in bad_pairs:
+            excluded[key] = "its seed partner was excluded"
+    runs_all, runs = runs, {k: v for k, v in runs.items() if k not in excluded}
+
     pairs: dict[tuple, dict[str, dict]] = defaultdict(dict)
     for s in runs.values():
         pairs[(s["batch"], s["seed"])][s["arm"]] = s
@@ -221,7 +236,7 @@ def summarize_batch(batch_dirs: list[Path] | Path) -> dict[str, Any]:
             cell = ladder[s["archivist_cost"]][s["arm"]]
             cell[0] += s["archivist"]["offers"]
             cell[1] += s["archivist"]["accepted"]
-    return {"runs": runs, "pairs": len(pairs), "comparison": table,
+    return {"runs": runs, "excluded": excluded, "runs_seen": len(runs_all), "pairs": len(pairs), "comparison": table,
             "archivist_ladder": {str(k): v for k, v in sorted(ladder.items())}}
 
 
@@ -247,6 +262,9 @@ def write_batch_summary(batch_dirs: list[Path] | Path, out_dir: Path | None = No
              "p is a two-sided paired sign-flip test across seed pairs: exact up to 20 pairs, 100,000 random "
              "sign patterns above that. With few pairs it cannot go low: 3 pairs give at best 0.25.", "",
              ]
+    if summary["excluded"]:
+        lines += [f"Excluded under the exclusion rule ({len(summary['excluded'])} of {summary['runs_seen']} runs):", ""]
+        lines += [f"- {k}: {why}" for k, why in sorted(summary["excluded"].items())] + [""]
     if summary.get("primary"):
         lines += [f"## Primary measures (pre-registered; Holm-adjusted across {len(summary['primary'])}, alpha {alpha})", "",
                   "| Measure | Named | Unnamed | Named higher (of pairs) | p | p (Holm) | Hypothesis supported |",

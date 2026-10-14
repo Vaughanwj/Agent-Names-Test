@@ -70,3 +70,13 @@ def test_primary_measures_get_a_holm_table(tmp_path):
     batch = app.run_batch(pilot_doc(seeds=[1, 2], generations=2, rounds=1), "t", out_root=str(tmp_path))
     text = analysis.write_batch_summary([batch], batch, primary=["pair hunts", "couples per generation"]).read_text(encoding="utf-8")
     assert "Primary measures (pre-registered" in text and "p (Holm)" in text
+
+def test_exclusion_rule_drops_an_incomplete_run_and_its_partner(tmp_path):
+    batch = app.run_batch(pilot_doc(seeds=[1, 2], generations=2, rounds=1), "t", out_root=str(tmp_path))
+    events = batch / "named-s2" / "events.jsonl"
+    lines = [l for l in events.read_text(encoding="utf-8").splitlines() if '"run_end"' not in l]
+    events.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    summary = analysis.summarize_batch([batch])
+    assert summary["pairs"] == 1
+    assert summary["excluded"] == {"named-s2": "did not complete", "unnamed-s2": "its seed partner was excluded"}
+    assert set(summary["runs"]) == {"named-s1", "unnamed-s1"}

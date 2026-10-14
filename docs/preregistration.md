@@ -95,3 +95,17 @@ spent $16.
 ## Deviations
 
 Any deviation from this plan will be listed in the results with the reason.
+
+## Notes added after data collection, before analysis
+
+Added on 2026-10-14, after the confirmatory batch finished and before any primary measure was
+looked at:
+
+1. **Four runs failed.** Seeds 129 and 130, in both arms, stopped when the Anthropic account
+   reached its own API usage limit (HTTP 400, "You have reached your specified API usage
+   limits"). The failures were caused by the order in which runs were scheduled, not by
+   anything in the runs. Under the exclusion rule, pairs 129 and 130 are excluded and replaced
+   by seeds 131 and 132 once the limit is raised.
+2. **The exclusion rule is now implemented in `analysis.summarize_batch`.** A run that did not
+   complete, or that used fallbacks for more than 5% of its decisions, is dropped together with
+   its seed partner. The rule itself is unchanged.
