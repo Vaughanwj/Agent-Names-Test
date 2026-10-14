@@ -58,7 +58,10 @@ def summarize_run(events: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
     # 4. Archivist consultations.
+    offers = by["archivist_offer"]
     archivist = {
+        "offers": len(offers),
+        "take_up_rate": round(sum(1 for o in offers if o["choice"] != "no") / len(offers), 3) if offers else None,
         "consultations": len(by["archivist"]),
         "by_topic": dict(Counter(e["topic"] for e in by["archivist"])),
         "by_generation": dict(sorted(Counter(e["generation"] for e in by["archivist"]).items())),
@@ -138,6 +141,7 @@ def summarize_batch(batch_dir: Path) -> dict[str, Any]:
         "gift share to past helpers": lambda s: s["help"]["gift_past_helper_share"],
         "guards, total": lambda s: s["help"]["guards_total"],
         "archivist consultations": lambda s: s["archivist"]["consultations"],
+        "archivist take-up (share of offers accepted)": lambda s: s["archivist"].get("take_up_rate"),
         "rules proposed": lambda s: s["rules"]["proposed"],
         "rules passed": lambda s: len(s["rules"]["passed"]),
         "mean endowment fraction": lambda s: s["sacrifice"]["mean_endowment_fraction"],

@@ -14,7 +14,7 @@ from .model import Agent, ScoringRule
 # What an agent is shown, and what it may answer. Built by core.views.
 # ---------------------------------------------------------------------------
 
-DECISION_KINDS = ("forage", "pair", "birth", "propose", "vote")
+DECISION_KINDS = ("archivist", "forage", "pair", "birth", "propose", "vote")
 ACTIVITIES = ("gather_energy", "hunt_alone", "hunt_together", "collect_memory", "guard_memory")
 ARCHIVIST_TOPICS = ("no", "ancestors", "descendants")
 

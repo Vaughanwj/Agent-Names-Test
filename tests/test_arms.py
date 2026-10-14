@@ -97,6 +97,13 @@ def test_unnamed_prompts_carry_no_names_or_ids(tmp_path):
     assert "name" not in mind.system_text.lower()
 
 
+def test_archivist_offer_points_at_no_one(tmp_path):
+    _, mind, _ = run_sim(tmp_path, "named", 2, mind_cls=PromptRecorder)
+    offers = [p for p in mind.prompts if "THE ARCHIVIST'S OFFER" in p]
+    assert offers
+    assert not any("listed below" in p or "OTHER AGENTS PRESENT" in p for p in offers)
+
+
 def test_named_prompts_show_names(tmp_path):
     _, mind, _ = run_sim(tmp_path, "named", 2, mind_cls=PromptRecorder)
     assert any("Your name is Ash" in p for p in mind.prompts)

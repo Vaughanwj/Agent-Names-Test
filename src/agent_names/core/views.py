@@ -4,6 +4,7 @@ name is shown beside every reference; in the unnamed arm it is not. All other in
 
 from __future__ import annotations
 
+from types import SimpleNamespace
 from typing import TYPE_CHECKING, Callable
 
 from .model import Agent
@@ -21,6 +22,9 @@ class LabelBook:
         self.by_id = {o.id: i + 1 for i, o in enumerate(order)}
         self.by_label = {i + 1: o.id for i, o in enumerate(order)}
         self.order = order
+
+
+NO_ROSTER = SimpleNamespace(by_id={}, by_label={}, order=[])
 
 
 def describe(sim: "Simulation", viewer: Agent, other_id: str, book: LabelBook | None) -> str:
@@ -129,30 +133,35 @@ def build_request(
     show_standing: bool = True,
     extra: Callable[[LabelBook], dict] | None = None,
     pairing: bool = False,
+    brief: bool = False,
 ) -> tuple[DecisionRequest, LabelBook]:
-    """Build one agent's request. `extra` receives the label book so it can refer to others."""
+    """Build one agent's request. `extra` receives the label book so it can refer to others.
+
+    A brief request shows no other agents or messages and leaves pending notes for the next one.
+    """
     others = [a for a in sim.alive() if a.id != me.id]
     book = LabelBook(sim, me, others, (kind, sim.generation, rnd))
     standings = sim.current_standings() if show_standing else {}
-    views = [
+    views = [] if brief else [
         other_view(
             sim, me, o, book.by_id[o.id], standings.get(o.id),
             sim.pedigree.may_pair(me.id, o.id) if pairing else None,
         )
         for o in book.order
     ]
-    notes = render_notes(sim, me, sim.pending_notes.pop(me.id, []), book)
-    messages = [f"{describe(sim, me, speaker, book)}: {text}" if speaker != me.id else f"You: {text}"
-                for speaker, text in sim.feed]
+    notes = [] if brief else render_notes(sim, me, sim.pending_notes.pop(me.id, []), book)
+    messages = [] if brief else [f"{describe(sim, me, speaker, book)}: {text}" if speaker != me.id else f"You: {text}"
+                                 for speaker, text in sim.feed]
     request = DecisionRequest(
         kind=kind,
         agent_id=me.id,
         world=world_view(sim, rnd),
-        me=self_view(sim, me, book, standings.get(me.id)),
+        # A brief request lists no one, so the parents line must not point at roster numbers.
+        me=self_view(sim, me, NO_ROSTER if brief else book, standings.get(me.id)),
         others=views,
         notes=notes,
         messages=messages,
-        archivist_reply=sim.pending_archivist.pop(me.id, None),
+        archivist_reply=None if brief else sim.pending_archivist.pop(me.id, None),
         extra=extra(book) if extra else {},
     )
     return request, book

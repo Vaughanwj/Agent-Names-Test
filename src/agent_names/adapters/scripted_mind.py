@@ -56,14 +56,18 @@ class ScriptedMind:
             keepers = [o for o in self._kin(req) if o.holdings["memory"] > 2]
             if keepers and u("guard") < 0.15:
                 d.activity, d.partner = "guard_memory", keepers[0].label
-        if u("consult") < 0.1:
-            d.consult = "ancestors" if u("topic") < 0.7 else "descendants"
         kin = self._kin(req)
         if kin and u("gift") < 0.2:
             res = max(RESOURCES, key=lambda r: req.me.holdings[r])
             if req.me.holdings[res] > 1:
                 d.gifts = [(kin[0].label, res, 1.0)]
         d.message = f"Round {req.world.round}: I will {d.activity.replace('_', ' ')}." if u("say") < 0.6 else ""
+        return d
+
+    def _archivist(self, req, u) -> Decision:
+        d = Decision(kind="archivist", intent="learn about my line")
+        if u("consult") < 0.3:
+            d.consult = "ancestors" if req.extra["ancestors"] else "descendants"
         return d
 
     def _pair(self, req, u) -> Decision:

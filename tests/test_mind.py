@@ -51,7 +51,7 @@ def _mind(responses):
 
 
 def test_request_shape_and_parse():
-    answer = {"intent": "hunt", "activity": "hunt_together", "partner": 1, "consult_archivist": "no",
+    answer = {"intent": "hunt", "activity": "hunt_together", "partner": 1,
               "gifts": [{"to": 1, "resource": "energy", "amount": 1}], "message": "hi"}
     mind, calls, log = _mind([_response(answer)])
     d = mind.decide(_request())
@@ -78,7 +78,7 @@ def test_budget_stops_the_run():
 
     from agent_names.adapters.anthropic_mind import BudgetExceeded
 
-    answer = {"intent": "", "activity": "gather_energy", "partner": 0, "consult_archivist": "no",
+    answer = {"intent": "", "activity": "gather_energy", "partner": 0,
               "gifts": [], "message": ""}
     mind, calls, _ = _mind([_response(answer) for _ in range(5)])
     mind.budget_usd = 0.0001  # one fake call costs $0.000044, so the fourth is refused
@@ -90,7 +90,7 @@ def test_budget_stops_the_run():
 
 
 def test_first_request_of_a_cold_kind_goes_alone():
-    answer = {"intent": "", "activity": "gather_energy", "partner": 0, "consult_archivist": "no",
+    answer = {"intent": "", "activity": "gather_energy", "partner": 0,
               "gifts": [], "message": ""}
     mind, calls, _ = _mind([_response(answer) for _ in range(6)])
     mind.concurrency = 4
@@ -111,7 +111,7 @@ def test_first_request_of_a_cold_kind_goes_alone():
 
 
 def test_every_schema_is_strict():
-    for kind in ("forage", "pair", "birth", "propose", "vote"):
+    for kind in ("archivist", "forage", "pair", "birth", "propose", "vote"):
         req = _request(kind)
         req.extra = {"naming": True}
         s = prompting.schema(req)

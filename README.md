@@ -114,8 +114,9 @@ Review these before the real pilot. The first one matters most.
      specialist ends a generation with about 9.7, against 15 for an energy gatherer. Guarded every
      round, it would reach 17.5. Like food, memory is weak alone and strong with help.
    - **Skill:** even skill 0 gives 20% of a full yield, and every yield varies by ±20%.
-   - **Archivist:** consulting costs a quarter of that round's yield. The answer arrives at the
-     agent's next decision.
+   - **Archivist:** at the start of each generation, every agent with ancestors or descendants
+     on record gets a direct offer to consult it. Accepting costs a quarter of that agent's
+     first-round yield. The answer arrives before round 1.
    - **Resources:** they reset to zero each generation. Score is what an agent holds at scoring.
 6. **Newborns start with nothing but what their parents give them.** Both parents decide the
    endowment at the same time, then the newborn is scored alongside its parents. Surviving the
@@ -166,15 +167,18 @@ no data, so these changed on 2026-10-14:
 | Archive | Rumoured at generation 3, revealed at 6 | Known from generation 1 |
 | Memory | `store_memory` collected memory and protected the agent's own store, so no one ever needed a guard | `collect_memory` collects without protecting. Only another agent's guard stops decay. |
 | Memory yield and decay | 3 per round, 40% decay | 3.5 per round, 30% decay on the start-of-round store |
-| Archivist price | Half a round's yield | A quarter of a round's yield |
+| Archivist | An optional field in every round's decision, costing half that round's yield | A direct yes/no offer at the start of each generation to every agent with a recorded lineage, costing a quarter of its first-round yield |
 
-What a check run showed (seed 1, both arms, 4 generations of 3 rounds, $0.14):
+What the check runs showed (seed 1, both arms, 4 generations of 3 rounds, about $0.14 each):
 
 - **Guarding is now a live dilemma.** Memory keepers asked others to guard their stores in 69
   messages. Agents guarded once.
-- **The archivist is still unused.** It got no consultations at a quarter of a round's yield,
-  and one consultation in 284 decisions when it was free. The price is not what keeps agents
-  away. How the archivist is offered is still an open question.
+- **Agents ignored the archivist as an optional choice.** It got no consultations at a quarter
+  of a round's yield, and one consultation in 284 decisions when it was free.
+- **Agents decline the direct offer.** There were 45 offers across both arms and none was
+  accepted. Every agent said it was keeping its first-round yield for scoring. Under individual
+  scoring, these agents value their ancestry at less than a quarter of one round. To find where
+  that changes, vary `foraging.archivist_cost` between batches.
 
 ## Smoke test results (2026-10-14)
 

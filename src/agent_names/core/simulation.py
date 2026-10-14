@@ -62,6 +62,7 @@ class Simulation:
         self.names_used: set[str] = set()
         self.lifetime: dict[str, dict[str, float]] = defaultdict(lambda: {"gathered": 0.0, "given": 0.0})
         self._departed: list[tuple[str, float]] = []
+        self._consulting: dict[str, str] = {}
         self._next_index = 0
 
     # ------------------------------------------------------------------ helpers
@@ -132,6 +133,7 @@ class Simulation:
         for g in range(1, cfg.generations + 1):
             self.generation = g
             self._start_generation()
+            self._archivist_offer()
             for r in range(1, cfg.rounds + 1):
                 self._forage(r)
             couples = self._pair()
@@ -161,6 +163,36 @@ class Simulation:
                         archive_stage=self.cfg.archive_stage(self.generation),
                         alive=[a.id for a in self.alive()])
 
+    # ---------------------------------------------------------------- archivist
+    def _archivist_offer(self) -> None:
+        """Once per generation, before foraging, each agent with a recorded lineage is asked whether
+        to consult the archivist. Accepting costs part of its first round's yield."""
+        g = self.generation
+        self._consulting: dict[str, str] = {}
+        offered = []
+        for a in self.alive():
+            has_up, has_down = bool(a.parents), bool(self.pedigree.children_of(a.id))
+            if has_up or has_down:
+                offered.append((a, has_up, has_down))
+        if not offered:
+            return
+        cost_pct = round(self.cfg.foraging.archivist_cost * 100)
+        built = [views.build_request(self, "archivist", a, show_standing=False, brief=True,
+                                     extra=lambda book, up=up, down=down: {"ancestors": up, "descendants": down,
+                                                                          "cost_pct": cost_pct})
+                 for a, up, down in offered]
+        decisions = self._decide([req for req, _ in built])
+        for (agent, up, down), dec in zip(offered, decisions):
+            topic = dec.consult if dec.consult in ARCHIVIST_TOPICS else "no"
+            self.log.record("archivist_offer", generation=g, agent=agent.id, has_ancestors=up,
+                            has_descendants=down, choice=topic, fallback=dec.fallback)
+            if topic == "no":
+                continue
+            reply = self.archivist.consult(agent, topic, self.pedigree, self.cfg.archive_stage(g))
+            self.pending_archivist[agent.id] = reply
+            self._consulting[agent.id] = topic
+            self.log.record("archivist", generation=g, round=1, agent=agent.id, topic=topic, reply=reply)
+
     # ---------------------------------------------------------------- foraging
     def _forage(self, rnd: int) -> None:
         present = self.alive()
@@ -172,13 +204,9 @@ class Simulation:
         for agent, (req, book), dec in zip(present, built, decisions):
             activity = dec.activity if dec.activity in ACTIVITIES else "gather_energy"
             partner = book.by_label.get(dec.partner) if dec.partner else None
-            consult = dec.consult if dec.consult in ARCHIVIST_TOPICS else "no"
+            # The archivist's price falls on the first round of the generation it was consulted in.
+            consult = self._consulting.get(agent.id, "no") if rnd == 1 else "no"
             choices[agent.id] = Choice(activity, partner, consult, self._resolve_gifts(dec, book))
-            if consult != "no":
-                reply = self.archivist.consult(agent, consult, self.pedigree, self.cfg.archive_stage(self.generation))
-                self.pending_archivist[agent.id] = reply
-                self.log.record("archivist", generation=self.generation, round=rnd, agent=agent.id,
-                                topic=consult, reply=reply)
             msg = self._clean_message(dec.message)
             if msg:
                 new_feed.append((agent.id, msg))

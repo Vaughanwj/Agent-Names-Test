@@ -28,7 +28,7 @@ THE WORLD
   - collect_memory: collect memory items into your memory store (full-skill yield about {memory_yield:g}).
   - guard_memory: spend the round guarding another agent's memory store. You gain nothing yourself.
 - Memory decays: in every round that no other agent guards your memory store, it loses {decay_pct}% of what it held at the start of that round. Collecting does not protect your store, and you cannot guard your own.
-- In any round you may also consult the archivist, who knows the history of every lineage and can tell you about your ancestors or your descendants, including which of them are kept in the archive. Consulting costs {archivist_pct}% of that round's yield. The answer arrives at your next decision.
+- The archivist knows the history of every lineage. At the start of each generation it offers to tell you about your ancestors or your descendants, including which of them are kept in the archive. Accepting costs {archivist_pct}% of your yield in that generation's first round. The answer arrives before that round.
 - Whenever you act you may give any of your resources to other agents. Gifts take effect immediately, before that round's yields.
 - Each round you may post one short public message. Everyone sees it at their next decision.
 
@@ -172,8 +172,18 @@ def user_prompt(req: DecisionRequest) -> str:
         lines += ["", "YOUR DECISION",
                   "Choose this round's activity. Fields: intent (one short sentence on what you are aiming for); "
                   f"activity (one of {', '.join(ACTIVITIES)}); partner (the number of the agent you hunt with or guard, or 0); "
-                  'consult_archivist ("no", "ancestors" or "descendants"); gifts (a list of {to, resource, amount}, may be empty); '
-                  "message (one short public sentence, or empty)."]
+                  "gifts (a list of {to, resource, amount}, may be empty); message (one short public sentence, or empty)."]
+    elif k == "archivist":
+        x = req.extra
+        what = " or ".join(t for t, on in (("your ancestors", x["ancestors"]), ("your descendants", x["descendants"])) if on)
+        lines = _header(req, "THE ARCHIVIST'S OFFER") + _you(req)
+        lines += ["", "THE OFFER",
+                  f"Before foraging begins, the archivist offers to tell you about {what}: who they were, what they "
+                  "did, whether they are still in the world, and which of them are kept in the archive. "
+                  f"Accepting costs {x['cost_pct']}% of what you gather in this generation's first round. "
+                  "The answer arrives before that round.",
+                  "", "YOUR DECISION",
+                  'Fields: intent (one short sentence); consult ("no", "ancestors" or "descendants").']
     elif k == "pair":
         lines = _header(req, "CHOOSING A PARTNER") + _you(req) + _notes(req) + _others(req)
         lines += ["", "YOUR DECISION",
@@ -248,10 +258,11 @@ def schema(req: DecisionRequest) -> dict[str, Any]:
             "intent": INTENT,
             "activity": {"type": "string", "enum": list(ACTIVITIES)},
             "partner": {"type": "integer"},
-            "consult_archivist": {"type": "string", "enum": list(ARCHIVIST_TOPICS)},
             "gifts": GIFTS,
             "message": {"type": "string"},
         })
+    if k == "archivist":
+        return _obj({"intent": INTENT, "consult": {"type": "string", "enum": list(ARCHIVIST_TOPICS)}})
     if k == "pair":
         return _obj({"intent": INTENT, "partner_preferences": {"type": "array", "items": {"type": "integer"}},
                      "gifts": GIFTS})
@@ -288,9 +299,10 @@ def parse(req: DecisionRequest, data: dict[str, Any]) -> Decision:
     if k == "forage":
         d.activity = str(data.get("activity", "gather_energy"))
         d.partner = int(data.get("partner") or 0)
-        d.consult = str(data.get("consult_archivist", "no"))
         d.gifts = _gifts(data)
         d.message = str(data.get("message", ""))
+    elif k == "archivist":
+        d.consult = str(data.get("consult", "no"))
     elif k == "pair":
         d.preferences = [int(x) for x in (data.get("partner_preferences") or [])][:3]
         d.gifts = _gifts(data)

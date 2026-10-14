@@ -145,6 +145,32 @@ def test_archive_is_known_from_the_start_by_default(tmp_path):
     assert stages == {1: "full", 2: "full"}
 
 
+def test_archivist_is_offered_once_per_generation_to_agents_with_a_lineage(tmp_path):
+    sim, _, events = run_sim(tmp_path, "named", 2)
+    offers = [e for e in events if e["type"] == "archivist_offer"]
+    assert offers and not [o for o in offers if o["generation"] == 1]  # founders have nothing on record yet
+    for o in offers:
+        assert o["has_ancestors"] or o["has_descendants"]
+    by_gen = {}
+    for o in offers:
+        by_gen.setdefault(o["generation"], []).append(o["agent"])
+    assert all(len(v) == len(set(v)) for v in by_gen.values())  # once per agent per generation
+    accepted = {(o["generation"], o["agent"]) for o in offers if o["choice"] != "no"}
+    consults = {(e["generation"], e["agent"]) for e in events if e["type"] == "archivist"}
+    assert accepted and accepted == consults
+
+
+def test_consulting_costs_part_of_the_first_round_only():
+    from agent_names.core.foraging import Choice, ForagingConfig, resolve_round
+
+    cfg = ForagingConfig(noise=0.0)
+    a, b = _forager("a", 0), _forager("b", 1)
+    result = resolve_round({"a": a, "b": b}, {"a": Choice("gather_energy", consult="ancestors"),
+                                              "b": Choice("gather_energy")}, cfg, KeyedRandom(1), 1, 1)
+    assert result.yields["a"]["energy"] == pytest.approx(3.0 * (1 - cfg.archivist_cost))
+    assert result.yields["b"]["energy"] == pytest.approx(3.0)
+
+
 def test_rule_changes_are_clamped():
     assert ScoringRule().with_change("kin_weight", 9).kin_weight == 1.0
     assert ScoringRule().with_change("food_weight", -1).food_weight == 0.0
