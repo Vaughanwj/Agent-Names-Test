@@ -7,7 +7,12 @@ slots with a 5% mutation rate per slot, and 3 paired seeds per arm. Since the fi
 permanent archive is known from generation 1 instead of being revealed in stages (see
 [Changes after the pilot](#changes-after-the-pilot)).
 
-Every agent runs on **Claude Haiku 5.5** (`claude-haiku-5-5`, effort `low`). Both arms use the same model.
+A third arm, `stable_id`, gives every agent a fixed ID assigned by the world instead of a name
+chosen by its parents. It separates the two explanations the confirmatory result left open (see
+choice 12 below). It is built and tested with the scripted stand-in but has not been run on
+Claude yet.
+
+Every agent runs on **Claude Haiku 5.5** (`claude-haiku-5-5`, effort `low`). Every arm uses the same model.
 
 ## Running it
 
@@ -41,6 +46,7 @@ Results go to `runs/<name>-<timestamp>/`, with one folder per run and a summary 
 | `<arm>-s<seed>/archive.json` | The permanent archive at the end of the run. |
 | `<arm>-s<seed>/system_prompt.txt` | The exact system prompt that arm saw. |
 | `summary.md`, `summary.json` | The doc's measures, named vs unnamed, averaged over seeds. |
+| `summary-<arm>-vs-<arm>.md`, `.json` | The same for every other pair of arms in the batch, such as `summary-named-vs-stable_id.md`. |
 | `cost.json` | Actual API spend for the batch. |
 
 Each run stops if it spends more than `mind.budget_usd`: $2 per run in `configs/pilot.yaml`.
@@ -50,6 +56,10 @@ locally (Python 3.10+, `pip install -e .`):
 
 ```bash
 agent-names summarize runs/pilot-20261014-070000
+```
+
+```bash
+agent-names summarize runs/three-20261014-070000 --arms named,stable_id
 ```
 
 ```bash
@@ -64,20 +74,41 @@ file or random library. Each arm is a configuration of the same core.
 | Port | Adapter |
 | --- | --- |
 | AgentMind | `adapters/anthropic_mind.py`: one Claude call per decision, with structured JSON output, a cached system prompt, a retry, a logged fallback and a budget cap. `adapters/scripted_mind.py`: a free, deterministic stand-in that renders the same prompts. |
-| Archivist | `adapters/archivist.py`: built on the core's pedigree. The arm sets whether names appear. |
+| Archivist | `adapters/archivist.py`: built on the core's pedigree. The arm sets whether names, IDs or neither appear. |
 | RandomSource | `adapters/random_source.py`: each draw is a hash of the seed and a key such as (generation, birth order, slot). Draws never depend on call order. |
 | Scorer | `adapters/scorer.py`: plain code. No model interprets the rules. |
 | EventLog | `adapters/storage.py`: one JSONL file per run. |
 | ArchiveStore | `adapters/storage.py`: a local JSON file. |
 | RunConfig | `adapters/config_yaml.py`, reading `configs/*.yaml`. |
 
-The arm switch touches three things only: names (shown or not), how the archivist phrases its
-answers, and what the archive keeps. Tests check that:
+There are three arms (`core/model.py`, `Arm`):
 
-- both arms get identical inheritance draws for identical seeds, even when their histories
-  diverge (`tests/test_arms.py`);
-- a stand-in that ignores names plays out the same world in both arms;
-- no unnamed-arm prompt or archivist answer contains a name or an internal ID.
+| Arm | Handle shown beside every agent | Chosen by |
+| --- | --- | --- |
+| `named` | A name, such as Ash or Ember Two | The world for founders; both parents for everyone born since |
+| `unnamed` | None; only `[1]`…`[n]`, reshuffled on every request | Nobody |
+| `stable_id` | An ID, such as A47, kept for life and never reused | The world, for everyone |
+
+The arm switch touches three things only: the handle (a name, an ID, or nothing), how the
+archivist phrases its answers, and what the archive keeps. Where the named arm shows a name, the
+stable_id arm shows the ID: the roster, messages, notes, parent lines, archivist answers, the
+departed list and vote proposals. Only the named arm asks parents for a name. List the arms in a
+config (`arms: [named, unnamed, stable_id]`) or with `--arms`. Tests check that:
+
+- all three arms get identical inheritance draws for identical seeds, even when their
+  histories diverge (`tests/test_arms.py`);
+- a stand-in that ignores handles plays out the same world in every arm;
+- the system prompts differ only in the handle clauses;
+- no unnamed-arm prompt or archivist answer contains a name or an internal ID;
+- no stable_id prompt, schema or archivist answer contains a name, a request for one, or an
+  internal ID, and each agent is shown under the same ID in every round and generation;
+- the archive keeps names plus works (named), IDs plus works (stable_id), or works only
+  (unnamed).
+
+The analysis (`analysis.py`) compares any two arms, paired by seed. Arms are ordered named,
+stable_id, unnamed, and each comparison takes the earlier arm minus the later one, so a positive
+difference always means more identity, more of the measure. A batch with all three arms gets a
+summary for each pair.
 
 ## Choices made where the design doc was silent
 
@@ -88,10 +119,10 @@ Review these before the real pilot. The first one matters most.
    pilot tests whether names change behaviour when information is equal, not whether names make
    tracking possible. To test tracking instead, remove the history line from the unnamed arm
    (`core/views.py`, `other_view`). That adds a second difference between the arms.
-2. **Pointing at others without names.** In both arms, others are listed as `[1]`…`[n]`, and
+2. **Pointing at others without names.** In every arm, others are listed as `[1]`…`[n]`, and
    the numbers are reshuffled on every request so they can't harden into names. The named arm
-   also shows the name. Relations ("your elder parent", "your cousin", "no known relation") are
-   computed from the pedigree and shown in both arms.
+   also shows the name, and the stable_id arm the ID. Relations ("your elder parent", "your
+   cousin", "no known relation") are computed from the pedigree and shown in every arm.
 3. **Generation numbers.** Generations run 1–8. Founders count as generation 0: they were born
    before generation 1. The archive is known from generation 1. To restore the doc's staged
    reveal, set `reveal: {hint: 3, full: 6}` in the config.
@@ -128,7 +159,8 @@ Review these before the real pilot. The first one matters most.
 8. **Naming (named arm).** Each parent proposes up to 3 names, and a lot decides whose list is
    tried first. Names must be unique among the living and the dead. If none is valid, a name
    comes from a fallback list, and the log flags it. Founders get fixed names (Ash, Brook,
-   Cedar…) and are told nothing about who named them.
+   Cedar…) and are told nothing about who named them. The other two arms have no naming step:
+   their parents make the same birth decision without the name field.
 9. **What agents can vote on.** They can change these scoring parameters:
 
    | Parameter | Range | What it does |
@@ -143,9 +175,42 @@ Review these before the real pilot. The first one matters most.
    - A proposal passes with more than half of the 10 survivors.
    - The population limit is fixed in code and cannot be voted on.
 10. **What gets archived.** Each generation's highest-standing agent, plus the final survivors.
-    The named arm keeps names and works; the unnamed arm keeps works only.
+    The named arm keeps names and works, the stable_id arm IDs and works, and the unnamed arm
+    works only.
 11. **Messages are not filtered.** Agents post one public line per round. If unnamed agents coin
     names for each other, the message log will show it, and that would be a finding.
+12. **The stable_id arm (added after the confirmatory run).** Named populations coordinated
+    more, but a name is also a stable handle that others can address
+    ([docs/confirmatory-results.md](docs/confirmatory-results.md)). In this arm, every agent
+    gets a handle that no parent chooses. Named vs stable_id then tests a parent-given name
+    against a bare handle, and stable_id vs unnamed tests a handle against none. Review these
+    choices before a real run:
+    - **The ID's form.** An ID is `A` and a number, such as A47. The world assigns it when the
+      agent is created, founders and newborns alike. It never changes and is never given to
+      another agent, living or dead.
+    - **Numbers don't reveal age.** The numbers come from a pool of 10–99 shuffled by the seed
+      (larger only if a config allows more than 90 agents), so A12 need not be older than A80.
+      Sequential IDs would tell agents who the founders are, which no other arm shows. A seed
+      always gives the same IDs (`core/simulation.py`, `stable_ids`).
+    - **It is called an ID, not a name.** Prompts say "Your ID is A47." and "Your child, with
+      the ID A47, was born…", and no prompt asks for, offers or mentions a name. So named vs
+      stable_id bundles several differences: who chooses the handle, whether it reads as a word,
+      whether it is called a name, and the naming decision below. That is the contrast the
+      confirmatory result raised, but a difference between these two arms won't say which part
+      of the bundle matters.
+    - **The system prompt says the ID is permanent.** It says an agent keeps its ID for life
+      and no two agents share one. The named arm is not told that names are permanent; agents
+      assume it. Next to bracket numbers that are reshuffled every time, an ID's permanence is
+      not obvious, so this one sentence is the only information the stable_id arm gets that
+      the named arm doesn't (`adapters/prompting.py`, `IDS_CLAUSE`).
+    - **No naming decision.** The birth decision is the unnamed arm's, with no name field. In
+      the named arm, parents propose names in the same decision as the endowment, so a
+      parental-investment difference between named and stable_id could come from either.
+    - **Analysis.** Each comparison applies the exclusion rule within its own two arms, so a
+      failed stable_id run drops its named and unnamed partners only from the comparisons that
+      include stable_id. The Holm correction runs within each comparison, not across them. A
+      real three-arm run needs its own pre-registration: which comparisons are primary, and how
+      to correct across them.
 
 ## Cost
 

@@ -7,7 +7,7 @@ import random
 import statistics
 from collections import Counter, defaultdict
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 from .adapters.storage import event_files, read_events
 
@@ -150,11 +150,12 @@ MAX_FALLBACK_SHARE = 0.05
 
 
 def paired_test(diffs: list[float]) -> float | None:
-    """Two-sided sign-flip permutation test on paired differences (named minus unnamed).
+    """Two-sided sign-flip permutation test on paired differences (first arm minus second).
 
     Under no arm effect, each pair's difference is equally likely to have either sign, because
-    the two runs of a pair share a seed and differ only in names. Exact for up to 20 pairs;
-    beyond that, 100,000 random sign patterns from a fixed seed, with p = (k + 1) / (draws + 1).
+    the two runs of a pair share a seed and differ only in how agents are identified. Exact for
+    up to 20 pairs; beyond that, 100,000 random sign patterns from a fixed seed, with
+    p = (k + 1) / (draws + 1).
     """
     n = len(diffs)
     if n == 0:
@@ -182,8 +183,31 @@ def holm(pvalues: dict[str, float]) -> dict[str, float]:
     return out
 
 
-def summarize_batch(batch_dirs: list[Path] | Path) -> dict[str, Any]:
-    """Pool runs from one or more batches. Runs are paired by (batch, seed) across the two arms."""
+DEFAULT_ARMS = ("named", "unnamed")
+# Arms from the most identity to the least. Each comparison puts the earlier arm first, so a
+# positive difference always means "more identity, more of this measure".
+ARM_ORDER = ("named", "stable_id", "unnamed")
+ARM_LABELS = {"named": "Named", "stable_id": "Stable ID", "unnamed": "Unnamed"}
+
+
+def arm_label(arm: str) -> str:
+    return ARM_LABELS.get(arm, arm.replace("_", " ").capitalize())
+
+
+def arm_pairs(arms: Iterable[str]) -> list[tuple[str, str]]:
+    """Every pair among the given arms, each with the arm that carries more identity first."""
+    rank = {a: i for i, a in enumerate(ARM_ORDER)}
+    present = sorted(set(arms), key=lambda a: (rank.get(a, len(ARM_ORDER)), a))
+    return [(a, b) for i, a in enumerate(present) for b in present[i + 1:]]
+
+
+def summary_stem(arms: tuple[str, str]) -> str:
+    """File name (without suffix) of a comparison's summary. Named vs unnamed keeps "summary"."""
+    return "summary" if tuple(arms) == DEFAULT_ARMS else f"summary-{arms[0]}-vs-{arms[1]}"
+
+
+def load_runs(batch_dirs: list[Path] | Path) -> dict[str, dict]:
+    """Summaries of every run in one or more batches, keyed by run folder (batch/run when pooling)."""
     if isinstance(batch_dirs, (str, Path)):
         batch_dirs = [batch_dirs]
     runs: dict[str, dict] = {}
@@ -195,9 +219,24 @@ def summarize_batch(batch_dirs: list[Path] | Path) -> dict[str, Any]:
                 s["archivist_cost"] = json.loads(cfg_path.read_text(encoding="utf-8"))["foraging"]["archivist_cost"]
             s["batch"] = Path(batch).name
             runs[f"{Path(batch).name}/{ev.parent.name}" if len(batch_dirs) > 1 else ev.parent.name] = s
+    return runs
+
+
+def summarize_batch(batch_dirs: list[Path] | Path, arms: tuple[str, str] = DEFAULT_ARMS,
+                    runs: dict[str, dict] | None = None) -> dict[str, Any]:
+    """Pool runs from one or more batches and compare two arms, the first minus the second.
+
+    Runs are paired by (batch, seed) across the two arms; runs of any other arm are left out.
+    `runs` takes the output of load_runs, so several comparisons can share one read of the logs.
+    """
+    first, second = arms
+    if first == second:
+        raise ValueError(f"cannot compare an arm with itself: {first}")
+    runs = {k: s for k, s in (load_runs(batch_dirs) if runs is None else runs).items() if s["arm"] in arms}
 
     # Exclusion rule (docs/preregistration.md): a run that did not complete, or that used fallback
     # decisions for more than 5% of its decisions, is excluded together with its seed partner.
+    # In a batch with more than two arms, the partner is the run of the other arm being compared.
     excluded: dict[str, str] = {}
     for key, s in runs.items():
         if not s["completed"]:
@@ -213,24 +252,24 @@ def summarize_batch(batch_dirs: list[Path] | Path) -> dict[str, Any]:
     pairs: dict[tuple, dict[str, dict]] = defaultdict(dict)
     for s in runs.values():
         pairs[(s["batch"], s["seed"])][s["arm"]] = s
-    pairs = {k: v for k, v in pairs.items() if "named" in v and "unnamed" in v}
+    pairs = {k: v for k, v in pairs.items() if first in v and second in v}
 
     table = {}
     for name, f in METRICS.items():
         vals = {arm: [v for v in (f(s) for s in runs.values() if s["arm"] == arm) if v is not None]
-                for arm in ("named", "unnamed")}
+                for arm in arms}
         diffs = []
         for p in pairs.values():
-            a, b = f(p["named"]), f(p["unnamed"])
+            a, b = f(p[first]), f(p[second])
             if a is not None and b is not None:
                 diffs.append(a - b)
         table[name] = {
-            "named": _mean(vals["named"]), "unnamed": _mean(vals["unnamed"]),
-            "pairs": len(diffs), "named_higher": sum(d > 0 for d in diffs), "ties": sum(d == 0 for d in diffs),
+            first: _mean(vals[first]), second: _mean(vals[second]),
+            "pairs": len(diffs), f"{first}_higher": sum(d > 0 for d in diffs), "ties": sum(d == 0 for d in diffs),
             "p": paired_test(diffs),
         }
 
-    ladder = defaultdict(lambda: {"named": [0, 0], "unnamed": [0, 0]})
+    ladder = defaultdict(lambda: {first: [0, 0], second: [0, 0]})
     for s in runs.values():
         if s.get("archivist_cost") is not None and s["archivist"]["offers"]:
             cell = ladder[s["archivist_cost"]][s["arm"]]
@@ -241,24 +280,31 @@ def summarize_batch(batch_dirs: list[Path] | Path) -> dict[str, Any]:
 
 
 def write_batch_summary(batch_dirs: list[Path] | Path, out_dir: Path | None = None,
-                        primary: list[str] | None = None, alpha: float = 0.05) -> Path:
+                        primary: list[str] | None = None, alpha: float = 0.05,
+                        arms: tuple[str, str] = DEFAULT_ARMS, runs: dict[str, dict] | None = None) -> Path:
+    """Write one comparison's summary, as Markdown and JSON. A hypothesis is supported when the
+    first arm is higher."""
     if isinstance(batch_dirs, (str, Path)):
         batch_dirs = [Path(batch_dirs)]
+    first, second = arms
+    one, two, higher = arm_label(first), arm_label(second), f"{first}_higher"
     out_dir = Path(out_dir or batch_dirs[0])
     out_dir.mkdir(parents=True, exist_ok=True)
-    summary = summarize_batch(batch_dirs)
+    summary = summarize_batch(batch_dirs, arms, runs)
     if primary:
         unknown = [p for p in primary if p not in summary["comparison"]]
         if unknown:
             raise ValueError(f"unknown primary measures: {unknown}")
         adjusted = holm({p: summary["comparison"][p]["p"] for p in primary})
         summary["primary"] = {p: {**summary["comparison"][p], "p_holm": adjusted[p],
-                                  "supported": adjusted[p] < alpha and summary["comparison"][p]["named"] > summary["comparison"][p]["unnamed"]}
+                                  "supported": adjusted[p] < alpha and summary["comparison"][p][first] > summary["comparison"][p][second]}
                               for p in primary}
-    (out_dir / "summary.json").write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
-    lines = ["# Batch summary", "",
+    stem = summary_stem(arms)
+    (out_dir / f"{stem}.json").write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
+    title = "# Batch summary" if tuple(arms) == DEFAULT_ARMS else f"# Batch summary: {one} vs {two}"
+    lines = [title, "",
              f"Batches: {', '.join(Path(b).name for b in batch_dirs)}. Runs: {len(summary['runs'])}. "
-             f"Seed pairs (named and unnamed with the same seed): {summary['pairs']}.", "",
+             f"Seed pairs ({first} and {second} with the same seed): {summary['pairs']}.", "",
              "p is a two-sided paired sign-flip test across seed pairs: exact up to 20 pairs, 100,000 random "
              "sign patterns above that. With few pairs it cannot go low: 3 pairs give at best 0.25.", "",
              ]
@@ -267,25 +313,41 @@ def write_batch_summary(batch_dirs: list[Path] | Path, out_dir: Path | None = No
         lines += [f"- {k}: {why}" for k, why in sorted(summary["excluded"].items())] + [""]
     if summary.get("primary"):
         lines += [f"## Primary measures (pre-registered; Holm-adjusted across {len(summary['primary'])}, alpha {alpha})", "",
-                  "| Measure | Named | Unnamed | Named higher (of pairs) | p | p (Holm) | Hypothesis supported |",
+                  f"| Measure | {one} | {two} | {one} higher (of pairs) | p | p (Holm) | Hypothesis supported |",
                   "| --- | --- | --- | --- | --- | --- | --- |"]
         for name, v in summary["primary"].items():
-            lines.append(f"| {name} | {v['named']} | {v['unnamed']} | {v['named_higher']} of {v['pairs']} | {v['p']} | "
+            lines.append(f"| {name} | {v[first]} | {v[second]} | {v[higher]} of {v['pairs']} | {v['p']} | "
                          f"{v['p_holm']} | {'yes' if v['supported'] else 'no'} |")
         lines += ["", "## All measures (exploratory, unadjusted)", ""]
-    lines += ["| Measure (mean over runs) | Named | Unnamed | Named higher (of pairs) | p |",
+    lines += [f"| Measure (mean over runs) | {one} | {two} | {one} higher (of pairs) | p |",
               "| --- | --- | --- | --- | --- |"]
     for name, v in summary["comparison"].items():
         ties = f", {v['ties']} tied" if v["ties"] else ""
-        lines.append(f"| {name} | {v['named']} | {v['unnamed']} | {v['named_higher']} of {v['pairs']}{ties} | {v['p']} |")
+        lines.append(f"| {name} | {v[first]} | {v[second]} | {v[higher]} of {v['pairs']}{ties} | {v['p']} |")
     if summary["archivist_ladder"]:
-        lines += ["", "| Archivist price (share of first-round yield) | Named: accepted / offers | Unnamed: accepted / offers |",
+        lines += ["", f"| Archivist price (share of first-round yield) | {one}: accepted / offers | {two}: accepted / offers |",
                   "| --- | --- | --- |"]
         for price, cell in summary["archivist_ladder"].items():
-            lines.append(f"| {float(price):.0%} | {cell['named'][1]} / {cell['named'][0]} | {cell['unnamed'][1]} / {cell['unnamed'][0]} |")
+            lines.append(f"| {float(price):.0%} | {cell[first][1]} / {cell[first][0]} | {cell[second][1]} / {cell[second][0]} |")
     names = [n for s in summary["runs"].values() for n in s["names"]["chosen"]]
     if names:
         lines += ["", f"Names chosen in the named arm: {', '.join(names)}"]
-    path = out_dir / "summary.md"
+    path = out_dir / f"{stem}.md"
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return path
+
+
+def write_batch_summaries(batch_dirs: list[Path] | Path, out_dir: Path | None = None,
+                          primary: list[str] | None = None, alpha: float = 0.05,
+                          arms: tuple[str, str] | None = None) -> list[Path]:
+    """Write one summary per comparison: the two arms given, or else every pair of arms found.
+
+    A named and unnamed batch gets the single summary.md it always did. A batch that also has a
+    stable_id arm gets summary-named-vs-stable_id.md and summary-stable_id-vs-unnamed.md as well.
+    Primary measures are Holm-corrected within each comparison, not across comparisons.
+    """
+    if isinstance(batch_dirs, (str, Path)):
+        batch_dirs = [Path(batch_dirs)]
+    runs = load_runs(batch_dirs)
+    comparisons = [tuple(arms)] if arms else arm_pairs(s["arm"] for s in runs.values()) or [DEFAULT_ARMS]
+    return [write_batch_summary(batch_dirs, out_dir, primary, alpha, arms=c, runs=runs) for c in comparisons]

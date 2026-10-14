@@ -5,6 +5,8 @@ from __future__ import annotations
 import argparse
 import json
 
+import yaml
+
 from agent_names import analysis, app, cli
 from agent_names.adapters import config_yaml
 
@@ -80,3 +82,61 @@ def test_exclusion_rule_drops_an_incomplete_run_and_its_partner(tmp_path):
     assert summary["pairs"] == 1
     assert summary["excluded"] == {"named-s2": "did not complete", "unnamed-s2": "its seed partner was excluded"}
     assert set(summary["runs"]) == {"named-s1", "unnamed-s1"}
+
+
+THREE_ARMS = ["named", "unnamed", "stable_id"]
+
+
+def test_a_three_arm_batch_gets_one_summary_per_pair_of_arms(tmp_path):
+    batch = app.run_batch(pilot_doc(seeds=[1, 2], generations=2, rounds=1, arms=THREE_ARMS), "t", out_root=str(tmp_path))
+    paths = analysis.write_batch_summaries([batch], batch)
+    assert [p.name for p in paths] == ["summary-named-vs-stable_id.md", "summary.md", "summary-stable_id-vs-unnamed.md"]
+
+    plain = json.loads((batch / "summary.json").read_text(encoding="utf-8"))  # named vs unnamed, as before
+    assert set(plain["runs"]) == {"named-s1", "named-s2", "unnamed-s1", "unnamed-s2"} and plain["pairs"] == 2
+
+    new = json.loads((batch / "summary-named-vs-stable_id.json").read_text(encoding="utf-8"))
+    assert set(new["runs"]) == {"named-s1", "named-s2", "stable_id-s1", "stable_id-s2"} and new["pairs"] == 2
+    assert set(new["comparison"]["pair hunts"]) == {"named", "stable_id", "pairs", "named_higher", "ties", "p"}
+    text = paths[0].read_text(encoding="utf-8")
+    assert "# Batch summary: Named vs Stable ID" in text
+    assert "| Measure (mean over runs) | Named | Stable ID | Named higher (of pairs) | p |" in text
+    assert "Seed pairs (named and stable_id with the same seed): 2." in text
+
+
+def test_any_two_arms_compare_first_minus_second(tmp_path):
+    batch = app.run_batch(pilot_doc(seeds=[1, 2], generations=2, rounds=1, arms=THREE_ARMS), "t", out_root=str(tmp_path))
+    runs = analysis.load_runs([batch])
+    forward = analysis.summarize_batch([batch], arms=("stable_id", "unnamed"), runs=runs)["comparison"]
+    backward = analysis.summarize_batch([batch], arms=("unnamed", "stable_id"), runs=runs)["comparison"]
+    for name in analysis.METRICS:
+        f, b = forward[name], backward[name]
+        assert (f["stable_id"], f["unnamed"], f["p"]) == (b["stable_id"], b["unnamed"], b["p"])
+        assert f["stable_id_higher"] + b["unnamed_higher"] + f["ties"] == f["pairs"]
+
+
+def test_exclusion_applies_within_each_comparison(tmp_path):
+    batch = app.run_batch(pilot_doc(seeds=[1, 2], generations=2, rounds=1, arms=THREE_ARMS), "t", out_root=str(tmp_path))
+    events = batch / "stable_id-s2" / "events.jsonl"
+    lines = [l for l in events.read_text(encoding="utf-8").splitlines() if '"run_end"' not in l]
+    events.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    plain = analysis.summarize_batch([batch])
+    assert plain["excluded"] == {} and plain["pairs"] == 2  # a stable_id failure leaves named vs unnamed alone
+    s = analysis.summarize_batch([batch], arms=("named", "stable_id"))
+    assert s["pairs"] == 1
+    assert s["excluded"] == {"stable_id-s2": "did not complete", "named-s2": "its seed partner was excluded"}
+
+
+def test_a_config_can_list_three_arms(tmp_path, capsys):
+    config = tmp_path / "three.yaml"
+    config.write_text(yaml.safe_dump(pilot_doc(seeds=[1], arms=THREE_ARMS)), encoding="utf-8")
+    cli.main(["pilot", "--config", str(config), "--name", "three", "--generations", "1", "--rounds", "1",
+              "--out", str(tmp_path / "runs")])
+    (batch,) = (tmp_path / "runs").iterdir()
+    assert {p.name for p in batch.iterdir() if p.is_dir()} == {"named-s1", "unnamed-s1", "stable_id-s1"}
+    assert (batch / "stable_id-s1" / "system_prompt.txt").read_text(encoding="utf-8").count("Every agent has an ID") == 1
+    assert "# Batch summary: Stable ID vs Unnamed" in capsys.readouterr().out
+
+    cli.main(["summarize", str(batch), "--arms", "stable_id,unnamed", "--out", str(tmp_path / "one")])
+    assert sorted(p.name for p in (tmp_path / "one").iterdir()) == ["summary-stable_id-vs-unnamed.json",
+                                                                   "summary-stable_id-vs-unnamed.md"]
