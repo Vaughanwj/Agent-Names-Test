@@ -22,7 +22,7 @@ ARCHIVIST_TOPICS = ("no", "ancestors", "descendants")
 @dataclass
 class OtherView:
     label: int  # reshuffled every request; the only handle an agent can answer with
-    name: str | None  # a name (named arm), a world-assigned ID (stable_id arm), or None (unnamed arm)
+    name: str | None  # a word name (named, world_name), an ID (stable_id, parent_id), or None (unnamed)
     relation: str  # "your elder parent", "no known relation", ...
     age: int
     traits: dict[str, float]
@@ -35,7 +35,7 @@ class OtherView:
 @dataclass
 class SelfView:
     name: str | None  # as OtherView.name
-    name_givers: str  # "your parents" / "the world" (founders, and everyone in stable_id) / "" for unnamed
+    name_givers: str  # "your parents" (named, parent_id) / "the world" (founders; everyone in stable_id, world_name) / ""
     born_in: int
     age: int
     parents_line: str

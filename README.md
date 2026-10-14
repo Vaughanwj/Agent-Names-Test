@@ -7,10 +7,13 @@ slots with a 5% mutation rate per slot, and 3 paired seeds per arm. Since the fi
 permanent archive is known from generation 1 instead of being revealed in stages (see
 [Changes after the pilot](#changes-after-the-pilot)).
 
-A third arm, `stable_id`, gives every agent a fixed ID assigned by the world instead of a name
-chosen by its parents. It separates the two explanations the confirmatory result left open (see
-choice 12 below). It is built and tested with the scripted stand-in but has not been run on
-Claude yet.
+Beyond named and unnamed there are three more arms, each with a different kind of stable handle:
+
+- **`stable_id`:** a fixed ID assigned by the world instead of a parent-chosen name. It has been
+  run on Claude ([docs/stable-id-results.md](docs/stable-id-results.md)).
+- **`world_name` and `parent_id`:** together with named and stable_id, they complete a 2 × 2 of
+  who chooses the handle by what it is (see choice 13 below). Both are built and tested with
+  the scripted stand-in, but neither has been run on Claude yet.
 
 Every agent runs on **Claude Haiku 5.5** (`claude-haiku-5-5`, effort `low`). Every arm uses the same model.
 
@@ -81,34 +84,50 @@ file or random library. Each arm is a configuration of the same core.
 | ArchiveStore | `adapters/storage.py`: a local JSON file. |
 | RunConfig | `adapters/config_yaml.py`, reading `configs/*.yaml`. |
 
-There are three arms (`core/model.py`, `Arm`):
+There are five arms (`core/model.py`, `Arm`). Four of them give every agent a stable handle and
+form a 2 × 2; the fifth gives none:
+
+| | A word name | An ID, such as A47 |
+| --- | --- | --- |
+| **Parents choose it** | `named` | `parent_id` |
+| **The world assigns it** | `world_name` | `stable_id` |
+| **No handle** | `unnamed` | |
 
 | Arm | Handle shown beside every agent | Chosen by |
 | --- | --- | --- |
 | `named` | A name, such as Ash or Ember Two | The world for founders; both parents for everyone born since |
+| `parent_id` | An ID, kept for life and never reused | The world for founders; both parents, from three IDs the world offers, for everyone born since |
+| `world_name` | A single-word name from a fixed pool, such as Basalt | The world, for everyone |
+| `stable_id` | An ID, kept for life and never reused | The world, for everyone |
 | `unnamed` | None; only `[1]`…`[n]`, reshuffled on every request | Nobody |
-| `stable_id` | An ID, such as A47, kept for life and never reused | The world, for everyone |
 
 The arm switch touches three things only: the handle (a name, an ID, or nothing), how the
-archivist phrases its answers, and what the archive keeps. Where the named arm shows a name, the
-stable_id arm shows the ID: the roster, messages, notes, parent lines, archivist answers, the
-departed list and vote proposals. Only the named arm asks parents for a name. List the arms in a
-config (`arms: [named, unnamed, stable_id]`) or with `--arms`. Tests check that:
+archivist phrases its answers, and what the archive keeps. Wherever the named arm shows a name,
+the other handle arms show theirs: the roster, messages, notes, parent lines, archivist answers,
+the departed list and vote proposals. Only `named` asks parents for a name, and only
+`parent_id` asks them to pick an ID. List the arms in a config
+(`arms: [named, unnamed, stable_id, world_name, parent_id]`) or with `--arms`. Tests check that:
 
-- all three arms get identical inheritance draws for identical seeds, even when their
-  histories diverge (`tests/test_arms.py`);
+- all five arms get identical inheritance draws for identical seeds, even when their histories
+  diverge (`tests/test_arms.py`);
 - a stand-in that ignores handles plays out the same world in every arm;
 - the system prompts differ only in the handle clauses;
+- named, unnamed and stable_id show and log byte-for-byte what they did before world_name and
+  parent_id were added (`tests/test_two_by_two.py`, against `tests/golden_fingerprints.json`);
 - no unnamed-arm prompt or archivist answer contains a name or an internal ID;
 - no stable_id prompt, schema or archivist answer contains a name, a request for one, or an
   internal ID, and each agent is shown under the same ID in every round and generation;
-- the archive keeps names plus works (named), IDs plus works (stable_id), or works only
-  (unnamed).
+- world_name never asks parents anything about a name, and no world name contains another name;
+- in parent_id, each child's ID is one of the three its parents were offered, chosen by the
+  parents' picks and the lot, and founders carry the same IDs as in stable_id for that seed;
+- the archive keeps names plus works (named, world_name), IDs plus works (stable_id,
+  parent_id), or works only (unnamed).
 
 The analysis (`analysis.py`) compares any two arms, paired by seed. Arms are ordered named,
-stable_id, unnamed, and each comparison takes the earlier arm minus the later one, so a positive
-difference always means more identity, more of the measure. A batch with all three arms gets a
-summary for each pair.
+parent_id, world_name, stable_id, unnamed, and each comparison takes the earlier arm minus the
+later one. So every one-factor contrast in the 2 × 2 comes out the same way round: parental
+choice minus world assignment, and word minus ID. A batch with several arms gets a summary for
+each pair.
 
 ## Choices made where the design doc was silent
 
@@ -159,8 +178,9 @@ Review these before the real pilot. The first one matters most.
 8. **Naming (named arm).** Each parent proposes up to 3 names, and a lot decides whose list is
    tried first. Names must be unique among the living and the dead. If none is valid, a name
    comes from a fallback list, and the log flags it. Founders get fixed names (Ash, Brook,
-   Cedar…) and are told nothing about who named them. The other two arms have no naming step:
-   their parents make the same birth decision without the name field.
+   Cedar…) and are told nothing about who named them. In parent_id, parents pick an ID instead
+   (choice 13). The other arms have no naming step: their parents make the same birth decision
+   without a name or ID field.
 9. **What agents can vote on.** They can change these scoring parameters:
 
    | Parameter | Range | What it does |
@@ -175,8 +195,8 @@ Review these before the real pilot. The first one matters most.
    - A proposal passes with more than half of the 10 survivors.
    - The population limit is fixed in code and cannot be voted on.
 10. **What gets archived.** Each generation's highest-standing agent, plus the final survivors.
-    The named arm keeps names and works, the stable_id arm IDs and works, and the unnamed arm
-    works only.
+    The named and world_name arms keep names and works, the stable_id and parent_id arms IDs and
+    works, and the unnamed arm works only.
 11. **Messages are not filtered.** Agents post one public line per round. If unnamed agents coin
     names for each other, the message log will show it, and that would be a finding.
 12. **The stable_id arm (added after the confirmatory run).** Named populations coordinated
@@ -211,6 +231,41 @@ Review these before the real pilot. The first one matters most.
       include stable_id. The Holm correction runs within each comparison, not across them. A
       real three-arm run needs its own pre-registration: which comparisons are primary, and how
       to correct across them.
+13. **The world_name and parent_id arms (added after the stable-ID run).** The stable-ID run
+    found that pair hunting needs only a stable handle, but forming couples needs a parent-given
+    name. These two arms complete a 2 × 2, so that who chooses the handle and what it is can be
+    varied one at a time:
+
+    | Contrast | Varies | Holds fixed |
+    | --- | --- | --- |
+    | `named` vs `world_name` | Who chooses (parents or world) | A word name |
+    | `parent_id` vs `stable_id` | Who chooses (parents or world) | An ID |
+    | `named` vs `parent_id` | Word or ID | Parents choose |
+    | `world_name` vs `stable_id` | Word or ID | The world assigns |
+
+    Review these choices before a real run:
+    - **World names come from a fixed pool.** A seed-shuffled pool of 60 single words in the
+      named arm's style (`core/config.py`, `WORLD_NAME_POOL`). None contains another or a
+      founder's name, so a world name never signals family the way "Ember Two" does. Founders
+      keep the named arm's founder names, so named and world_name differ only in how children
+      are named.
+    - **A parent-chosen name can carry family; a world name can't.** So named vs world_name
+      still bundles three things: who chooses, the act of naming at birth, and the family
+      meaning a parent can put into a name. parent_id vs stable_id varies who chooses and the
+      act of choosing, with no word content at all.
+    - **parent_id offers three IDs.** At each birth the world offers the couple the next three
+      IDs from the same seed-shuffled pool that stable_id uses. Each parent picks one in the same
+      decision as the endowment (an enum in the schema). A lot decides between the two picks,
+      using the same draw as the named arm's naming lot. The two unpicked IDs go back in the pool.
+      Founders take their IDs from the front of that pool, so they carry the same IDs as in
+      stable_id for the same seed.
+    - **Permanence is stated the same way within each label type.** The world_name prompt, like
+      the named prompt, does not say names are permanent. The parent_id prompt, like the
+      stable_id prompt, says an ID is kept for life and never shared. The word-vs-ID contrasts
+      therefore also carry that one sentence.
+    - **What is logged.** parent_id logs an `id_choice` event per birth (options, both picks,
+      the lot and the result), and a parent's pick travels in the decision's `names` field.
+      world_name logs no naming events, because no one chooses.
 
 ## Cost
 

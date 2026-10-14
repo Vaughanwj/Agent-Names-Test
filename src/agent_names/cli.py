@@ -89,7 +89,7 @@ def main(argv: list[str] | None = None) -> None:
     sp.add_argument("--generations", type=int)
     sp.add_argument("--rounds", type=int)
     sp.add_argument("--seeds", help="comma-separated, e.g. 1,2,3")
-    sp.add_argument("--arms", help="comma-separated, from named, unnamed and stable_id")
+    sp.add_argument("--arms", help="comma-separated, from named, parent_id, world_name, stable_id and unnamed")
     sp.add_argument("--parallel", type=int, default=1, help="runs to execute at once")
     sp.add_argument("--out", help="output root (default: config output_dir)")
     sp.add_argument("--batch-budget", type=float, metavar="USD",

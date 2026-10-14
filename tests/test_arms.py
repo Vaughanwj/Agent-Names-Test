@@ -18,7 +18,7 @@ from agent_names.adapters.random_source import KeyedRandom
 
 from .helpers import pilot_doc, run_sim
 
-ARMS = ("named", "unnamed", "stable_id")
+ARMS = ("named", "unnamed", "stable_id", "world_name", "parent_id")
 STABLE_ID = re.compile(r"\bA\d+\b")
 
 
@@ -31,6 +31,10 @@ class ArmBiasedMind(ScriptedMind):
             d.preferences = list(reversed(d.preferences))
         elif req.world.arm == "stable_id":  # rotate them
             d.preferences = d.preferences[1:] + d.preferences[:1]
+        elif req.world.arm == "world_name":  # rotate the other way
+            d.preferences = d.preferences[-1:] + d.preferences[:-1]
+        elif req.world.arm == "parent_id":  # keep only the first choice
+            d.preferences = d.preferences[:1]
         return d
 
 
@@ -66,20 +70,20 @@ def test_draws_do_not_depend_on_call_order():
 def _strip_names(events):
     out = []
     for e in events:
-        if e["type"] in ("naming", "llm_call", "run_timing"):
+        if e["type"] in ("naming", "id_choice", "llm_call", "run_timing"):
             continue
         e = {k: v for k, v in e.items() if k not in ("ts", "run", "arm", "name", "t")}
         out.append(e)
     return out
 
 
-@pytest.mark.parametrize("arm", ["named", "stable_id"])
+@pytest.mark.parametrize("arm", ["named", "stable_id", "world_name", "parent_id"])
 def test_name_blind_mind_gives_identical_worlds(tmp_path, arm):
     """With a mind that ignores names and IDs, every arm must play out the same world."""
     _, _, handled = run_sim(tmp_path, arm, 4)
     _, _, unnamed = run_sim(tmp_path, "unnamed", 4)
     a, b = _strip_names(handled), _strip_names(unnamed)
-    # Decisions differ only in the name proposals the named arm is asked for.
+    # Decisions differ only in the name proposals (named) or ID picks (parent_id) parents make.
     for e in a:
         if e["type"] == "decision":
             e["decision"]["names"] = []
@@ -93,10 +97,13 @@ def test_name_blind_mind_gives_identical_worlds(tmp_path, arm):
 
 def test_system_prompts_differ_only_in_the_handle_clauses():
     cfg = config_yaml.run_config(pilot_doc(), "named", 1, "x")
-    named, unnamed, stable = (prompting.system_prompt(arm, cfg) for arm in ARMS)
+    named, unnamed, stable, world, parent = (prompting.system_prompt(arm, cfg) for arm in ARMS)
     assert named.replace(prompting.NAMES_CLAUSE, "").replace(prompting.NAMING_CLAUSE, "") == unnamed
     assert stable.replace(prompting.IDS_CLAUSE, "") == unnamed
     assert prompting.IDS_CLAUSE in stable and prompting.NAMING_CLAUSE not in stable
+    assert world.replace(prompting.WORLD_NAMES_CLAUSE, "") == unnamed
+    assert parent.replace(prompting.PARENT_IDS_CLAUSE, "").replace(prompting.ID_PICK_CLAUSE, "") == unnamed
+    assert prompting.NAMING_CLAUSE not in world + parent and prompting.ID_PICK_CLAUSE not in named + world
 
 
 class PromptRecorder(ScriptedMind):
@@ -196,7 +203,7 @@ def test_archive_keeps_handles_with_works(tmp_path):
         kept[arm] = {k for e in entries for k in e} - {"_ref", "works"}
         if arm == "stable_id":
             assert all(e["id"] == sim.pedigree.agent(e["_ref"]).name for e in entries)
-    assert kept == {"named": {"name"}, "unnamed": set(), "stable_id": {"id"}}
+    assert kept == {"named": {"name"}, "unnamed": set(), "stable_id": {"id"}, "world_name": {"name"}, "parent_id": {"id"}}
 
 
 def test_archivist_offer_points_at_no_one(tmp_path):

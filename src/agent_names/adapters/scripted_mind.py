@@ -79,6 +79,9 @@ class ScriptedMind:
         share = 0.1 + 0.4 * u("share")
         d = Decision(kind="birth", intent="give my child a start",
                      endowment={r: round(req.me.holdings[r] * share, 2) for r in RESOURCES})
+        if req.extra.get("id_options"):
+            options = req.extra["id_options"]
+            d.names = [options[int(u("id") * len(options))]]
         if req.extra.get("naming"):
             d.names = ["".join(SYLLABLES[int(u("syl", i, j) * len(SYLLABLES))] for j in range(2)).title()
                        for i in range(3)]

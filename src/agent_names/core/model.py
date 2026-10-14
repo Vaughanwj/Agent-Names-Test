@@ -12,6 +12,10 @@ class Arm(str, Enum):
     NAMED = "named"  # parents name their child
     UNNAMED = "unnamed"  # no handle; others are pointed at by reshuffled bracket numbers only
     STABLE_ID = "stable_id"  # the world assigns a neutral ID that never changes; parents choose nothing
+    # The four arms with a handle form a 2 x 2: who chooses it (parents or the world) by what it is
+    # (a word name or a neutral ID). named = parents x word; stable_id = world x ID.
+    PARENT_ID = "parent_id"  # parents pick their child's ID from three neutral IDs the world offers
+    WORLD_NAME = "world_name"  # the world gives every agent a word name; parents choose nothing
 
 
 def empty_holdings() -> dict[str, float]:
@@ -31,7 +35,7 @@ class Agent:
     birth_order: int  # position among births in that generation (founder slot for founders)
     parents: tuple[str, ...]  # elder parent first; empty for founders
     traits: dict[str, float]
-    name: str | None = None  # the shown handle: a name, a world-assigned ID (stable_id arm), or None (unnamed)
+    name: str | None = None  # the shown handle: a word name, an ID (stable_id, parent_id), or None (unnamed)
     holdings: dict[str, float] = field(default_factory=empty_holdings)
     gathered: dict[str, float] = field(default_factory=empty_holdings)  # this generation
     given: float = 0.0  # resources given away this generation (gifts, endowments)

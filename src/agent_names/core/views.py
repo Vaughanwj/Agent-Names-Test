@@ -1,6 +1,6 @@
-"""What each agent is shown. This is where the arm switch reaches agents: in the named arm a
-name is shown beside every reference, in the stable_id arm a world-assigned ID is shown in the
-same places, and in the unnamed arm nothing is. All other information (relations, skills,
+"""What each agent is shown. This is where the arm switch reaches agents: in the arms with a
+handle (named, world_name: a word name; stable_id, parent_id: an ID) it is shown beside every
+reference, and in the unnamed arm nothing is. All other information (relations, skills,
 holdings, shared history) is identical in all arms."""
 
 from __future__ import annotations
@@ -86,10 +86,10 @@ def parents_line(sim: "Simulation", me: Agent, book: LabelBook) -> str:
 
 
 def self_view(sim: "Simulation", me: Agent, book: LabelBook, standing: float | None) -> SelfView:
-    if sim.cfg.named:
+    if sim.cfg.parents_choose:  # named, parent_id
         givers = "the world" if me.is_founder else "your parents"
     elif sim.cfg.shows_handles:
-        givers = "the world"  # stable_id: every ID is assigned by the world, newborns' included
+        givers = "the world"  # stable_id, world_name: every handle is assigned by the world, newborns' included
     else:
         givers = ""
     return SelfView(
