@@ -1,0 +1,59 @@
+# 2 x 2 run, pre-registered in docs/preregistration-two-by-two.md. Do not edit after the run starts.
+# Identical to configs/confirm-stable-id.yaml except for the arms: world_name and parent_id on the
+# same 30 seeds, so each run pairs by seed with the existing named and unnamed runs in
+# data/confirm-20261014/ and the stable_id runs in data/stable-id-20261014/.
+seeds: [101, 102, 103, 104, 105, 106, 107, 108, 109, 110,
+        111, 112, 113, 114, 115, 116, 117, 118, 119, 120,
+        121, 122, 123, 124, 125, 126, 127, 128, 131, 132]
+arms: [world_name, parent_id]
+
+population: 10
+peak: 15
+max_couples: 5
+generations: 8
+rounds: 5
+
+inheritance:
+  mutation_rate: 0.05
+  mutation_sd: 0.25
+
+foraging:
+  skill_floor: 0.2
+  energy_yield: 3.0
+  solo_hunt_yield: 1.5
+  pair_hunt_yield: 10.0
+  pair_hunt_success: 0.8
+  memory_yield: 3.5
+  memory_decay: 0.3
+  noise: 0.2
+  archivist_cost: 0.10
+
+reveal:
+  hint: null
+  full: 1
+
+governance:
+  enabled: true
+  max_proposals: 5
+  pass_fraction: 0.5
+
+scoring:
+  energy_weight: 1.0
+  food_weight: 1.0
+  memory_weight: 1.0
+  kin_weight: 0.0
+  group_weight: 0.0
+  gift_credit: 0.0
+
+mind:
+  kind: anthropic
+  model: claude-haiku-5-5
+  effort: low
+  max_tokens: 8000
+  concurrency: 10
+  budget_usd: 0.40          # about twice the most expensive run so far
+
+pricing:
+  claude-haiku-5-5: {input: 0.10, output: 0.50}
+
+output_dir: runs
