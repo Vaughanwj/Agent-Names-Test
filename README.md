@@ -155,7 +155,8 @@ adds nothing. Details and alternatives are in [docs/cost-estimate.md](docs/cost-
 
 ## Pilot results (2026-10-14)
 
-The full pilot ran on 2026-10-14: 6 runs, $1.21. Results are in [docs/pilot-results.md](docs/pilot-results.md) and raw data in [data/pilot-20261014/](data/pilot-20261014/).
+- **First pilot** (original mechanics): 6 runs, $1.21. Results are in [docs/pilot-results.md](docs/pilot-results.md) and raw data in [data/pilot-20261014/](data/pilot-20261014/).
+- **Second pilot** (archive known from the start, guarding, per-generation archivist offer): 6 runs, $1.18. Results are in [docs/pilot2-results.md](docs/pilot2-results.md) and raw data in [data/pilot2-20261014/](data/pilot2-20261014/).
 
 ## Changes after the pilot
 

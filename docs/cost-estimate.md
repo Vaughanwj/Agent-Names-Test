@@ -67,4 +67,6 @@ for different lengths and count tokens slightly differently.
 | Full-length budgeting run | $0.221 |
 | Final Docker smoke test | $0.051 |
 | The pilot itself (6 runs, 3,936 calls) | $1.211 |
-| **Total** | **$1.59** |
+| Mechanics checks (three short runs) | $0.366 |
+| Second pilot (6 runs, 4,274 calls) | $1.179 |
+| **Total** | **$3.14** |
