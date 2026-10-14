@@ -1,0 +1,31 @@
+# docker compose run --rm smoke     # ~175 calls, a few cents
+# docker compose run --rm pilot     # the full pilot: 3 seeds x 2 arms
+# docker compose run --rm dry       # full-length run with the scripted mind, free
+# docker compose run --rm tests
+#
+# ANTHROPIC_API_KEY and ANTHROPIC_WORKSPACE_ID are read from your shell or from a .env file
+# next to this one (see .env.example). Neither is ever written into the image.
+
+x-base: &base
+  build: .
+  image: agent-names:latest
+  environment:
+    - ANTHROPIC_API_KEY
+    - ANTHROPIC_WORKSPACE_ID
+  volumes:
+    - ./runs:/app/runs
+
+services:
+  pilot:
+    <<: *base
+    command: ["pilot", "--config", "configs/pilot.yaml", "--name", "pilot"]
+  smoke:
+    <<: *base
+    command: ["pilot", "--config", "configs/smoke.yaml", "--name", "smoke"]
+  dry:
+    <<: *base
+    command: ["pilot", "--config", "configs/pilot.yaml", "--mind", "scripted", "--name", "dry"]
+  tests:
+    <<: *base
+    entrypoint: ["python", "-m", "pytest", "-q", "-p", "no:cacheprovider"]
+    command: []

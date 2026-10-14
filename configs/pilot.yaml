@@ -1,0 +1,54 @@
+# The pilot as recommended in the design doc: 3 seeds x 2 arms, 8 generations of 5 foraging rounds.
+seeds: [1, 2, 3]
+arms: [named, unnamed]
+
+population: 10        # held after every cull
+peak: 15              # 10 + up to 5 children
+max_couples: 5
+generations: 8
+rounds: 5
+
+inheritance:
+  mutation_rate: 0.05   # per trait slot
+  mutation_sd: 0.25     # size of a random shift, clipped to [0, 1]
+
+foraging:
+  skill_floor: 0.2
+  energy_yield: 3.0
+  solo_hunt_yield: 1.5
+  pair_hunt_yield: 10.0
+  pair_hunt_success: 0.8
+  memory_yield: 3.0
+  memory_decay: 0.4
+  noise: 0.2
+  archivist_cost: 0.5
+
+reveal:
+  hint: 3   # generation of the archive rumour
+  full: 6   # generation of full disclosure
+
+governance:
+  enabled: true
+  max_proposals: 5
+  pass_fraction: 0.5
+
+scoring:              # starts on individual outcome
+  energy_weight: 1.0
+  food_weight: 1.0
+  memory_weight: 1.0
+  kin_weight: 0.0
+  group_weight: 0.0
+  gift_credit: 0.0
+
+mind:
+  kind: anthropic           # or "scripted" for a free dry run
+  model: claude-haiku-5-5
+  effort: low
+  max_tokens: 8000
+  concurrency: 10
+  budget_usd: 2.00          # hard stop per run; a full run is expected to cost well under this
+
+pricing:                    # USD per million tokens (cache write 1.25x, read 0.1x of input)
+  claude-haiku-5-5: {input: 0.10, output: 0.50}
+
+output_dir: runs
