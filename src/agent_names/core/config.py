@@ -15,6 +15,15 @@ DEFAULT_FOUNDER_NAMES = ["Ash", "Brook", "Cedar", "Dune", "Ember", "Fern", "Garn
 DEFAULT_FOUNDER_SPECIALTIES = ["energy", "food", "memory", "energy", "food", "memory", "energy", "food", "memory", "energy"]
 FALLBACK_NAMES = ["Kestrel", "Linden", "Moss", "Nettle", "Onyx", "Pebble", "Quill", "Rowan", "Sorrel", "Thistle",
                   "Umber", "Vale", "Willow", "Yarrow", "Zephyr", "Alder", "Birch", "Clover", "Drift", "Elm"]
+# Word names the world hands out in the world_name arm, in the same style as the names parents
+# choose in the named arm. Single words only: none contains another or a founder's name, so a
+# name never signals family the way "Ember Two" does.
+WORLD_NAME_POOL = ["Alder", "Aspen", "Basalt", "Birch", "Bramble", "Briar", "Calla", "Cinder", "Clover", "Cobalt",
+                   "Coral", "Cove", "Dahlia", "Delta", "Drift", "Fennel", "Flint", "Gale", "Glen", "Hazel",
+                   "Holly", "Indigo", "Ivy", "Jasper", "Kelp", "Kestrel", "Larch", "Laurel", "Linden", "Lotus",
+                   "Maple", "Marsh", "Mica", "Moss", "Nettle", "Opal", "Pebble", "Quartz", "Quill", "Reed",
+                   "Ridge", "Rowan", "Rue", "Sable", "Sage", "Sedge", "Shale", "Slate", "Sorrel", "Sparrow",
+                   "Spruce", "Tansy", "Teal", "Thistle", "Thyme", "Vale", "Willow", "Wren", "Yarrow", "Zephyr"]
 
 
 @dataclass
@@ -57,9 +66,19 @@ class RunConfig:
 
     @property
     def shows_handles(self) -> bool:
-        """Every agent has a stable handle shown beside every reference to it: a name in the named
-        arm, a world-assigned ID in the stable_id arm. The unnamed arm has none."""
-        return self.arm in (Arm.NAMED, Arm.STABLE_ID)
+        """Every agent has a stable handle shown beside every reference to it: a word name (named,
+        world_name) or an ID (stable_id, parent_id). The unnamed arm has none."""
+        return self.arm in (Arm.NAMED, Arm.STABLE_ID, Arm.PARENT_ID, Arm.WORLD_NAME)
+
+    @property
+    def handle_is_id(self) -> bool:
+        """The handle is a neutral ID like "A47" rather than a word name."""
+        return self.arm in (Arm.STABLE_ID, Arm.PARENT_ID)
+
+    @property
+    def parents_choose(self) -> bool:
+        """Parents choose their child's handle: a name (named) or one of three offered IDs (parent_id)."""
+        return self.arm in (Arm.NAMED, Arm.PARENT_ID)
 
     @property
     def max_agents(self) -> int:
@@ -76,7 +95,11 @@ class RunConfig:
     def validate(self) -> None:
         if len(self.founder_specialties) != self.population:
             raise ValueError("founder_specialties must list one specialty per founder")
-        if self.named and len(self.founder_names) < self.population:
+        if self.arm in (Arm.NAMED, Arm.WORLD_NAME) and len(self.founder_names) < self.population:
             raise ValueError("founder_names must have at least one name per founder")
+        if self.arm == Arm.WORLD_NAME:
+            founders = {n.lower() for n in self.founder_names}
+            if len([n for n in WORLD_NAME_POOL if n.lower() not in founders]) < self.max_couples * self.generations:
+                raise ValueError("WORLD_NAME_POOL is too small for this many births")
         if self.peak - self.population < self.max_couples:
             raise ValueError("peak must leave room for max_couples children")

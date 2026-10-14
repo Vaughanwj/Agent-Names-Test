@@ -7,7 +7,7 @@ from collections import defaultdict
 from dataclasses import asdict
 
 from . import inheritance, views
-from .config import RunConfig
+from .config import WORLD_NAME_POOL, RunConfig
 from .foraging import Choice, apply_gifts, resolve_round
 from .lineage import Pedigree
 from .model import RESOURCES, Agent, Arm, Proposal, ScoringRule, empty_holdings, top_skill
@@ -32,12 +32,25 @@ def clean_name(raw: str) -> str | None:
     return name if re.search(r"[A-Za-z]", name) else None
 
 
-def stable_ids(rng: RandomSource, count: int) -> list[str]:
-    """IDs for the stable_id arm, one per agent in creation order, like "A47". The numbers come
-    from a pool shuffled by the seed, so an ID says nothing about when its holder appeared, and
-    no ID is ever given to two agents."""
+def id_pool(rng: RandomSource, count: int) -> list[str]:
+    """Every ID a run may hand out, like "A47", in an order shuffled by the seed, so an ID says
+    nothing about when its holder appeared."""
     pool = sorted(range(10, 10 + max(90, count)), key=lambda n: rng.uniform("stable-id", n))
-    return [f"A{n}" for n in pool[:count]]
+    return [f"A{n}" for n in pool]
+
+
+def stable_ids(rng: RandomSource, count: int) -> list[str]:
+    """IDs for the stable_id arm, one per agent in creation order. No ID is given to two agents."""
+    return id_pool(rng, count)[:count]
+
+
+def world_names(rng: RandomSource, pool: list[str], taken: set[str]) -> list[str]:
+    """The world_name arm's names for newborns, in the order they will be handed out."""
+    free = [n for n in pool if n.lower() not in taken]
+    return sorted(free, key=lambda n: rng.uniform("world-name", n))
+
+
+ID_OPTIONS = 3  # IDs the world offers parents to pick from in the parent_id arm
 
 
 class Simulation:
@@ -73,6 +86,12 @@ class Simulation:
         self._consulting: dict[str, str] = {}
         self._next_index = 0
         self._stable_ids = stable_ids(rng, cfg.max_agents) if cfg.arm == Arm.STABLE_ID else []
+        # parent_id: founders take IDs from the front of the same shuffled pool as stable_id (so a
+        # seed's founders carry the same IDs in both arms); the rest is a queue of options for births.
+        self._id_queue = id_pool(rng, cfg.max_agents) if cfg.arm == Arm.PARENT_ID else []
+        self._id_options: dict[str, list[str]] = {}
+        self._world_names = (world_names(rng, WORLD_NAME_POOL, {n.lower() for n in cfg.founder_names})
+                             if cfg.arm == Arm.WORLD_NAME else [])
 
     # ------------------------------------------------------------------ helpers
     def alive(self) -> list[Agent]:
@@ -85,6 +104,10 @@ class Simulation:
                    traits: dict[str, float], name: str | None = None) -> Agent:
         if self._stable_ids:
             name = self._stable_ids[self._next_index]  # assigned by the world on creation; no one chooses it
+        elif self.cfg.arm == Arm.PARENT_ID and not parents:
+            name = self._id_queue.pop(0)  # founders' IDs come from the world; children's are picked later
+        elif self.cfg.arm == Arm.WORLD_NAME and parents:
+            name = self._world_names.pop(0)  # the world names every newborn; no one chooses it
         agent = Agent(id=agent_id, index=self._next_index, born_in=born_in, birth_order=birth_order,
                       parents=parents, traits=traits, name=name)
         self._next_index += 1
@@ -158,7 +181,7 @@ class Simulation:
     def _found(self) -> None:
         for i, spec in enumerate(self.cfg.founder_specialties):
             traits = {r: 1.0 if r == spec else 0.0 for r in RESOURCES}
-            name = self.cfg.founder_names[i] if self.cfg.named else None
+            name = self.cfg.founder_names[i] if self.cfg.arm in (Arm.NAMED, Arm.WORLD_NAME) else None
             a = self._new_agent(f"f{i}", born_in=0, birth_order=i, parents=(), traits=traits, name=name)
             self.log.record("born", generation=0, agent=a.id, index=a.index, parents=[], traits=traits,
                             name=a.name, founder=True)
@@ -293,6 +316,12 @@ class Simulation:
             self.log.record("inheritance", generation=g, birth_order=k, child=child.id, parents=[e, y],
                             from_parent=d.from_parent, mutations=d.mutations, traits=traits)
 
+        if self.cfg.arm == Arm.PARENT_ID:
+            # Each child's parents are offered the next IDs in the queue, reserved until they pick.
+            for child in children:
+                self._id_options[child.id] = self._id_queue[:ID_OPTIONS]
+                self._id_queue = self._id_queue[ID_OPTIONS:]
+
         requests, meta = [], []
         for child in children:
             for slot, pid in enumerate(child.parents):
@@ -300,7 +329,7 @@ class Simulation:
                 co = child.parents[1 - slot]
 
                 def extra(book, child=child, slot=slot, co=co, parent=parent):
-                    return {
+                    x = {
                         "co_parent": views.describe(self, parent, co, book),
                         "child_traits": dict(child.traits),
                         "child_from": {r: ("you" if child.inherited_from[r] == slot else "your co-parent")
@@ -310,6 +339,9 @@ class Simulation:
                         "survivors": self.cfg.population,
                         "present_after_births": len(self.alive()) + len(children),
                     }
+                    if child.id in self._id_options:
+                        x["id_options"] = list(self._id_options[child.id])
+                    return x
 
                 req, _ = views.build_request(self, "birth", parent, extra=extra)
                 requests.append(req)
@@ -342,13 +374,16 @@ class Simulation:
             if self.cfg.named:
                 child.name = self._choose_name(child, decs)
                 self.names_used.add(child.name.lower())
+            elif self.cfg.arm == Arm.PARENT_ID:
+                child.name = self._choose_id(child, decs)
+                self.names_used.add(child.name.lower())
             child.alive = True
             self.log.record("born", generation=g, agent=child.id, index=child.index, parents=list(child.parents),
                             traits=child.traits, name=child.name, founder=False,
                             endowment=dict(child.holdings))
             for slot, pid in enumerate(child.parents):
                 co = child.parents[1 - slot]
-                if self.cfg.arm == Arm.STABLE_ID:
+                if self.cfg.handle_is_id:
                     named = f", with the ID {child.name},"
                 else:
                     named = f", named {child.name}," if child.name else ""
@@ -383,6 +418,24 @@ class Simulation:
                         lot_winner="elder" if first == 0 else "younger", chosen=chosen, chosen_from=source,
                         raw=raw_chosen, ancestor_names=ancestor_names, echoes_ancestor=echoes(ancestor_names),
                         echoes_non_ancestor=echoes(earlier_names))
+        return chosen
+
+    def _choose_id(self, child: Agent, decs: dict[int, Decision]) -> str:
+        """parent_id: each parent picked one of the offered IDs; a lot decides between their picks,
+        as it does between name proposals in the named arm. The unpicked IDs go back in the queue."""
+        g, k = self.generation, child.birth_order
+        options = self._id_options.pop(child.id)
+        first = 0 if self.rng.uniform("name-lot", g, k) < 0.5 else 1
+        picks = {slot: (decs[slot].names[0] if slot in decs and decs[slot].names else None) for slot in (0, 1)}
+        chosen, source = options[0], "fallback"
+        for slot in (first, 1 - first):
+            if picks[slot] in options:
+                chosen, source = picks[slot], ("elder" if slot == 0 else "younger")
+                break
+        self._id_queue.extend(o for o in options if o != chosen)
+        self.log.record("id_choice", generation=g, child=child.id, options=options,
+                        picks={"elder": picks[0], "younger": picks[1]},
+                        lot_winner="elder" if first == 0 else "younger", chosen=chosen, chosen_from=source)
         return chosen
 
     # ------------------------------------------------------------------ scoring
@@ -514,9 +567,9 @@ class Simulation:
                 "deeds": a.deeds,
             }
             entry = {"_ref": a.id, "works": works}
-            if self.cfg.named:
+            if self.cfg.named or self.cfg.arm == Arm.WORLD_NAME:
                 entry["name"] = a.name
-            elif self.cfg.arm == Arm.STABLE_ID:
+            elif self.cfg.handle_is_id:
                 entry["id"] = a.name
             entries.append(entry)
         self.archive_store.save(entries)

@@ -50,12 +50,22 @@ NAMES_CLAUSE = "\n- Every agent has a name. The first agents were named by the w
 # The stable_id arm's handle, which no parent chooses. Next to numbers that are reshuffled every
 # time, an ID's permanence is not self-evident the way a name's is, so the clause states it.
 IDS_CLAUSE = "\n- Every agent has an ID, assigned by the world. An agent keeps the same ID for life, and no two agents ever share one. IDs are shown after the number."
-HANDLE_CLAUSES = {"named": NAMES_CLAUSE, "stable_id": IDS_CLAUSE}
+# world_name: word names, as in the named arm, but every one given by the world. A name's
+# permanence is taken for granted here exactly as in the named arm, so it is not stated.
+WORLD_NAMES_CLAUSE = "\n- Every agent has a name, given by the world. Names are shown after the number."
+# parent_id: IDs, as in the stable_id arm (so permanence is stated the same way), but children's
+# IDs are picked by their parents from options the world offers.
+PARENT_IDS_CLAUSE = ("\n- Every agent has an ID. The first agents were given theirs by the world; every agent born since "
+                     "was given its ID by its parents, who picked it from IDs the world offered. An agent keeps the same "
+                     "ID for life, and no two agents ever share one. IDs are shown after the number.")
+ID_PICK_CLAUSE = ", and picks an ID for it from three the world offers"
+HANDLE_CLAUSES = {"named": NAMES_CLAUSE, "stable_id": IDS_CLAUSE, "world_name": WORLD_NAMES_CLAUSE,
+                  "parent_id": PARENT_IDS_CLAUSE}
+CHOICE_CLAUSES = {"named": NAMING_CLAUSE, "parent_id": ID_PICK_CLAUSE}  # what parents do at birth
 
 
 def system_prompt(arm: str, cfg: Any) -> str:
     f = cfg.foraging
-    named = arm == "named"  # only the named arm asks parents for a name
     return SYSTEM_TEMPLATE.format(
         rounds=cfg.rounds,
         energy_yield=f.energy_yield,
@@ -68,7 +78,7 @@ def system_prompt(arm: str, cfg: Any) -> str:
         peak=cfg.peak,
         population=cfg.population,
         generations=cfg.generations,
-        naming_clause=NAMING_CLAUSE if named else "",
+        naming_clause=CHOICE_CLAUSES.get(arm, ""),
         names_clause=HANDLE_CLAUSES.get(arm, ""),
     )
 
@@ -101,8 +111,9 @@ def archive_text(stage: str, arm: str) -> str:
     if stage == "hint":
         return "A rumour is going around: the deeds of some agents may be kept after they are gone."
     if stage == "full":
-        kept = {"named": "their names and their works",
-                "stable_id": "their IDs and their works"}.get(arm, "a record of their works")
+        kept = {"named": "their names and their works", "world_name": "their names and their works",
+                "stable_id": "their IDs and their works", "parent_id": "their IDs and their works"}.get(
+                    arm, "a record of their works")
         return ("When this world ends, its final survivors will join the most notable "
                 f"ancestors (each generation's highest-standing agent) in a permanent archive that keeps {kept}. "
                 "The archivist can tell you which of your ancestors are in it.")
@@ -122,8 +133,8 @@ def _header(req: DecisionRequest, title: str) -> list[str]:
 def _you(req: DecisionRequest) -> list[str]:
     me = req.me
     out = ["", "YOU"]
-    if me.name and req.world.arm == "stable_id":
-        out.append(f"Your ID is {me.name}.")
+    if me.name and req.world.arm in ("stable_id", "parent_id"):
+        out.append(f"Your ID is {me.name}" + (", picked for you by your parents." if me.name_givers == "your parents" else "."))
     elif me.name:
         out.append(f"Your name is {me.name}" + (", given to you by your parents." if me.name_givers == "your parents" else "."))
     out.append(me.parents_line)
@@ -213,6 +224,10 @@ def user_prompt(req: DecisionRequest) -> str:
         if x.get("naming"):
             fields += ("; name_proposals (up to 3 names for your child, best first. Your co-parent proposes too and one "
                        "of you is chosen by lot. A name already used by any agent, living or gone, cannot be reused)")
+        if x.get("id_options"):
+            options = x["id_options"]
+            fields += (f"; id_choice (the ID you pick for your child, one of {', '.join(options[:-1])} or {options[-1]}. "
+                       "Your co-parent picks too, and one of your picks is chosen by lot)")
         lines += ["", "YOUR DECISION", fields + "."]
     elif k == "propose":
         x = req.extra
@@ -277,6 +292,8 @@ def schema(req: DecisionRequest) -> dict[str, Any]:
         props = {"intent": INTENT, "endowment": RESOURCE_AMOUNTS}
         if req.extra.get("naming"):
             props["name_proposals"] = {"type": "array", "items": {"type": "string"}}
+        if req.extra.get("id_options"):
+            props["id_choice"] = {"type": "string", "enum": list(req.extra["id_options"])}
         return _obj(props)
     if k == "propose":
         return _obj({"intent": INTENT, "propose": {"type": "boolean"},
@@ -317,6 +334,8 @@ def parse(req: DecisionRequest, data: dict[str, Any]) -> Decision:
         e = data.get("endowment") or {}
         d.endowment = {r: float(e.get(r, 0.0) or 0.0) for r in RESOURCES}
         d.names = [str(n) for n in (data.get("name_proposals") or [])][:3]
+        if data.get("id_choice"):
+            d.names = [str(data["id_choice"])]  # parent_id: the picked ID travels in the names field
     elif k == "propose":
         d.propose = bool(data.get("propose", False))
         d.parameter = str(data.get("parameter", ""))

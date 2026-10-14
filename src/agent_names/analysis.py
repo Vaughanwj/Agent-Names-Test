@@ -186,8 +186,12 @@ def holm(pvalues: dict[str, float]) -> dict[str, float]:
 DEFAULT_ARMS = ("named", "unnamed")
 # Arms from the most identity to the least. Each comparison puts the earlier arm first, so a
 # positive difference always means "more identity, more of this measure".
-ARM_ORDER = ("named", "stable_id", "unnamed")
-ARM_LABELS = {"named": "Named", "stable_id": "Stable ID", "unnamed": "Unnamed"}
+# The handle arms form a 2 x 2 of who chooses (parents, world) by what it is (word, ID); listing
+# them parents-before-world and word-before-ID makes every one-factor contrast come out as
+# (named, world_name), (parent_id, stable_id), (named, parent_id) and (world_name, stable_id).
+ARM_ORDER = ("named", "parent_id", "world_name", "stable_id", "unnamed")
+ARM_LABELS = {"named": "Named", "parent_id": "Parent ID", "world_name": "World name", "stable_id": "Stable ID",
+              "unnamed": "Unnamed"}
 
 
 def arm_label(arm: str) -> str:
