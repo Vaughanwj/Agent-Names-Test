@@ -69,4 +69,5 @@ for different lengths and count tokens slightly differently.
 | The pilot itself (6 runs, 3,936 calls) | $1.211 |
 | Mechanics checks (three short runs) | $0.366 |
 | Second pilot (6 runs, 4,274 calls) | $1.179 |
-| **Total** | **$3.14** |
+| Scale-up (20 runs, 8,606 calls) | $3.878 |
+| **Total** | **$7.02** |

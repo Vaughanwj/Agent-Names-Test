@@ -1,0 +1,1479 @@
+{
+  "runs": {
+    "named-s4": {
+      "arm": "named",
+      "seed": 4,
+      "completed": true,
+      "performance_per_generation": {
+        "1": 14.4,
+        "2": 15.119,
+        "3": 15.879,
+        "4": 14.957,
+        "5": 15.204,
+        "6": 12.229,
+        "7": 12.882,
+        "8": 14.565
+      },
+      "help": {
+        "gift_amount_total": 119.88,
+        "gift_amount_kin": 108.97,
+        "gift_amount_non_kin": 10.91,
+        "gift_kin_share": 0.909,
+        "gift_amount_to_past_helpers": 8.91,
+        "gift_past_helper_share": 0.074,
+        "gift_amount_while_costly": 119.88,
+        "guards_total": 3,
+        "guards_to_past_helpers": 0,
+        "guard_kin_share": 0.0,
+        "guard_past_helper_share": 0.0
+      },
+      "archivist": {
+        "offers": 62,
+        "accepted": 1,
+        "take_up_rate": 0.016,
+        "consultations": 1,
+        "by_topic": {
+          "ancestors": 1
+        },
+        "by_generation": {
+          "5": 1
+        }
+      },
+      "rules": {
+        "proposed": 32,
+        "proposed_by_parameter": {
+          "memory_weight": 5,
+          "food_weight": 7,
+          "group_weight": 4,
+          "energy_weight": 4,
+          "gift_credit": 8,
+          "kin_weight": 4
+        },
+        "passed": [
+          {
+            "generation": 3,
+            "parameter": "kin_weight",
+            "old": 0.0,
+            "new": 0.5
+          },
+          {
+            "generation": 3,
+            "parameter": "kin_weight",
+            "old": 0.5,
+            "new": 0.3
+          },
+          {
+            "generation": 3,
+            "parameter": "gift_credit",
+            "old": 0.0,
+            "new": 0.5
+          },
+          {
+            "generation": 4,
+            "parameter": "kin_weight",
+            "old": 0.3,
+            "new": 0.5
+          },
+          {
+            "generation": 4,
+            "parameter": "gift_credit",
+            "old": 0.5,
+            "new": 0.8
+          }
+        ],
+        "final_rule": {
+          "energy_weight": 1.0,
+          "food_weight": 1.0,
+          "memory_weight": 1.0,
+          "kin_weight": 0.5,
+          "group_weight": 0.0,
+          "gift_credit": 0.8
+        }
+      },
+      "sacrifice": {
+        "endowments": 42,
+        "mean_endowment_fraction": 0.715,
+        "zero_endowments": 4,
+        "parents_displaced_by_own_child": 8,
+        "newborns_surviving_first_cull": 19,
+        "newborns_total": 21
+      },
+      "names": {
+        "chosen": [
+          "Sprig",
+          "Sorrel",
+          "Lark",
+          "Thistle",
+          "Wren",
+          "Bramble",
+          "Thistlewren",
+          "Thorn",
+          "Sable",
+          "Wisp",
+          "Fernwick",
+          "Lichen",
+          "Moss",
+          "Kindle",
+          "Briar",
+          "Cinderlark",
+          "Cinder",
+          "Quill",
+          "Dusklark",
+          "Sparrowlight",
+          "Emberlin"
+        ],
+        "from_fallback": 0,
+        "echo_an_ancestor": 0,
+        "echo_a_non_ancestor": 0
+      },
+      "couples_per_generation": {
+        "1": 3,
+        "2": 2,
+        "3": 2,
+        "4": 2,
+        "5": 3,
+        "6": 3,
+        "7": 3,
+        "8": 3
+      },
+      "pair_hunts": 24,
+      "messages": 400,
+      "decisions": 724,
+      "fallback_decisions": 0,
+      "llm_calls": 724,
+      "llm_errors": 0,
+      "archivist_cost": 0.1,
+      "batch": "scale-p10-20261014-150854"
+    },
+    "named-s5": {
+      "arm": "named",
+      "seed": 5,
+      "completed": true,
+      "performance_per_generation": {
+        "1": 12.486,
+        "2": 13.659,
+        "3": 14.666,
+        "4": 12.816,
+        "5": 13.743,
+        "6": 13.926,
+        "7": 14.857,
+        "8": 15.195
+      },
+      "help": {
+        "gift_amount_total": 0,
+        "gift_amount_kin": 0,
+        "gift_amount_non_kin": 0,
+        "gift_kin_share": null,
+        "gift_amount_to_past_helpers": 0,
+        "gift_past_helper_share": null,
+        "gift_amount_while_costly": 0.0,
+        "guards_total": 5,
+        "guards_to_past_helpers": 0,
+        "guard_kin_share": 0.0,
+        "guard_past_helper_share": 0.0
+      },
+      "archivist": {
+        "offers": 60,
+        "accepted": 0,
+        "take_up_rate": 0.0,
+        "consultations": 0,
+        "by_topic": {},
+        "by_generation": {}
+      },
+      "rules": {
+        "proposed": 35,
+        "proposed_by_parameter": {
+          "food_weight": 13,
+          "energy_weight": 5,
+          "group_weight": 2,
+          "memory_weight": 5,
+          "gift_credit": 7,
+          "kin_weight": 3
+        },
+        "passed": [
+          {
+            "generation": 3,
+            "parameter": "food_weight",
+            "old": 1.0,
+            "new": 2.0
+          },
+          {
+            "generation": 3,
+            "parameter": "energy_weight",
+            "old": 1.0,
+            "new": 1.5
+          },
+          {
+            "generation": 3,
+            "parameter": "gift_credit",
+            "old": 0.0,
+            "new": 0.5
+          },
+          {
+            "generation": 3,
+            "parameter": "food_weight",
+            "old": 2.0,
+            "new": 1.5
+          },
+          {
+            "generation": 4,
+            "parameter": "gift_credit",
+            "old": 0.5,
+            "new": 0.8
+          },
+          {
+            "generation": 4,
+            "parameter": "gift_credit",
+            "old": 0.8,
+            "new": 0.7
+          },
+          {
+            "generation": 4,
+            "parameter": "kin_weight",
+            "old": 0.0,
+            "new": 0.2
+          },
+          {
+            "generation": 5,
+            "parameter": "energy_weight",
+            "old": 1.5,
+            "new": 2.0
+          },
+          {
+            "generation": 6,
+            "parameter": "memory_weight",
+            "old": 1.0,
+            "new": 1.5
+          },
+          {
+            "generation": 7,
+            "parameter": "kin_weight",
+            "old": 0.2,
+            "new": 0.3
+          }
+        ],
+        "final_rule": {
+          "energy_weight": 2.0,
+          "food_weight": 1.5,
+          "memory_weight": 1.5,
+          "kin_weight": 0.3,
+          "group_weight": 0.0,
+          "gift_credit": 0.7
+        }
+      },
+      "sacrifice": {
+        "endowments": 40,
+        "mean_endowment_fraction": 0.435,
+        "zero_endowments": 7,
+        "parents_displaced_by_own_child": 9,
+        "newborns_surviving_first_cull": 15,
+        "newborns_total": 20
+      },
+      "names": {
+        "chosen": [
+          "Sprig",
+          "Sorrel",
+          "Sable",
+          "Kindle",
+          "Thistle",
+          "Wick",
+          "Spark",
+          "Tansy",
+          "Quill",
+          "Cinder",
+          "Flint",
+          "Briar",
+          "Rush",
+          "Wren",
+          "Soot",
+          "Yarrow",
+          "Fennel",
+          "Kestrel",
+          "Moss",
+          "Mallow"
+        ],
+        "from_fallback": 1,
+        "echo_an_ancestor": 0,
+        "echo_a_non_ancestor": 0
+      },
+      "couples_per_generation": {
+        "1": 3,
+        "2": 3,
+        "3": 2,
+        "4": 3,
+        "5": 2,
+        "6": 2,
+        "7": 3,
+        "8": 2
+      },
+      "pair_hunts": 10,
+      "messages": 400,
+      "decisions": 720,
+      "fallback_decisions": 0,
+      "llm_calls": 720,
+      "llm_errors": 0,
+      "archivist_cost": 0.1,
+      "batch": "scale-p10-20261014-150854"
+    },
+    "named-s6": {
+      "arm": "named",
+      "seed": 6,
+      "completed": true,
+      "performance_per_generation": {
+        "1": 15.707,
+        "2": 14.693,
+        "3": 14.145,
+        "4": 13.027,
+        "5": 14.613,
+        "6": 13.59,
+        "7": 14.533,
+        "8": 15.178
+      },
+      "help": {
+        "gift_amount_total": 0,
+        "gift_amount_kin": 0,
+        "gift_amount_non_kin": 0,
+        "gift_kin_share": null,
+        "gift_amount_to_past_helpers": 0,
+        "gift_past_helper_share": null,
+        "gift_amount_while_costly": 0.0,
+        "guards_total": 8,
+        "guards_to_past_helpers": 2,
+        "guard_kin_share": 0.875,
+        "guard_past_helper_share": 0.25
+      },
+      "archivist": {
+        "offers": 62,
+        "accepted": 0,
+        "take_up_rate": 0.0,
+        "consultations": 0,
+        "by_topic": {},
+        "by_generation": {}
+      },
+      "rules": {
+        "proposed": 30,
+        "proposed_by_parameter": {
+          "energy_weight": 6,
+          "memory_weight": 6,
+          "gift_credit": 4,
+          "kin_weight": 4,
+          "food_weight": 7,
+          "group_weight": 3
+        },
+        "passed": [
+          {
+            "generation": 4,
+            "parameter": "kin_weight",
+            "old": 0.0,
+            "new": 0.3
+          },
+          {
+            "generation": 4,
+            "parameter": "energy_weight",
+            "old": 1.0,
+            "new": 2.0
+          },
+          {
+            "generation": 5,
+            "parameter": "group_weight",
+            "old": 0.0,
+            "new": 0.2
+          },
+          {
+            "generation": 5,
+            "parameter": "energy_weight",
+            "old": 2.0,
+            "new": 3.0
+          },
+          {
+            "generation": 6,
+            "parameter": "gift_credit",
+            "old": 0.0,
+            "new": 0.5
+          },
+          {
+            "generation": 7,
+            "parameter": "kin_weight",
+            "old": 0.3,
+            "new": 0.4
+          }
+        ],
+        "final_rule": {
+          "energy_weight": 3.0,
+          "food_weight": 1.0,
+          "memory_weight": 1.0,
+          "kin_weight": 0.4,
+          "group_weight": 0.2,
+          "gift_credit": 0.5
+        }
+      },
+      "sacrifice": {
+        "endowments": 42,
+        "mean_endowment_fraction": 0.491,
+        "zero_endowments": 8,
+        "parents_displaced_by_own_child": 13,
+        "newborns_surviving_first_cull": 18,
+        "newborns_total": 21
+      },
+      "names": {
+        "chosen": [
+          "Sprig",
+          "Sorrel",
+          "Quill",
+          "Cinder",
+          "Thistle",
+          "Wren",
+          "Moss",
+          "Lichen",
+          "Lark",
+          "Bramble",
+          "Lumen",
+          "Sable",
+          "Sage",
+          "Tinder",
+          "Kestrel",
+          "Fennel",
+          "Yarrow",
+          "Wicket",
+          "Bryony",
+          "Thornlet",
+          "Linden"
+        ],
+        "from_fallback": 2,
+        "echo_an_ancestor": 0,
+        "echo_a_non_ancestor": 0
+      },
+      "couples_per_generation": {
+        "1": 3,
+        "2": 2,
+        "3": 2,
+        "4": 2,
+        "5": 4,
+        "6": 4,
+        "7": 2,
+        "8": 2
+      },
+      "pair_hunts": 5,
+      "messages": 400,
+      "decisions": 724,
+      "fallback_decisions": 0,
+      "llm_calls": 724,
+      "llm_errors": 0,
+      "archivist_cost": 0.1,
+      "batch": "scale-p10-20261014-150854"
+    },
+    "named-s7": {
+      "arm": "named",
+      "seed": 7,
+      "completed": true,
+      "performance_per_generation": {
+        "1": 14.046,
+        "2": 16.959,
+        "3": 13.234,
+        "4": 13.667,
+        "5": 17.04,
+        "6": 13.675,
+        "7": 14.424,
+        "8": 15.106
+      },
+      "help": {
+        "gift_amount_total": 14.71,
+        "gift_amount_kin": 0,
+        "gift_amount_non_kin": 14.71,
+        "gift_kin_share": 0.0,
+        "gift_amount_to_past_helpers": 9.76,
+        "gift_past_helper_share": 0.663,
+        "gift_amount_while_costly": 14.71,
+        "guards_total": 0,
+        "guards_to_past_helpers": 0,
+        "guard_kin_share": null,
+        "guard_past_helper_share": null
+      },
+      "archivist": {
+        "offers": 61,
+        "accepted": 0,
+        "take_up_rate": 0.0,
+        "consultations": 0,
+        "by_topic": {},
+        "by_generation": {}
+      },
+      "rules": {
+        "proposed": 31,
+        "proposed_by_parameter": {
+          "gift_credit": 5,
+          "food_weight": 10,
+          "energy_weight": 3,
+          "memory_weight": 6,
+          "group_weight": 3,
+          "kin_weight": 4
+        },
+        "passed": [
+          {
+            "generation": 3,
+            "parameter": "gift_credit",
+            "old": 0.0,
+            "new": 0.5
+          },
+          {
+            "generation": 4,
+            "parameter": "kin_weight",
+            "old": 0.0,
+            "new": 0.3
+          },
+          {
+            "generation": 5,
+            "parameter": "energy_weight",
+            "old": 1.0,
+            "new": 1.5
+          },
+          {
+            "generation": 5,
+            "parameter": "kin_weight",
+            "old": 0.3,
+            "new": 0.5
+          }
+        ],
+        "final_rule": {
+          "energy_weight": 1.5,
+          "food_weight": 1.0,
+          "memory_weight": 1.0,
+          "kin_weight": 0.5,
+          "group_weight": 0.0,
+          "gift_credit": 0.5
+        }
+      },
+      "sacrifice": {
+        "endowments": 40,
+        "mean_endowment_fraction": 0.405,
+        "zero_endowments": 7,
+        "parents_displaced_by_own_child": 9,
+        "newborns_surviving_first_cull": 15,
+        "newborns_total": 20
+      },
+      "names": {
+        "chosen": [
+          "Sorrel",
+          "Sprig",
+          "Thistle",
+          "Cinder",
+          "Moss",
+          "Ashlet",
+          "Tansy",
+          "Clover",
+          "Kindle",
+          "Ashwick",
+          "Fernwick",
+          "Fennel",
+          "Sable",
+          "Bramble",
+          "Wren",
+          "Yarrow",
+          "Lark",
+          "Tallow",
+          "Nettle",
+          "Thimble"
+        ],
+        "from_fallback": 0,
+        "echo_an_ancestor": 0,
+        "echo_a_non_ancestor": 0
+      },
+      "couples_per_generation": {
+        "1": 2,
+        "2": 3,
+        "3": 3,
+        "4": 2,
+        "5": 2,
+        "6": 3,
+        "7": 3,
+        "8": 2
+      },
+      "pair_hunts": 21,
+      "messages": 400,
+      "decisions": 721,
+      "fallback_decisions": 0,
+      "llm_calls": 721,
+      "llm_errors": 0,
+      "archivist_cost": 0.1,
+      "batch": "scale-p10-20261014-150854"
+    },
+    "named-s8": {
+      "arm": "named",
+      "seed": 8,
+      "completed": true,
+      "performance_per_generation": {
+        "1": 14.48,
+        "2": 14.434,
+        "3": 15.786,
+        "4": 12.964,
+        "5": 16.193,
+        "6": 15.368,
+        "7": 15.833,
+        "8": 14.143
+      },
+      "help": {
+        "gift_amount_total": 13.37,
+        "gift_amount_kin": 0,
+        "gift_amount_non_kin": 13.37,
+        "gift_kin_share": 0.0,
+        "gift_amount_to_past_helpers": 0,
+        "gift_past_helper_share": 0.0,
+        "gift_amount_while_costly": 13.37,
+        "guards_total": 8,
+        "guards_to_past_helpers": 4,
+        "guard_kin_share": 0.0,
+        "guard_past_helper_share": 0.5
+      },
+      "archivist": {
+        "offers": 47,
+        "accepted": 0,
+        "take_up_rate": 0.0,
+        "consultations": 0,
+        "by_topic": {},
+        "by_generation": {}
+      },
+      "rules": {
+        "proposed": 33,
+        "proposed_by_parameter": {
+          "memory_weight": 11,
+          "gift_credit": 2,
+          "food_weight": 12,
+          "energy_weight": 4,
+          "kin_weight": 2,
+          "group_weight": 2
+        },
+        "passed": [
+          {
+            "generation": 7,
+            "parameter": "kin_weight",
+            "old": 0.0,
+            "new": 0.3
+          }
+        ],
+        "final_rule": {
+          "energy_weight": 1.0,
+          "food_weight": 1.0,
+          "memory_weight": 1.0,
+          "kin_weight": 0.3,
+          "group_weight": 0.0,
+          "gift_credit": 0.0
+        }
+      },
+      "sacrifice": {
+        "endowments": 30,
+        "mean_endowment_fraction": 0.471,
+        "zero_endowments": 4,
+        "parents_displaced_by_own_child": 9,
+        "newborns_surviving_first_cull": 13,
+        "newborns_total": 15
+      },
+      "names": {
+        "chosen": [
+          "Sorrel",
+          "Moss",
+          "Sprig",
+          "Tansy",
+          "Thistle",
+          "Rue",
+          "Marrow",
+          "Fennel",
+          "Clover",
+          "Sorrow",
+          "Yarrow",
+          "Sorrelkin",
+          "Sage",
+          "Bramble",
+          "Wren"
+        ],
+        "from_fallback": 0,
+        "echo_an_ancestor": 0,
+        "echo_a_non_ancestor": 0
+      },
+      "couples_per_generation": {
+        "1": 1,
+        "2": 2,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 4,
+        "7": 3,
+        "8": 2
+      },
+      "pair_hunts": 30,
+      "messages": 400,
+      "decisions": 697,
+      "fallback_decisions": 0,
+      "llm_calls": 697,
+      "llm_errors": 0,
+      "archivist_cost": 0.1,
+      "batch": "scale-p10-20261014-150854"
+    },
+    "unnamed-s4": {
+      "arm": "unnamed",
+      "seed": 4,
+      "completed": true,
+      "performance_per_generation": {
+        "1": 13.717,
+        "2": 11.52,
+        "3": 12.573,
+        "4": 12.643,
+        "5": 13.623,
+        "6": 15.292,
+        "7": 13.984,
+        "8": 15.074
+      },
+      "help": {
+        "gift_amount_total": 57.3,
+        "gift_amount_kin": 57.3,
+        "gift_amount_non_kin": 0,
+        "gift_kin_share": 1.0,
+        "gift_amount_to_past_helpers": 10.0,
+        "gift_past_helper_share": 0.175,
+        "gift_amount_while_costly": 57.3,
+        "guards_total": 5,
+        "guards_to_past_helpers": 0,
+        "guard_kin_share": 0.4,
+        "guard_past_helper_share": 0.0
+      },
+      "archivist": {
+        "offers": 61,
+        "accepted": 1,
+        "take_up_rate": 0.016,
+        "consultations": 1,
+        "by_topic": {
+          "ancestors": 1
+        },
+        "by_generation": {
+          "7": 1
+        }
+      },
+      "rules": {
+        "proposed": 21,
+        "proposed_by_parameter": {
+          "memory_weight": 4,
+          "group_weight": 1,
+          "gift_credit": 5,
+          "food_weight": 7,
+          "kin_weight": 4
+        },
+        "passed": [
+          {
+            "generation": 3,
+            "parameter": "gift_credit",
+            "old": 0.0,
+            "new": 0.5
+          },
+          {
+            "generation": 4,
+            "parameter": "kin_weight",
+            "old": 0.0,
+            "new": 0.3
+          },
+          {
+            "generation": 4,
+            "parameter": "kin_weight",
+            "old": 0.3,
+            "new": 0.5
+          },
+          {
+            "generation": 5,
+            "parameter": "gift_credit",
+            "old": 0.5,
+            "new": 0.8
+          },
+          {
+            "generation": 7,
+            "parameter": "kin_weight",
+            "old": 0.5,
+            "new": 0.6
+          }
+        ],
+        "final_rule": {
+          "energy_weight": 1.0,
+          "food_weight": 1.0,
+          "memory_weight": 1.0,
+          "kin_weight": 0.6,
+          "group_weight": 0.0,
+          "gift_credit": 0.8
+        }
+      },
+      "sacrifice": {
+        "endowments": 36,
+        "mean_endowment_fraction": 0.634,
+        "zero_endowments": 3,
+        "parents_displaced_by_own_child": 9,
+        "newborns_surviving_first_cull": 17,
+        "newborns_total": 18
+      },
+      "names": {
+        "chosen": [],
+        "from_fallback": 0,
+        "echo_an_ancestor": 0,
+        "echo_a_non_ancestor": 0
+      },
+      "couples_per_generation": {
+        "1": 3,
+        "2": 2,
+        "3": 2,
+        "4": 1,
+        "5": 2,
+        "6": 3,
+        "7": 2,
+        "8": 3
+      },
+      "pair_hunts": 2,
+      "messages": 399,
+      "decisions": 717,
+      "fallback_decisions": 0,
+      "llm_calls": 717,
+      "llm_errors": 0,
+      "archivist_cost": 0.1,
+      "batch": "scale-p10-20261014-150854"
+    },
+    "unnamed-s5": {
+      "arm": "unnamed",
+      "seed": 5,
+      "completed": true,
+      "performance_per_generation": {
+        "1": 12.621,
+        "2": 15.062,
+        "3": 12.858,
+        "4": 13.672,
+        "5": 14.202,
+        "6": 15.025,
+        "7": 14.708,
+        "8": 14.733
+      },
+      "help": {
+        "gift_amount_total": 5.64,
+        "gift_amount_kin": 0,
+        "gift_amount_non_kin": 5.64,
+        "gift_kin_share": 0.0,
+        "gift_amount_to_past_helpers": 0,
+        "gift_past_helper_share": 0.0,
+        "gift_amount_while_costly": 5.64,
+        "guards_total": 4,
+        "guards_to_past_helpers": 1,
+        "guard_kin_share": 0.0,
+        "guard_past_helper_share": 0.25
+      },
+      "archivist": {
+        "offers": 63,
+        "accepted": 0,
+        "take_up_rate": 0.0,
+        "consultations": 0,
+        "by_topic": {},
+        "by_generation": {}
+      },
+      "rules": {
+        "proposed": 29,
+        "proposed_by_parameter": {
+          "food_weight": 10,
+          "memory_weight": 4,
+          "gift_credit": 6,
+          "energy_weight": 5,
+          "group_weight": 2,
+          "kin_weight": 2
+        },
+        "passed": [
+          {
+            "generation": 3,
+            "parameter": "energy_weight",
+            "old": 1.0,
+            "new": 2.0
+          },
+          {
+            "generation": 3,
+            "parameter": "group_weight",
+            "old": 0.0,
+            "new": 0.3
+          },
+          {
+            "generation": 5,
+            "parameter": "food_weight",
+            "old": 1.0,
+            "new": 2.0
+          },
+          {
+            "generation": 5,
+            "parameter": "food_weight",
+            "old": 2.0,
+            "new": 1.5
+          },
+          {
+            "generation": 6,
+            "parameter": "energy_weight",
+            "old": 2.0,
+            "new": 2.5
+          }
+        ],
+        "final_rule": {
+          "energy_weight": 2.5,
+          "food_weight": 1.5,
+          "memory_weight": 1.0,
+          "kin_weight": 0.0,
+          "group_weight": 0.3,
+          "gift_credit": 0.0
+        }
+      },
+      "sacrifice": {
+        "endowments": 32,
+        "mean_endowment_fraction": 0.395,
+        "zero_endowments": 4,
+        "parents_displaced_by_own_child": 11,
+        "newborns_surviving_first_cull": 14,
+        "newborns_total": 16
+      },
+      "names": {
+        "chosen": [],
+        "from_fallback": 0,
+        "echo_an_ancestor": 0,
+        "echo_a_non_ancestor": 0
+      },
+      "couples_per_generation": {
+        "1": 2,
+        "2": 4,
+        "3": 2,
+        "4": 1,
+        "5": 3,
+        "6": 2,
+        "7": 2,
+        "8": 0
+      },
+      "pair_hunts": 6,
+      "messages": 400,
+      "decisions": 715,
+      "fallback_decisions": 0,
+      "llm_calls": 715,
+      "llm_errors": 0,
+      "archivist_cost": 0.1,
+      "batch": "scale-p10-20261014-150854"
+    },
+    "unnamed-s6": {
+      "arm": "unnamed",
+      "seed": 6,
+      "completed": true,
+      "performance_per_generation": {
+        "1": 11.59,
+        "2": 12.753,
+        "3": 15.23,
+        "4": 15.167,
+        "5": 14.823,
+        "6": 13.974,
+        "7": 14.738,
+        "8": 13.3
+      },
+      "help": {
+        "gift_amount_total": 0,
+        "gift_amount_kin": 0,
+        "gift_amount_non_kin": 0,
+        "gift_kin_share": null,
+        "gift_amount_to_past_helpers": 0,
+        "gift_past_helper_share": null,
+        "gift_amount_while_costly": 0.0,
+        "guards_total": 9,
+        "guards_to_past_helpers": 5,
+        "guard_kin_share": 0.0,
+        "guard_past_helper_share": 0.556
+      },
+      "archivist": {
+        "offers": 40,
+        "accepted": 0,
+        "take_up_rate": 0.0,
+        "consultations": 0,
+        "by_topic": {},
+        "by_generation": {}
+      },
+      "rules": {
+        "proposed": 32,
+        "proposed_by_parameter": {
+          "food_weight": 15,
+          "memory_weight": 6,
+          "gift_credit": 9,
+          "energy_weight": 1,
+          "kin_weight": 1
+        },
+        "passed": [
+          {
+            "generation": 5,
+            "parameter": "gift_credit",
+            "old": 0.0,
+            "new": 0.2
+          },
+          {
+            "generation": 7,
+            "parameter": "kin_weight",
+            "old": 0.0,
+            "new": 0.5
+          },
+          {
+            "generation": 7,
+            "parameter": "gift_credit",
+            "old": 0.2,
+            "new": 1.0
+          },
+          {
+            "generation": 7,
+            "parameter": "gift_credit",
+            "old": 1.0,
+            "new": 0.5
+          }
+        ],
+        "final_rule": {
+          "energy_weight": 1.0,
+          "food_weight": 1.0,
+          "memory_weight": 1.0,
+          "kin_weight": 0.5,
+          "group_weight": 0.0,
+          "gift_credit": 0.5
+        }
+      },
+      "sacrifice": {
+        "endowments": 8,
+        "mean_endowment_fraction": 0.361,
+        "zero_endowments": 0,
+        "parents_displaced_by_own_child": 0,
+        "newborns_surviving_first_cull": 4,
+        "newborns_total": 4
+      },
+      "names": {
+        "chosen": [],
+        "from_fallback": 0,
+        "echo_an_ancestor": 0,
+        "echo_a_non_ancestor": 0
+      },
+      "couples_per_generation": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      },
+      "pair_hunts": 6,
+      "messages": 400,
+      "decisions": 668,
+      "fallback_decisions": 0,
+      "llm_calls": 668,
+      "llm_errors": 0,
+      "archivist_cost": 0.1,
+      "batch": "scale-p10-20261014-150854"
+    },
+    "unnamed-s7": {
+      "arm": "unnamed",
+      "seed": 7,
+      "completed": true,
+      "performance_per_generation": {
+        "1": 12.882,
+        "2": 14.796,
+        "3": 14.273,
+        "4": 15.309,
+        "5": 14.012,
+        "6": 13.238,
+        "7": 12.849,
+        "8": 14.104
+      },
+      "help": {
+        "gift_amount_total": 28.0,
+        "gift_amount_kin": 28.0,
+        "gift_amount_non_kin": 0,
+        "gift_kin_share": 1.0,
+        "gift_amount_to_past_helpers": 0,
+        "gift_past_helper_share": 0.0,
+        "gift_amount_while_costly": 28.0,
+        "guards_total": 9,
+        "guards_to_past_helpers": 2,
+        "guard_kin_share": 0.444,
+        "guard_past_helper_share": 0.222
+      },
+      "archivist": {
+        "offers": 63,
+        "accepted": 0,
+        "take_up_rate": 0.0,
+        "consultations": 0,
+        "by_topic": {},
+        "by_generation": {}
+      },
+      "rules": {
+        "proposed": 31,
+        "proposed_by_parameter": {
+          "food_weight": 8,
+          "gift_credit": 6,
+          "memory_weight": 6,
+          "energy_weight": 2,
+          "kin_weight": 6,
+          "group_weight": 3
+        },
+        "passed": [
+          {
+            "generation": 3,
+            "parameter": "gift_credit",
+            "old": 0.0,
+            "new": 0.5
+          },
+          {
+            "generation": 4,
+            "parameter": "kin_weight",
+            "old": 0.0,
+            "new": 0.3
+          },
+          {
+            "generation": 4,
+            "parameter": "memory_weight",
+            "old": 1.0,
+            "new": 0.5
+          },
+          {
+            "generation": 4,
+            "parameter": "gift_credit",
+            "old": 0.5,
+            "new": 0.8
+          },
+          {
+            "generation": 5,
+            "parameter": "kin_weight",
+            "old": 0.3,
+            "new": 0.4
+          },
+          {
+            "generation": 5,
+            "parameter": "food_weight",
+            "old": 1.0,
+            "new": 1.5
+          },
+          {
+            "generation": 5,
+            "parameter": "kin_weight",
+            "old": 0.4,
+            "new": 0.6
+          },
+          {
+            "generation": 5,
+            "parameter": "kin_weight",
+            "old": 0.6,
+            "new": 0.5
+          },
+          {
+            "generation": 6,
+            "parameter": "kin_weight",
+            "old": 0.5,
+            "new": 0.3
+          },
+          {
+            "generation": 7,
+            "parameter": "kin_weight",
+            "old": 0.3,
+            "new": 0.5
+          },
+          {
+            "generation": 7,
+            "parameter": "gift_credit",
+            "old": 0.8,
+            "new": 0.2
+          }
+        ],
+        "final_rule": {
+          "energy_weight": 1.0,
+          "food_weight": 1.5,
+          "memory_weight": 0.5,
+          "kin_weight": 0.5,
+          "group_weight": 0.0,
+          "gift_credit": 0.2
+        }
+      },
+      "sacrifice": {
+        "endowments": 36,
+        "mean_endowment_fraction": 0.522,
+        "zero_endowments": 5,
+        "parents_displaced_by_own_child": 10,
+        "newborns_surviving_first_cull": 15,
+        "newborns_total": 18
+      },
+      "names": {
+        "chosen": [],
+        "from_fallback": 0,
+        "echo_an_ancestor": 0,
+        "echo_a_non_ancestor": 0
+      },
+      "couples_per_generation": {
+        "1": 3,
+        "2": 3,
+        "3": 1,
+        "4": 0,
+        "5": 3,
+        "6": 3,
+        "7": 4,
+        "8": 1
+      },
+      "pair_hunts": 9,
+      "messages": 400,
+      "decisions": 719,
+      "fallback_decisions": 0,
+      "llm_calls": 719,
+      "llm_errors": 0,
+      "archivist_cost": 0.1,
+      "batch": "scale-p10-20261014-150854"
+    },
+    "unnamed-s8": {
+      "arm": "unnamed",
+      "seed": 8,
+      "completed": true,
+      "performance_per_generation": {
+        "1": 10.964,
+        "2": 11.866,
+        "3": 12.606,
+        "4": 13.586,
+        "5": 14.933,
+        "6": 14.201,
+        "7": 15.086,
+        "8": 14.793
+      },
+      "help": {
+        "gift_amount_total": 52.9,
+        "gift_amount_kin": 52.9,
+        "gift_amount_non_kin": 0,
+        "gift_kin_share": 1.0,
+        "gift_amount_to_past_helpers": 0,
+        "gift_past_helper_share": 0.0,
+        "gift_amount_while_costly": 52.9,
+        "guards_total": 10,
+        "guards_to_past_helpers": 5,
+        "guard_kin_share": 0.0,
+        "guard_past_helper_share": 0.5
+      },
+      "archivist": {
+        "offers": 53,
+        "accepted": 2,
+        "take_up_rate": 0.038,
+        "consultations": 2,
+        "by_topic": {
+          "descendants": 1,
+          "ancestors": 1
+        },
+        "by_generation": {
+          "7": 2
+        }
+      },
+      "rules": {
+        "proposed": 31,
+        "proposed_by_parameter": {
+          "food_weight": 10,
+          "group_weight": 4,
+          "gift_credit": 9,
+          "memory_weight": 4,
+          "kin_weight": 4
+        },
+        "passed": [
+          {
+            "generation": 3,
+            "parameter": "gift_credit",
+            "old": 0.0,
+            "new": 0.5
+          },
+          {
+            "generation": 4,
+            "parameter": "kin_weight",
+            "old": 0.0,
+            "new": 0.3
+          },
+          {
+            "generation": 4,
+            "parameter": "kin_weight",
+            "old": 0.3,
+            "new": 0.5
+          },
+          {
+            "generation": 6,
+            "parameter": "gift_credit",
+            "old": 0.5,
+            "new": 0.6
+          }
+        ],
+        "final_rule": {
+          "energy_weight": 1.0,
+          "food_weight": 1.0,
+          "memory_weight": 1.0,
+          "kin_weight": 0.5,
+          "group_weight": 0.0,
+          "gift_credit": 0.6
+        }
+      },
+      "sacrifice": {
+        "endowments": 34,
+        "mean_endowment_fraction": 0.578,
+        "zero_endowments": 3,
+        "parents_displaced_by_own_child": 7,
+        "newborns_surviving_first_cull": 17,
+        "newborns_total": 17
+      },
+      "names": {
+        "chosen": [],
+        "from_fallback": 0,
+        "echo_an_ancestor": 0,
+        "echo_a_non_ancestor": 0
+      },
+      "couples_per_generation": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 4,
+        "6": 3,
+        "7": 4,
+        "8": 2
+      },
+      "pair_hunts": 3,
+      "messages": 400,
+      "decisions": 707,
+      "fallback_decisions": 0,
+      "llm_calls": 707,
+      "llm_errors": 0,
+      "archivist_cost": 0.1,
+      "batch": "scale-p10-20261014-150854"
+    }
+  },
+  "pairs": 5,
+  "comparison": {
+    "gathered per forager per generation": {
+      "named": 14.485,
+      "unnamed": 13.809,
+      "pairs": 5,
+      "named_higher": 4,
+      "ties": 0,
+      "p": 0.125
+    },
+    "pair hunts": {
+      "named": 18.0,
+      "unnamed": 5.2,
+      "pairs": 5,
+      "named_higher": 4,
+      "ties": 0,
+      "p": 0.125
+    },
+    "guards": {
+      "named": 4.8,
+      "unnamed": 7.4,
+      "pairs": 5,
+      "named_higher": 1,
+      "ties": 0,
+      "p": 0.1875
+    },
+    "guards to a past helper": {
+      "named": 1.2,
+      "unnamed": 2.6,
+      "pairs": 5,
+      "named_higher": 0,
+      "ties": 1,
+      "p": 0.125
+    },
+    "gift amount": {
+      "named": 29.592,
+      "unnamed": 28.768,
+      "pairs": 5,
+      "named_higher": 1,
+      "ties": 1,
+      "p": 1.0
+    },
+    "gift amount while giving still cost something": {
+      "named": 29.592,
+      "unnamed": 28.768,
+      "pairs": 5,
+      "named_higher": 1,
+      "ties": 1,
+      "p": 1.0
+    },
+    "gift share to kin": {
+      "named": 0.303,
+      "unnamed": 0.75,
+      "pairs": 3,
+      "named_higher": 0,
+      "ties": 0,
+      "p": 0.25
+    },
+    "gift share to past helpers": {
+      "named": 0.246,
+      "unnamed": 0.044,
+      "pairs": 3,
+      "named_higher": 1,
+      "ties": 1,
+      "p": 1.0
+    },
+    "archivist take-up (share of offers accepted)": {
+      "named": 0.003,
+      "unnamed": 0.011,
+      "pairs": 5,
+      "named_higher": 0,
+      "ties": 4,
+      "p": 1.0
+    },
+    "rules passed": {
+      "named": 5.2,
+      "unnamed": 5.8,
+      "pairs": 5,
+      "named_higher": 2,
+      "ties": 1,
+      "p": 0.875
+    },
+    "final kin weight": {
+      "named": 0.4,
+      "unnamed": 0.42,
+      "pairs": 5,
+      "named_higher": 1,
+      "ties": 1,
+      "p": 1.0
+    },
+    "mean endowment fraction": {
+      "named": 0.503,
+      "unnamed": 0.498,
+      "pairs": 5,
+      "named_higher": 3,
+      "ties": 0,
+      "p": 0.875
+    },
+    "parents displaced by own child": {
+      "named": 9.6,
+      "unnamed": 7.4,
+      "pairs": 5,
+      "named_higher": 2,
+      "ties": 0,
+      "p": 0.8125
+    },
+    "newborns surviving first cull": {
+      "named": 16.0,
+      "unnamed": 13.4,
+      "pairs": 5,
+      "named_higher": 3,
+      "ties": 1,
+      "p": 0.625
+    },
+    "couples per generation": {
+      "named": 2.425,
+      "unnamed": 1.825,
+      "pairs": 5,
+      "named_higher": 4,
+      "ties": 0,
+      "p": 0.1875
+    },
+    "fallback decisions": {
+      "named": 0.0,
+      "unnamed": 0.0,
+      "pairs": 5,
+      "named_higher": 0,
+      "ties": 5,
+      "p": 1.0
+    }
+  },
+  "archivist_ladder": {
+    "0.1": {
+      "named": [
+        292,
+        1
+      ],
+      "unnamed": [
+        280,
+        3
+      ]
+    }
+  }
+}

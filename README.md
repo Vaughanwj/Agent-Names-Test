@@ -157,6 +157,13 @@ adds nothing. Details and alternatives are in [docs/cost-estimate.md](docs/cost-
 
 - **First pilot** (original mechanics): 6 runs, $1.21. Results are in [docs/pilot-results.md](docs/pilot-results.md) and raw data in [data/pilot-20261014/](data/pilot-20261014/).
 - **Second pilot** (archive known from the start, guarding, per-generation archivist offer): 6 runs, $1.18. Results are in [docs/pilot2-results.md](docs/pilot2-results.md) and raw data in [data/pilot2-20261014/](data/pilot2-20261014/).
+- **Scale-up** (10 more seeds per arm, archivist priced at 10% and 5%, pooled to 13 seed pairs): 20 runs, $3.88. Results are in [docs/scale-results.md](docs/scale-results.md) and raw data in [data/scale-20261014/](data/scale-20261014/).
+
+To pool batches and run the paired tests yourself:
+
+```bash
+agent-names summarize data/pilot2-20261014 data/scale-20261014/archivist-10pct data/scale-20261014/archivist-5pct --out runs/pooled
+```
 
 ## Changes after the pilot
 
