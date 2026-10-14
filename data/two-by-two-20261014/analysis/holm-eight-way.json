@@ -1,0 +1,22 @@
+{
+  "raw": {
+    "C1 parent_id>stable_id | couples per generation": 1e-05,
+    "C1 parent_id>stable_id | mean endowment fraction": 0.18266,
+    "C2 named>world_name | couples per generation": 0.00785,
+    "C2 named>world_name | mean endowment fraction": 0.01438,
+    "C3 world_name>stable_id | couples per generation": 7e-05,
+    "C3 world_name>stable_id | mean endowment fraction": 0.34594,
+    "C4 named>parent_id | couples per generation": 0.16788,
+    "C4 named>parent_id | mean endowment fraction": 0.00613
+  },
+  "holm_eight_way": {
+    "C1 parent_id>stable_id | couples per generation": 8e-05,
+    "C3 world_name>stable_id | couples per generation": 0.00049,
+    "C4 named>parent_id | mean endowment fraction": 0.03678,
+    "C2 named>world_name | couples per generation": 0.03925,
+    "C2 named>world_name | mean endowment fraction": 0.05752,
+    "C4 named>parent_id | couples per generation": 0.50364,
+    "C1 parent_id>stable_id | mean endowment fraction": 0.50364,
+    "C3 world_name>stable_id | mean endowment fraction": 0.50364
+  }
+}

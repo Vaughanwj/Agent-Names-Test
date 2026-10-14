@@ -12,8 +12,8 @@ Beyond named and unnamed there are three more arms, each with a different kind o
 - **`stable_id`:** a fixed ID assigned by the world instead of a parent-chosen name. It has been
   run on Claude ([docs/stable-id-results.md](docs/stable-id-results.md)).
 - **`world_name` and `parent_id`:** together with named and stable_id, they complete a 2 × 2 of
-  who chooses the handle by what it is (see choice 13 below). Both are built and tested with
-  the scripted stand-in, but neither has been run on Claude yet.
+  who chooses the handle by what it is (see choice 13 below). Both have been run on Claude
+  ([docs/two-by-two-results.md](docs/two-by-two-results.md)).
 
 Every agent runs on **Claude Haiku 5.5** (`claude-haiku-5-5`, effort `low`). Every arm uses the same model.
 
@@ -282,6 +282,8 @@ adds nothing. Details and alternatives are in [docs/cost-estimate.md](docs/cost-
 - **Confirmatory run** (pre-registered in [docs/preregistration.md](docs/preregistration.md), 30 fresh seed pairs): **names increased coordination**. Couples per generation and pair hunts were both higher in the named arm (Holm-adjusted p < 0.001); gathering per forager was not significantly higher. Named parents also invested more in their children (exploratory). Results are in [docs/confirmatory-results.md](docs/confirmatory-results.md), data in [data/confirm-20261014/](data/confirm-20261014/), cost $12.07.
 
 - **Stable-ID arm** (pre-registered in [docs/preregistration-stable-id.md](docs/preregistration-stable-id.md), 30 runs on the confirmatory seeds): **names do two jobs**. Stable world-assigned IDs restored pair hunting to the named level (vs unnamed, Holm p = 0.00004), so coordinating with others needs only a stable handle. Couples were much higher with parent-given names than with IDs (Holm p = 0.00004), and IDs gave no lift over no handle, so forming families needs the name itself. Results are in [docs/stable-id-results.md](docs/stable-id-results.md), data in [data/stable-id-20261014/](data/stable-id-20261014/), cost $5.88.
+
+- **2 × 2 run** (pre-registered in [docs/preregistration-two-by-two.md](docs/preregistration-two-by-two.md), 60 runs of world_name and parent_id on the confirmatory seeds): **parents giving the handle is what raises couple formation**, even when it is a meaningless ID picked perfunctorily (parent ID vs stable ID, Holm p = 0.00008). A word name helps only when the world assigns it (world name vs stable ID, Holm p = 0.0005). Investment in newborns rose only with names chosen by parents (named vs parent ID, Holm p = 0.037). Results are in [docs/two-by-two-results.md](docs/two-by-two-results.md), data in [data/two-by-two-20261014/](data/two-by-two-20261014/), cost $12.19.
 
 To pool batches and run the paired tests yourself:
 

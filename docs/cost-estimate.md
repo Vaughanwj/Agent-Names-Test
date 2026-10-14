@@ -72,4 +72,5 @@ for different lengths and count tokens slightly differently.
 | Scale-up (20 runs, 8,606 calls) | $3.878 |
 | Confirmatory run (64 runs, 44,174 calls) | $12.072 |
 | Stable-ID arm (30 runs, 20,898 calls) | $5.880 |
-| **Total** | **$24.97** |
+| 2 × 2 run (60 runs, 43,007 calls) | $12.195 |
+| **Total** | **$37.16** |
