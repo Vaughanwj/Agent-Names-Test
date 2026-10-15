@@ -370,3 +370,12 @@ What the check runs showed (seed 1, both arms, 4 generations of 3 rounds, about 
   and capped at 1.
 - **No agent consulted the archivist in any run so far.** Consulting costs half a round's yield,
   and that price may be too high to produce data on how much agents value their ancestry.
+
+## Licence
+
+| What | Licence |
+| --- | --- |
+| The code (`src/`, `scripts/`, `tests/`, `paper/make_figures.py`, the Docker and config files) | [MIT](LICENSE) |
+| The data (`data/`) | [CC BY 4.0](data/LICENSE.md) |
+| The paper (`paper/`, text and figures) | CC BY 4.0 |
+| The documentation (`docs/`) | CC BY 4.0 |
