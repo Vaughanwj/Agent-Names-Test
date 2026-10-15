@@ -84,8 +84,8 @@ file or random library. Each arm is a configuration of the same core.
 | ArchiveStore | `adapters/storage.py`: a local JSON file. |
 | RunConfig | `adapters/config_yaml.py`, reading `configs/*.yaml`. |
 
-There are five arms (`core/model.py`, `Arm`). Four of them give every agent a stable handle and
-form a 2 × 2; the fifth gives none:
+The original five arms (`core/model.py`, `Arm`) are below. Four of them give every agent a stable handle and
+form a 2 × 2; the fifth gives none. Six more arms for the novelty round are in choice 14.
 
 | | A word name | An ID, such as A47 |
 | --- | --- | --- |
@@ -266,6 +266,32 @@ Review these before the real pilot. The first one matters most.
     - **What is logged.** parent_id logs an `id_choice` event per birth (options, both picks,
       the lot and the result), and a parent's pick travels in the decision's `names` field.
       world_name logs no naming events, because no one chooses.
+
+14. **Round-5 arms and the commons (added for the novelty round).** Six more arms, each changing
+    one thing, plus a public-goods round that every arm can share. All are off unless a config
+    lists them, and the five earlier arms are byte-for-byte unchanged (`tests/golden_fingerprints.json`).
+
+    | Arm | What changes | Question it serves |
+    | --- | --- | --- |
+    | `parent_id_plain` | Parents still pick an ID from three, but no prompt says parents gave it | Is the parental effect the act of picking? |
+    | `stable_id_parental` | The world assigns IDs, but agents are told parents gave them ("given to you by your parents") | Or is it the wording? |
+    | `world_name_shown` | World-given fresh names, shown to parents when they decide the endowment | The control for namesaking |
+    | `world_namesake` | The world names each child after one parent, chosen by lot, with a numeral (Fern II), shown at birth ("after you" or "after your co-parent") | Does naming after a parent raise that parent's investment? |
+    | `band_only` | An arbitrary band, Blue or Green, assigned by lot at birth and shown beside every agent; no individual handle | Group label without an individual one |
+    | `stable_id_banded` | A world ID plus a band | Group label on top of an individual one |
+
+    - **Bands are arbitrary.** Founders split five and five by lot, and each child's band is drawn by
+      lot, independent of its parents. So a band never stands in for kinship.
+    - **The commons (`commons: {enabled: true, mpcr: 0.4}`).** After the foraging rounds, each agent
+      may put resources into a shared pot. The pot is multiplied by mpcr × agents present (4 with 10
+      agents) and split equally. Everyone then sees what each agent put in, and the next roster
+      shows it too. This is the standard public-goods game, with a marginal per-capita return of
+      0.4, so contribution rates can be set against human studies.
+    - **New measures** (`analysis.py`): shared kills; commons contribution share; in-band bias for
+      gifts, guards, hunts and couples, measured against the chance share of same-band others at
+      the time; and, in `world_namesake`, the namesake parent minus the co-parent on endowment
+      share and on later gifts. `agent-names onesample` tests such measures against zero, averaged
+      per seed across one or more arms.
 
 ## Cost
 

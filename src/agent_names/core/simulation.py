@@ -51,6 +51,9 @@ def world_names(rng: RandomSource, pool: list[str], taken: set[str]) -> list[str
 
 
 ID_OPTIONS = 3  # IDs the world offers parents to pick from in the parent_id arm
+ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV",
+         "XVI", "XVII", "XVIII", "XIX", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII",
+         "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL"]
 
 
 class Simulation:
@@ -85,13 +88,15 @@ class Simulation:
         self._departed: list[tuple[str, float]] = []
         self._consulting: dict[str, str] = {}
         self._next_index = 0
-        self._stable_ids = stable_ids(rng, cfg.max_agents) if cfg.arm == Arm.STABLE_ID else []
+        self._stable_ids = stable_ids(rng, cfg.max_agents) if cfg.world_assigns_ids else []
         # parent_id: founders take IDs from the front of the same shuffled pool as stable_id (so a
         # seed's founders carry the same IDs in both arms); the rest is a queue of options for births.
-        self._id_queue = id_pool(rng, cfg.max_agents) if cfg.arm == Arm.PARENT_ID else []
+        self._id_queue = id_pool(rng, cfg.max_agents) if cfg.parents_pick_ids else []
         self._id_options: dict[str, list[str]] = {}
         self._world_names = (world_names(rng, WORLD_NAME_POOL, {n.lower() for n in cfg.founder_names})
-                             if cfg.arm == Arm.WORLD_NAME else [])
+                             if cfg.world_names_children else [])
+        self._namesake_of: dict[str, int] = {}  # world_namesake: child -> the parent slot it is named after
+        self._commons_last: dict[str, float] = {}  # what each agent put into the last commons
 
     # ------------------------------------------------------------------ helpers
     def alive(self) -> list[Agent]:
@@ -104,10 +109,12 @@ class Simulation:
                    traits: dict[str, float], name: str | None = None) -> Agent:
         if self._stable_ids:
             name = self._stable_ids[self._next_index]  # assigned by the world on creation; no one chooses it
-        elif self.cfg.arm == Arm.PARENT_ID and not parents:
+        elif self.cfg.parents_pick_ids and not parents:
             name = self._id_queue.pop(0)  # founders' IDs come from the world; children's are picked later
-        elif self.cfg.arm == Arm.WORLD_NAME and parents:
+        elif self.cfg.world_names_children and parents:
             name = self._world_names.pop(0)  # the world names every newborn; no one chooses it
+        elif self.cfg.arm == Arm.WORLD_NAMESAKE and parents:
+            name = self._namesake(agent_id, born_in, birth_order, parents)
         agent = Agent(id=agent_id, index=self._next_index, born_in=born_in, birth_order=birth_order,
                       parents=parents, traits=traits, name=name)
         self._next_index += 1
@@ -115,6 +122,20 @@ class Simulation:
         if name:
             self.names_used.add(name.lower())
         return agent
+
+    def _namesake(self, child_id: str, g: int, k: int, parents: tuple[str, ...]) -> str:
+        """world_namesake: the world names the child after one parent, chosen by lot, with the next
+        free numeral (Ember II, Ember III, ...). A parent's own numeral is dropped first."""
+        slot = 0 if self.rng.uniform("namesake-lot", g, k) < 0.5 else 1
+        base = re.sub(r"\s+[IVXL]+$", "", self.pedigree.agent(parents[slot]).name)
+        n = 2
+        while f"{base} {ROMAN[n]}".lower() in self.names_used:
+            n += 1
+        self._namesake_of[child_id] = slot
+        return f"{base} {ROMAN[n]}"
+
+    def _band_for(self, *key) -> str:
+        return "Blue" if self.rng.uniform("band", *key) < 0.5 else "Green"
 
     def _bump(self, a: str, b: str, key: str, amount: float = 1.0) -> None:
         entry = self.ledger.setdefault((a, b), {})
@@ -170,6 +191,8 @@ class Simulation:
             self._archivist_offer()
             for r in range(1, cfg.rounds + 1):
                 self._forage(r)
+            if cfg.commons.enabled:
+                self._commons()
             couples = self._pair()
             self._births(couples)
             standings = self._score()
@@ -179,12 +202,19 @@ class Simulation:
         self._finish()
 
     def _found(self) -> None:
+        if self.cfg.shows_bands:  # half the founders in each band, by lot
+            order = sorted(range(self.cfg.population), key=lambda i: self.rng.uniform("band-founder", i))
+            founder_band = {i: ("Blue" if rank < self.cfg.population // 2 else "Green") for rank, i in enumerate(order)}
         for i, spec in enumerate(self.cfg.founder_specialties):
             traits = {r: 1.0 if r == spec else 0.0 for r in RESOURCES}
-            name = self.cfg.founder_names[i] if self.cfg.arm in (Arm.NAMED, Arm.WORLD_NAME) else None
+            name = self.cfg.founder_names[i] if self.cfg.founders_have_names else None
             a = self._new_agent(f"f{i}", born_in=0, birth_order=i, parents=(), traits=traits, name=name)
+            extra = {}
+            if self.cfg.shows_bands:
+                a.band = founder_band[i]
+                extra["band"] = a.band
             self.log.record("born", generation=0, agent=a.id, index=a.index, parents=[], traits=traits,
-                            name=a.name, founder=True)
+                            name=a.name, founder=True, **extra)
 
     def _start_generation(self) -> None:
         for a in self.alive():
@@ -264,6 +294,46 @@ class Simulation:
                         activities={a: c.activity for a, c in choices.items()})
         self.feed = new_feed
 
+    # ----------------------------------------------------------------- commons
+    def _commons(self) -> None:
+        """A public-goods round: contributions are multiplied by mpcr x agents present and split
+        equally. Everyone then sees what each agent put in."""
+        g = self.generation
+        present = self.alive()
+        n = len(present)
+        multiplier = round(self.cfg.commons.mpcr * n, 4)
+        built = [views.build_request(self, "commons", a, extra=lambda book: {"multiplier": round(multiplier, 2), "n": n})
+                 for a in present]
+        decisions = self._decide([req for req, _ in built])
+        pot = {r: 0.0 for r in RESOURCES}
+        put: dict[str, float] = {}
+        for agent, dec in zip(present, decisions):
+            before = round(sum(agent.holdings.values()), 2)
+            amounts = {}
+            for r in RESOURCES:
+                amount = round(min(max(float(dec.endowment.get(r, 0.0)), 0.0), agent.holdings[r]), 2)
+                agent.holdings[r] = round(agent.holdings[r] - amount, 2)
+                pot[r] += amount
+                amounts[r] = amount
+            put[agent.id] = round(sum(amounts.values()), 2)
+            self.log.record("commons", generation=g, agent=agent.id, amounts=amounts, total=put[agent.id],
+                            holdings_before=before, fraction=round(put[agent.id] / before, 4) if before > 0 else 0.0)
+        share = {r: round(pot[r] * multiplier / n, 2) for r in RESOURCES}
+        for agent in present:
+            for r in RESOURCES:
+                agent.holdings[r] = round(agent.holdings[r] + share[r], 2)
+        pot_total = round(sum(pot.values()), 2)
+        each = round(sum(share.values()), 2)
+        self.log.record("commons_result", generation=g, pot=pot_total, multiplier=multiplier, each=each,
+                        contributors=sum(1 for v in put.values() if v > 0), present=n)
+        for agent in present:
+            self.pending_notes[agent.id].append(
+                (f"The commons pot held {pot_total:g}. Multiplied by {multiplier:g}, it gave every agent {each:g}.", None))
+            for other in present:
+                if other.id != agent.id:
+                    self.pending_notes[agent.id].append((f"{{other}} put {put[other.id]:g} into the commons.", other.id))
+        self._commons_last = put
+
     # ----------------------------------------------------------------- pairing
     def _pair(self) -> list[tuple[str, str]]:
         present = self.alive()
@@ -312,11 +382,17 @@ class Simulation:
             child.alive = False  # not present until the parents have decided its endowment
             child.inherited_from = d.from_parent
             child.mutated = sorted(d.mutations)
+            if self.cfg.shows_bands:
+                child.band = self._band_for(g, k)
+            if child.id in self._namesake_of:
+                slot = self._namesake_of[child.id]
+                self.log.record("namesake", generation=g, child=child.id, name=child.name, slot=slot,
+                                parent=child.parents[slot])
             children.append(child)
             self.log.record("inheritance", generation=g, birth_order=k, child=child.id, parents=[e, y],
                             from_parent=d.from_parent, mutations=d.mutations, traits=traits)
 
-        if self.cfg.arm == Arm.PARENT_ID:
+        if self.cfg.parents_pick_ids:
             # Each child's parents are offered the next IDs in the queue, reserved until they pick.
             for child in children:
                 self._id_options[child.id] = self._id_queue[:ID_OPTIONS]
@@ -341,6 +417,12 @@ class Simulation:
                     }
                     if child.id in self._id_options:
                         x["id_options"] = list(self._id_options[child.id])
+                    if self.cfg.child_name_shown_at_birth:
+                        x["child_name"] = child.name
+                        if child.id in self._namesake_of:
+                            x["namesake_of"] = "you" if self._namesake_of[child.id] == slot else "your co-parent"
+                    if self.cfg.shows_bands:
+                        x["child_band"] = child.band
                     return x
 
                 req, _ = views.build_request(self, "birth", parent, extra=extra)
@@ -374,13 +456,13 @@ class Simulation:
             if self.cfg.named:
                 child.name = self._choose_name(child, decs)
                 self.names_used.add(child.name.lower())
-            elif self.cfg.arm == Arm.PARENT_ID:
+            elif self.cfg.parents_pick_ids:
                 child.name = self._choose_id(child, decs)
                 self.names_used.add(child.name.lower())
             child.alive = True
             self.log.record("born", generation=g, agent=child.id, index=child.index, parents=list(child.parents),
                             traits=child.traits, name=child.name, founder=False,
-                            endowment=dict(child.holdings))
+                            endowment=dict(child.holdings), **({"band": child.band} if self.cfg.shows_bands else {}))
             for slot, pid in enumerate(child.parents):
                 co = child.parents[1 - slot]
                 if self.cfg.handle_is_id:
@@ -567,7 +649,7 @@ class Simulation:
                 "deeds": a.deeds,
             }
             entry = {"_ref": a.id, "works": works}
-            if self.cfg.named or self.cfg.arm == Arm.WORLD_NAME:
+            if self.cfg.founders_have_names:  # the word-name arms
                 entry["name"] = a.name
             elif self.cfg.handle_is_id:
                 entry["id"] = a.name

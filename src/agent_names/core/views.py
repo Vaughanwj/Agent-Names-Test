@@ -32,6 +32,8 @@ def describe(sim: "Simulation", viewer: Agent, other_id: str, book: LabelBook | 
     """A reference to another agent as the viewer sees it, e.g. '[3] Ash (your sibling)'."""
     other = sim.pedigree.agent(other_id)
     relation = sim.pedigree.relation(viewer.id, other_id)
+    if sim.cfg.shows_bands:
+        relation = f"{other.band} band; {relation}"
     name = other.name if sim.cfg.shows_handles else None
     if book and other_id in book.by_id:
         head = f"[{book.by_id[other_id]}]" + (f" {name}" if name else "")
@@ -86,7 +88,7 @@ def parents_line(sim: "Simulation", me: Agent, book: LabelBook) -> str:
 
 
 def self_view(sim: "Simulation", me: Agent, book: LabelBook, standing: float | None) -> SelfView:
-    if sim.cfg.parents_choose:  # named, parent_id
+    if sim.cfg.parents_credited:  # named, parent_id, stable_id_parental
         givers = "the world" if me.is_founder else "your parents"
     elif sim.cfg.shows_handles:
         givers = "the world"  # stable_id, world_name: every handle is assigned by the world, newborns' included
@@ -103,6 +105,7 @@ def self_view(sim: "Simulation", me: Agent, book: LabelBook, standing: float | N
         gathered=dict(me.gathered),
         given=me.given,
         standing=standing,
+        band=me.band if sim.cfg.shows_bands else None,
     )
 
 
@@ -125,6 +128,8 @@ def other_view(sim: "Simulation", me: Agent, other: Agent, label: int, standing:
         },
         standing=standing,
         can_pair=can_pair,
+        band=other.band if sim.cfg.shows_bands else None,
+        commons_last=sim._commons_last.get(other.id) if sim.cfg.commons.enabled else None,
     )
 
 

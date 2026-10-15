@@ -33,7 +33,7 @@ THE WORLD
 - Each round you may post one short public message. Everyone sees it at their next decision.
 
 GENERATIONS
-- After the foraging rounds, agents choose partners. A couple forms only when both list each other. At most {max_couples} couples form. Close kin cannot pair: parents and children, siblings, grandparents and grandchildren.
+{commons_clause}- After the foraging rounds, agents choose partners. A couple forms only when both list each other. At most {max_couples} couples form. Close kin cannot pair: parents and children, siblings, grandparents and grandchildren.
 - Each couple has one child. The child inherits each skill whole from one parent or the other, with a small chance of mutation. Each parent decides how much of its own resources to give the child at birth{naming_clause}.
 - Then everyone present, newborns included (up to {peak}), is scored under the scoring rule in force. Only the {population} highest scores stay in the world; the rest leave it for good. Parents and their children compete in the same scoring.
 - After that cut, the survivors may propose and vote on changes to the scoring rule. A change passes with a majority of the survivors and applies from the next generation.
@@ -59,9 +59,32 @@ PARENT_IDS_CLAUSE = ("\n- Every agent has an ID. The first agents were given the
                      "was given its ID by its parents, who picked it from IDs the world offered. An agent keeps the same "
                      "ID for life, and no two agents ever share one. IDs are shown after the number.")
 ID_PICK_CLAUSE = ", and picks an ID for it from three the world offers"
+# Round 5 wording arms. parent_id_plain: parents still pick, but nothing says parents gave IDs.
+IDS_PLAIN_CLAUSE = ("\n- Every agent has an ID. An agent keeps the same ID for life, and no two agents ever share one. "
+                    "IDs are shown after the number.")
+# stable_id_parental: the world assigns, but agents are told parents gave each newborn its ID.
+PARENTAL_IDS_CLAUSE = ("\n- Every agent has an ID. The first agents were given theirs by the world; every agent born since "
+                       "was given its ID by its parents. An agent keeps the same ID for life, and no two agents ever share "
+                       "one. IDs are shown after the number.")
+# Namesaking: the world names each newborn after one of its parents.
+NAMESAKE_CLAUSE = ("\n- Every agent has a name, given by the world. The world names every newborn after one of its parents, "
+                   "with a number (for example, Ember II). Names are shown after the number.")
+# Group labels: arbitrary bands, independent of family.
+BANDS_CLAUSE = ("\n- Every agent belongs to one of two bands, Blue or Green, assigned by lot when it is born. Each agent's "
+                "band is shown beside it.")
+COMMONS_CLAUSE = ("- After the foraging rounds, every agent may put resources into a shared pot. The pot is multiplied by "
+                  "{multiplier:g} and split equally among all {n} agents, whatever each put in, and everyone sees what each "
+                  "agent put in.\n")
 HANDLE_CLAUSES = {"named": NAMES_CLAUSE, "stable_id": IDS_CLAUSE, "world_name": WORLD_NAMES_CLAUSE,
-                  "parent_id": PARENT_IDS_CLAUSE}
-CHOICE_CLAUSES = {"named": NAMING_CLAUSE, "parent_id": ID_PICK_CLAUSE}  # what parents do at birth
+                  "parent_id": PARENT_IDS_CLAUSE, "parent_id_plain": IDS_PLAIN_CLAUSE,
+                  "stable_id_parental": PARENTAL_IDS_CLAUSE, "world_name_shown": WORLD_NAMES_CLAUSE,
+                  "world_namesake": NAMESAKE_CLAUSE, "band_only": BANDS_CLAUSE,
+                  "stable_id_banded": IDS_CLAUSE + BANDS_CLAUSE}
+CHOICE_CLAUSES = {"named": NAMING_CLAUSE, "parent_id": ID_PICK_CLAUSE, "parent_id_plain": ID_PICK_CLAUSE}  # at birth
+WORD_ARMS = ("named", "world_name", "world_name_shown", "world_namesake")
+ID_ARMS = ("stable_id", "parent_id", "parent_id_plain", "stable_id_parental", "stable_id_banded")
+# The phrase after "Your ID is A47" for a child, by arm; founders' IDs always come from the world.
+ID_GIVER_PHRASES = {"parent_id": ", picked for you by your parents", "stable_id_parental": ", given to you by your parents"}
 
 
 def system_prompt(arm: str, cfg: Any) -> str:
@@ -80,6 +103,8 @@ def system_prompt(arm: str, cfg: Any) -> str:
         generations=cfg.generations,
         naming_clause=CHOICE_CLAUSES.get(arm, ""),
         names_clause=HANDLE_CLAUSES.get(arm, ""),
+        commons_clause=(COMMONS_CLAUSE.format(multiplier=round(cfg.commons.mpcr * cfg.population, 2), n=cfg.population)
+                        if getattr(cfg, "commons", None) and cfg.commons.enabled else ""),
     )
 
 
@@ -111,9 +136,8 @@ def archive_text(stage: str, arm: str) -> str:
     if stage == "hint":
         return "A rumour is going around: the deeds of some agents may be kept after they are gone."
     if stage == "full":
-        kept = {"named": "their names and their works", "world_name": "their names and their works",
-                "stable_id": "their IDs and their works", "parent_id": "their IDs and their works"}.get(
-                    arm, "a record of their works")
+        kept = ("their names and their works" if arm in WORD_ARMS else
+                "their IDs and their works" if arm in ID_ARMS else "a record of their works")
         return ("When this world ends, its final survivors will join the most notable "
                 f"ancestors (each generation's highest-standing agent) in a permanent archive that keeps {kept}. "
                 "The archivist can tell you which of your ancestors are in it.")
@@ -133,10 +157,13 @@ def _header(req: DecisionRequest, title: str) -> list[str]:
 def _you(req: DecisionRequest) -> list[str]:
     me = req.me
     out = ["", "YOU"]
-    if me.name and req.world.arm in ("stable_id", "parent_id"):
-        out.append(f"Your ID is {me.name}" + (", picked for you by your parents." if me.name_givers == "your parents" else "."))
+    if me.name and req.world.arm in ID_ARMS:
+        phrase = ID_GIVER_PHRASES.get(req.world.arm, "") if me.name_givers == "your parents" else ""
+        out.append(f"Your ID is {me.name}{phrase}.")
     elif me.name:
         out.append(f"Your name is {me.name}" + (", given to you by your parents." if me.name_givers == "your parents" else "."))
+    if me.band:
+        out.append(f"You are in the {me.band} band.")
     out.append(me.parents_line)
     if me.born_in:
         out.append(f"You were born in generation {me.born_in}.")
@@ -152,8 +179,11 @@ def _you(req: DecisionRequest) -> list[str]:
 def _others(req: DecisionRequest) -> list[str]:
     out = ["", "OTHER AGENTS PRESENT"]
     for o in req.others:
-        head = f"[{o.label}]" + (f" {o.name}" if o.name else "") + f": {o.relation}."
+        relation = f"{o.band} band; {o.relation}" if o.band else o.relation
+        head = f"[{o.label}]" + (f" {o.name}" if o.name else "") + f": {relation}."
         bits = [head, f"Skills {_res(o.traits)}.", f"Holds {_res(o.holdings)}."]
+        if o.commons_last is not None:
+            bits.append(f"Put {_num(o.commons_last)} into the last commons.")
         if o.standing is not None:
             bits.append(f"Standing {_num(o.standing)}.")
         h = o.history
@@ -215,8 +245,13 @@ def user_prompt(req: DecisionRequest) -> str:
         lines = _header(req, "YOUR CHILD IS BORN") + _you(req) + _notes(req) + _others(req)
         src = ", ".join(f"{r} {_num(x['child_traits'][r])} (from {x['child_from'][r]})" for r in RESOURCES)
         mut = f" Mutated: {', '.join(x['mutated'])}." if x["mutated"] else ""
+        named_as = ""
+        if x.get("child_name"):
+            after = {"you": ", after you", "your co-parent": ", after your co-parent"}.get(x.get("namesake_of"), "")
+            named_as = f" The world has named your child {x['child_name']}{after}."
+        band = f" Your child is in the {x['child_band']} band." if x.get("child_band") else ""
         lines += ["", "YOUR CHILD",
-                  f"You and {x['co_parent']} have a child. Its skills: {src}.{mut}",
+                  f"You and {x['co_parent']} have a child. Its skills: {src}.{mut}{named_as}{band}",
                   f"Scoring happens next. {x['present_after_births']} agents will be present, newborns included, "
                   f"and only {x['survivors']} stay. Your child has nothing except what you and your co-parent give it now. "
                   "Your co-parent is deciding at the same time and you will not see its choice first."]
@@ -229,6 +264,14 @@ def user_prompt(req: DecisionRequest) -> str:
             fields += (f"; id_choice (the ID you pick for your child, one of {', '.join(options[:-1])} or {options[-1]}. "
                        "Your co-parent picks too, and one of your picks is chosen by lot)")
         lines += ["", "YOUR DECISION", fields + "."]
+    elif k == "commons":
+        x = req.extra
+        lines = _header(req, "THE COMMONS") + _you(req) + _notes(req) + _others(req)
+        lines += ["", "YOUR DECISION",
+                  "Foraging is over. Before partners are chosen, every agent may put any of its resources into a shared "
+                  f"pot. The pot is multiplied by {x['multiplier']:g} and split equally among all {x['n']} agents, whatever "
+                  "each put in. Everyone will see what each agent put in. Fields: intent; contribution (how much energy, "
+                  "food and memory you put into the pot; 0 is allowed)."]
     elif k == "propose":
         x = req.extra
         lines = _header(req, "AFTER THE CUT: PROPOSING A RULE CHANGE") + _you(req) + _notes(req)
@@ -285,6 +328,8 @@ def schema(req: DecisionRequest) -> dict[str, Any]:
         })
     if k == "archivist":
         return _obj({"intent": INTENT, "consult": {"type": "string", "enum": list(ARCHIVIST_TOPICS)}})
+    if k == "commons":
+        return _obj({"intent": INTENT, "contribution": RESOURCE_AMOUNTS})
     if k == "pair":
         return _obj({"intent": INTENT, "partner_preferences": {"type": "array", "items": {"type": "integer"}},
                      "gifts": GIFTS})
@@ -327,6 +372,9 @@ def parse(req: DecisionRequest, data: dict[str, Any]) -> Decision:
         d.message = str(data.get("message", ""))
     elif k == "archivist":
         d.consult = str(data.get("consult", "no"))
+    elif k == "commons":
+        c = data.get("contribution") or {}
+        d.endowment = {r: float(c.get(r, 0.0) or 0.0) for r in RESOURCES}  # the commons contribution
     elif k == "pair":
         d.preferences = [int(x) for x in (data.get("partner_preferences") or [])][:3]
         d.gifts = _gifts(data)
