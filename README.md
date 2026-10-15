@@ -379,3 +379,17 @@ What the check runs showed (seed 1, both arms, 4 generations of 3 rounds, about 
 | The data (`data/`) | [CC BY 4.0](data/LICENSE.md) |
 | The paper (`paper/`, text and figures) | CC BY 4.0 |
 | The documentation (`docs/`) | CC BY 4.0 |
+
+## Citation
+
+The paper (preprint):
+
+> Wynne-Jones, V. (2026). *What's in a Name? Addressability, Parental Framing and Group Labels in
+> Generational Populations of LLM Agents.* Zenodo. https://doi.org/10.5281/zenodo.23396932
+
+The code and data, archived at v1.0:
+
+> Wynne-Jones, V. (2026). *Agent-Names-Test: simulator, pre-registrations and data (v1.0).* Zenodo.
+> https://doi.org/10.5281/zenodo.23396934
+
+Both DOIs are reserved and resolve once the Zenodo records are published.

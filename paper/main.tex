@@ -32,8 +32,11 @@
 \newcommand{\STUDYFOURCOST}{75.07}
 
 \title{What's in a Name?\\[4pt]\large Addressability, Parental Framing and Group Labels in Generational Populations of LLM Agents}
-\author{Vaughan Wynne-Jones\\{\small Independent researcher}}
-\date{October 2026}
+\newcommand{\PAPERDOI}{10.5281/zenodo.23396932}
+\newcommand{\SOFTWAREDOI}{10.5281/zenodo.23396934}
+\author{Vaughan Wynne-Jones\\{\small Independent researcher}\\
+{\small ORCID: \href{https://orcid.org/0009-0006-3469-7151}{0009-0006-3469-7151}}}
+\date{October 2026\ifx\PAPERDOI\empty\else\\[2pt]{\small Preprint, \href{https://doi.org/\PAPERDOI}{doi:\PAPERDOI}}\fi}
 
 \begin{document}
 \maketitle
@@ -479,7 +482,9 @@ text. The agents in the simulation are Claude Haiku~5.5. All API costs were paid
 \section*{Data and code availability}
 
 The simulator, configurations, pre-registrations, event logs of every run and the analysis
-outputs are at \url{https://github.com/Vaughanwj/Agent-Names-Test}. Each pre-registration is
+outputs are at \url{https://github.com/Vaughanwj/Agent-Names-Test}\ifx\SOFTWAREDOI\empty\else, and
+the version this paper reports (v1.0) is archived at Zenodo,
+\href{https://doi.org/\SOFTWAREDOI}{doi:\SOFTWAREDOI}\fi. Each pre-registration is
 identified by the commit at which it was registered (Table~\ref{tab:studies}). The figures are
 generated from the event logs by \texttt{paper/make\_figures.py}. Study~4's registered analysis
 is \texttt{scripts/analyze\_round5.py}, and its exploratory analyses are
