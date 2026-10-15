@@ -2,7 +2,8 @@
 
 `python -m tests.fingerprints` (from the repo root, with src on the path) prints the current
 fingerprints as JSON; tests/golden_fingerprints.json holds the ones recorded before the
-world_name and parent_id arms were added.
+round-5 arms and the commons were added (named, unnamed and stable_id match those recorded before
+world_name and parent_id existed).
 """
 
 from __future__ import annotations
@@ -18,7 +19,7 @@ from agent_names.adapters.scripted_mind import ScriptedMind
 
 from .helpers import run_sim
 
-GOLDEN_ARMS = ("named", "unnamed", "stable_id")
+GOLDEN_ARMS = ("named", "unnamed", "stable_id", "world_name", "parent_id")
 GOLDEN_SEEDS = (1, 2)
 GOLDEN_RUN = {"generations": 3, "rounds": 2}
 

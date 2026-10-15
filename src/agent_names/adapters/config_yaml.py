@@ -9,7 +9,7 @@ from typing import Any
 
 import yaml
 
-from ..core.config import GovernanceConfig, RunConfig
+from ..core.config import CommonsConfig, GovernanceConfig, RunConfig
 from ..core.foraging import ForagingConfig
 from ..core.inheritance import InheritanceConfig
 from ..core.model import Arm, ScoringRule
@@ -55,6 +55,7 @@ def run_config(doc: dict[str, Any], arm: str, seed: int, run_id: str) -> RunConf
         reveal_hint=reveal.get("hint"),
         reveal_full=reveal.get("full", 1),
         governance=_build(GovernanceConfig, doc.get("governance")),
+        commons=_build(CommonsConfig, doc.get("commons")),
         initial_rule=_build(ScoringRule, doc.get("scoring")),
         message_max_chars=doc.get("message_max_chars", 240),
         mind=doc.get("mind", {"kind": "scripted"}),

@@ -70,6 +70,11 @@ class ScriptedMind:
             d.consult = "ancestors" if req.extra["ancestors"] else "descendants"
         return d
 
+    def _commons(self, req, u) -> Decision:
+        share = 0.4 * u("give")
+        return Decision(kind="commons", intent="put some in",
+                        endowment={r: round(req.me.holdings[r] * share, 2) for r in RESOURCES})
+
     def _pair(self, req, u) -> Decision:
         eligible = sorted((o for o in req.others if o.can_pair), key=lambda o: -(o.standing or 0))
         prefs = [o.label for o in eligible[:3]] if u("want") < 0.85 else []

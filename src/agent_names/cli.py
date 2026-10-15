@@ -69,6 +69,13 @@ def cmd_summarize(args) -> None:
         print(summary.read_text(encoding="utf-8"))
 
 
+def cmd_onesample(args) -> None:
+    arms = [a.strip() for a in args.arms.split(",")]
+    measures = [m.strip() for m in args.measures.split(",")]
+    result = analysis.one_sample([Path(b) for b in args.batch], arms, measures)
+    print(json.dumps(result, indent=2))
+
+
 def cmd_estimate(args) -> None:
     doc = config_yaml.load(args.config) if args.config else {}
     cal = cost.calibrate(sorted(Path(args.calibration).glob("*/events.jsonl")))
@@ -107,6 +114,12 @@ def main(argv: list[str] | None = None) -> None:
     ss.add_argument("--pair-by", choices=["batch", "seed"], default="batch",
                     help="pair runs by (batch, seed), the default, or by seed alone across batches")
     ss.set_defaults(func=cmd_summarize)
+
+    so = sub.add_parser("onesample", help="test measures against zero within one or more arms, averaged per seed")
+    so.add_argument("batch", nargs="+")
+    so.add_argument("--arms", required=True, help="comma-separated arms, averaged per seed, e.g. band_only,stable_id_banded")
+    so.add_argument("--measures", required=True, help="comma-separated measure names")
+    so.set_defaults(func=cmd_onesample)
 
     se = sub.add_parser("estimate", help="estimate cost from a dry-run plan and a real calibration batch")
     se.add_argument("--plan", required=True, help="batch dir of a full-length scripted run")

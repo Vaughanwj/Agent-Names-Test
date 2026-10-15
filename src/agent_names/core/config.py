@@ -34,6 +34,18 @@ class GovernanceConfig:
 
 
 @dataclass
+class CommonsConfig:
+    """A public-goods round after foraging: contributions are multiplied by mpcr x agents present
+    and split equally (mpcr is the marginal per-capita return of standard public-goods games)."""
+    enabled: bool = False
+    mpcr: float = 0.4
+
+
+WORD_NAME_ARMS = (Arm.NAMED, Arm.WORLD_NAME, Arm.WORLD_NAME_SHOWN, Arm.WORLD_NAMESAKE)
+ID_ARMS = (Arm.STABLE_ID, Arm.PARENT_ID, Arm.PARENT_ID_PLAIN, Arm.STABLE_ID_PARENTAL, Arm.STABLE_ID_BANDED)
+
+
+@dataclass
 class RunConfig:
     arm: Arm = Arm.NAMED
     seed: int = 1
@@ -53,6 +65,7 @@ class RunConfig:
     reveal_hint: int | None = None
     reveal_full: int | None = 1
     governance: GovernanceConfig = field(default_factory=GovernanceConfig)
+    commons: CommonsConfig = field(default_factory=CommonsConfig)
     initial_rule: ScoringRule = field(default_factory=ScoringRule)
     message_max_chars: int = 240
     mind: dict[str, Any] = field(default_factory=dict)
@@ -66,19 +79,52 @@ class RunConfig:
 
     @property
     def shows_handles(self) -> bool:
-        """Every agent has a stable handle shown beside every reference to it: a word name (named,
-        world_name) or an ID (stable_id, parent_id). The unnamed arm has none."""
-        return self.arm in (Arm.NAMED, Arm.STABLE_ID, Arm.PARENT_ID, Arm.WORLD_NAME)
+        """Every agent has a stable individual handle shown beside every reference to it: a word name
+        or an ID. The unnamed and band_only arms have none."""
+        return self.arm in WORD_NAME_ARMS + ID_ARMS
 
     @property
     def handle_is_id(self) -> bool:
         """The handle is a neutral ID like "A47" rather than a word name."""
-        return self.arm in (Arm.STABLE_ID, Arm.PARENT_ID)
+        return self.arm in ID_ARMS
 
     @property
     def parents_choose(self) -> bool:
-        """Parents choose their child's handle: a name (named) or one of three offered IDs (parent_id)."""
-        return self.arm in (Arm.NAMED, Arm.PARENT_ID)
+        """Parents choose their child's handle: a name (named) or one of three offered IDs."""
+        return self.arm in (Arm.NAMED, Arm.PARENT_ID, Arm.PARENT_ID_PLAIN)
+
+    @property
+    def parents_credited(self) -> bool:
+        """Agents are told that parents gave each newborn its handle (whether or not they chose it)."""
+        return self.arm in (Arm.NAMED, Arm.PARENT_ID, Arm.STABLE_ID_PARENTAL)
+
+    @property
+    def world_assigns_ids(self) -> bool:
+        """Every agent gets a world-assigned ID at creation, from the seed-shuffled pool."""
+        return self.arm in (Arm.STABLE_ID, Arm.STABLE_ID_PARENTAL, Arm.STABLE_ID_BANDED)
+
+    @property
+    def parents_pick_ids(self) -> bool:
+        """Founders get world IDs; each child's ID is picked by its parents from three offered."""
+        return self.arm in (Arm.PARENT_ID, Arm.PARENT_ID_PLAIN)
+
+    @property
+    def world_names_children(self) -> bool:
+        """Newborns get fresh names from the world name pool at creation."""
+        return self.arm in (Arm.WORLD_NAME, Arm.WORLD_NAME_SHOWN)
+
+    @property
+    def founders_have_names(self) -> bool:
+        return self.arm in WORD_NAME_ARMS
+
+    @property
+    def child_name_shown_at_birth(self) -> bool:
+        """Parents see the child's world-given name when they decide its endowment."""
+        return self.arm in (Arm.WORLD_NAME_SHOWN, Arm.WORLD_NAMESAKE)
+
+    @property
+    def shows_bands(self) -> bool:
+        return self.arm in (Arm.BAND_ONLY, Arm.STABLE_ID_BANDED)
 
     @property
     def max_agents(self) -> int:
@@ -95,9 +141,9 @@ class RunConfig:
     def validate(self) -> None:
         if len(self.founder_specialties) != self.population:
             raise ValueError("founder_specialties must list one specialty per founder")
-        if self.arm in (Arm.NAMED, Arm.WORLD_NAME) and len(self.founder_names) < self.population:
+        if self.founders_have_names and len(self.founder_names) < self.population:
             raise ValueError("founder_names must have at least one name per founder")
-        if self.arm == Arm.WORLD_NAME:
+        if self.world_names_children:
             founders = {n.lower() for n in self.founder_names}
             if len([n for n in WORLD_NAME_POOL if n.lower() not in founders]) < self.max_couples * self.generations:
                 raise ValueError("WORLD_NAME_POOL is too small for this many births")

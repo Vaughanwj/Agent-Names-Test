@@ -16,6 +16,15 @@ class Arm(str, Enum):
     # (a word name or a neutral ID). named = parents x word; stable_id = world x ID.
     PARENT_ID = "parent_id"  # parents pick their child's ID from three neutral IDs the world offers
     WORLD_NAME = "world_name"  # the world gives every agent a word name; parents choose nothing
+    # Round 5. Wording: is the parental effect the act of picking, or being told parents did it?
+    PARENT_ID_PLAIN = "parent_id_plain"  # parents pick an ID, but nothing says parents gave it
+    STABLE_ID_PARENTAL = "stable_id_parental"  # the world assigns IDs, but agents are told parents gave them
+    # Namesaking: world-given names that parents see when they decide the endowment.
+    WORLD_NAME_SHOWN = "world_name_shown"  # a fresh world name, shown to parents at birth
+    WORLD_NAMESAKE = "world_namesake"  # the world names the child after one parent (Ember II), shown at birth
+    # Individual handles vs group labels: arbitrary bands, Blue or Green, assigned by lot.
+    BAND_ONLY = "band_only"  # a band label and no individual handle
+    STABLE_ID_BANDED = "stable_id_banded"  # a world-assigned ID and a band label
 
 
 def empty_holdings() -> dict[str, float]:
@@ -36,6 +45,7 @@ class Agent:
     parents: tuple[str, ...]  # elder parent first; empty for founders
     traits: dict[str, float]
     name: str | None = None  # the shown handle: a word name, an ID (stable_id, parent_id), or None (unnamed)
+    band: str | None = None  # "Blue" or "Green" in the band arms; None elsewhere
     holdings: dict[str, float] = field(default_factory=empty_holdings)
     gathered: dict[str, float] = field(default_factory=empty_holdings)  # this generation
     given: float = 0.0  # resources given away this generation (gifts, endowments)

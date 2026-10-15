@@ -14,7 +14,7 @@ from .model import Agent, ScoringRule
 # What an agent is shown, and what it may answer. Built by core.views.
 # ---------------------------------------------------------------------------
 
-DECISION_KINDS = ("archivist", "forage", "pair", "birth", "propose", "vote")
+DECISION_KINDS = ("archivist", "forage", "commons", "pair", "birth", "propose", "vote")
 ACTIVITIES = ("gather_energy", "hunt_alone", "hunt_together", "collect_memory", "guard_memory")
 ARCHIVIST_TOPICS = ("no", "ancestors", "descendants")
 
@@ -30,6 +30,8 @@ class OtherView:
     history: dict[str, float]  # gave_you, you_gave, guarded_you, you_guarded, hunted_together
     standing: float | None = None  # current score, shown only where it matters
     can_pair: bool | None = None  # pairing requests only
+    band: str | None = None  # band arms only
+    commons_last: float | None = None  # what it put into the last commons, when the commons runs
 
 
 @dataclass
@@ -44,6 +46,7 @@ class SelfView:
     gathered: dict[str, float]
     given: float
     standing: float | None = None
+    band: str | None = None  # band arms only
 
 
 @dataclass

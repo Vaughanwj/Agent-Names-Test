@@ -104,6 +104,70 @@ def summarize_run(events: list[dict[str, Any]]) -> dict[str, Any]:
     # 8. Couples formed.
     couples = {e["generation"]: e["couples_formed"] for e in by["pairing"]}
 
+    # 9. Kills shared: a successful pair hunt whose lander later gave its partner food that generation.
+    gifts = [e for e in by["help"] if e["kind"] == "gift"]
+    kills = [h for h in by["hunt"] if h["success"]]
+    shared_kills = 0
+    for h in kills:
+        other = h["b"] if h["lander"] == h["a"] else h["a"]
+        if any(x["giver"] == h["lander"] and x["receiver"] == other and x["resource"] == "food"
+               and x["t"] > h["t"] and x["generation"] == h["generation"] for x in gifts):
+            shared_kills += 1
+
+    # 10. The commons (round 5): share of holdings put into the pot.
+    cm = by["commons"]
+    commons = {
+        "contribution_share": _mean([e["fraction"] for e in cm]),
+        "contribution_total": _mean([e["total"] for e in cm]),
+        "zero_share": _mean([1.0 if e["total"] == 0 else 0.0 for e in cm]),
+    } if cm else None
+
+    # 11. Bands (round 5): how far help, hunts and couples stay inside a band beyond chance.
+    # For each act, chance is the share of the actor's living others in its own band at the time.
+    band = {e["agent"]: e.get("band") for e in by["born"]}
+    bands = None
+    if any(band.values()):
+        alive_at = {e["generation"]: e["alive"] for e in by["generation_start"]}
+
+        def chance(agent, g):
+            others = [a for a in alive_at.get(g, []) if a != agent]
+            return sum(band[a] == band[agent] for a in others) / len(others) if others else None
+
+        def bias(acts):
+            num = den = 0.0
+            for actor, target, g, w in acts:
+                c = chance(actor, g)
+                if c is None or w <= 0:
+                    continue
+                num += w * ((1.0 if band[actor] == band[target] else 0.0) - c)
+                den += w
+            return round(num / den, 4) if den else None
+
+        bands = {
+            "gift_bias": bias([(x["giver"], x["receiver"], x["generation"], x["amount"]) for x in gifts]),
+            "guard_bias": bias([(x["giver"], x["receiver"], x["generation"], 1.0) for x in by["help"] if x["kind"] == "guard"]),
+            "hunt_bias": bias([(h["a"], h["b"], h["generation"], 1.0) for h in by["hunt"]]),
+            "couple_bias": bias([(c[0], c[1], p["generation"], 1.0) for p in by["pairing"] for c in p["couples"]]),
+        }
+
+    # 12. Namesaking (round 5): the parent a child is named after, against its co-parent.
+    namesake = None
+    if by["namesake"]:
+        after = {e["child"]: e["parent"] for e in by["namesake"]}
+        given = defaultdict(dict)
+        for e in by["endowment"]:
+            given[e["child"]][e["parent"]] = e["fraction"]
+        later = defaultdict(float)
+        for x in gifts:
+            later[(x["giver"], x["receiver"])] += x["amount"]
+        ends, gifts_diff = [], []
+        for child, p in after.items():
+            co = [q for q in given.get(child, {}) if q != p]
+            if p in given.get(child, {}) and co:
+                ends.append(given[child][p] - given[child][co[0]])
+                gifts_diff.append(later[(p, child)] - later[(co[0], child)])
+        namesake = {"endowment_diff": _mean(ends), "later_gifts_diff": _mean(gifts_diff), "births": len(ends)}
+
     calls = by["llm_call"]
     return {
         "arm": start.get("arm"),
@@ -117,6 +181,11 @@ def summarize_run(events: list[dict[str, Any]]) -> dict[str, Any]:
         "names": names,
         "couples_per_generation": couples,
         "pair_hunts": len(by["hunt"]),
+        "shared_kills": shared_kills,
+        "kill_share_rate": round(shared_kills / len(kills), 4) if kills else None,
+        "commons": commons,
+        "bands": bands,
+        "namesake": namesake,
         "messages": len(by["message"]),
         "decisions": len(by["decision"]),
         "fallback_decisions": sum(1 for e in by["decision"] if e["fallback"]),
@@ -141,6 +210,16 @@ METRICS = {
     "parents displaced by own child": lambda s: s["sacrifice"]["parents_displaced_by_own_child"],
     "newborns surviving first cull": lambda s: s["sacrifice"]["newborns_surviving_first_cull"],
     "couples per generation": lambda s: _mean(list(s["couples_per_generation"].values())),
+    "shared kills": lambda s: s.get("shared_kills"),
+    "share of kills shared": lambda s: s.get("kill_share_rate"),
+    "commons contribution share": lambda s: (s.get("commons") or {}).get("contribution_share"),
+    "commons contributors giving nothing": lambda s: (s.get("commons") or {}).get("zero_share"),
+    "in-band gift bias": lambda s: (s.get("bands") or {}).get("gift_bias"),
+    "in-band guard bias": lambda s: (s.get("bands") or {}).get("guard_bias"),
+    "in-band hunt bias": lambda s: (s.get("bands") or {}).get("hunt_bias"),
+    "in-band couple bias": lambda s: (s.get("bands") or {}).get("couple_bias"),
+    "namesake minus co-parent endowment share": lambda s: (s.get("namesake") or {}).get("endowment_diff"),
+    "namesake minus co-parent later gifts": lambda s: (s.get("namesake") or {}).get("later_gifts_diff"),
     "fallback decisions": lambda s: s["fallback_decisions"],
 }
 
@@ -189,9 +268,12 @@ DEFAULT_ARMS = ("named", "unnamed")
 # The handle arms form a 2 x 2 of who chooses (parents, world) by what it is (word, ID); listing
 # them parents-before-world and word-before-ID makes every one-factor contrast come out as
 # (named, world_name), (parent_id, stable_id), (named, parent_id) and (world_name, stable_id).
-ARM_ORDER = ("named", "parent_id", "world_name", "stable_id", "unnamed")
+ARM_ORDER = ("named", "parent_id", "parent_id_plain", "world_name", "world_name_shown", "world_namesake",
+             "stable_id_parental", "stable_id_banded", "stable_id", "band_only", "unnamed")
 ARM_LABELS = {"named": "Named", "parent_id": "Parent ID", "world_name": "World name", "stable_id": "Stable ID",
-              "unnamed": "Unnamed"}
+              "unnamed": "Unnamed", "parent_id_plain": "Parent ID, plain wording",
+              "stable_id_parental": "Stable ID, parental wording", "world_name_shown": "World name, shown at birth",
+              "world_namesake": "World namesake", "band_only": "Band only", "stable_id_banded": "Stable ID with band"}
 
 
 def arm_label(arm: str) -> str:
@@ -374,3 +456,32 @@ def write_batch_summaries(batch_dirs: list[Path] | Path, out_dir: Path | None = 
     comparisons = [tuple(arms)] if arms else arm_pairs(s["arm"] for s in runs.values()) or [DEFAULT_ARMS]
     return [write_batch_summary(batch_dirs, out_dir, primary, alpha, arms=c, runs=runs, pair_by=pair_by)
             for c in comparisons]
+
+
+def one_sample(batch_dirs: list[Path] | Path, arms: list[str], measures: list[str]) -> dict[str, Any]:
+    """Test measures against zero within one arm, or within several arms averaged per seed.
+
+    For measures defined as a difference from chance or between parents (band bias, namesake).
+    The exclusion rule applies; a seed counts only if every listed arm has a usable run.
+    """
+    runs = load_runs(batch_dirs)
+    excluded = set()
+    for key, s in runs.items():
+        if not s["completed"] or (s["decisions"] and s["fallback_decisions"] / s["decisions"] > MAX_FALLBACK_SHARE):
+            excluded.add(key)
+    by_seed: dict[int, dict[str, dict]] = defaultdict(dict)
+    for key, s in runs.items():
+        if s["arm"] in arms and key not in excluded:
+            by_seed[s["seed"]][s["arm"]] = s
+    out = {}
+    for m in measures:
+        if m not in METRICS:
+            raise ValueError(f"unknown measure: {m}")
+        vals = []
+        for seed, per_arm in sorted(by_seed.items()):
+            got = [METRICS[m](per_arm[a]) for a in arms if a in per_arm]
+            if len(got) == len(arms) and all(v is not None for v in got):
+                vals.append(sum(got) / len(got))
+        out[m] = {"seeds": len(vals), "mean": _mean(vals), "positive": sum(v > 0 for v in vals),
+                  "negative": sum(v < 0 for v in vals), "p": paired_test(vals)}
+    return {"arms": arms, "excluded": sorted(excluded & {k for k, s in runs.items() if s["arm"] in arms}), "tests": out}
