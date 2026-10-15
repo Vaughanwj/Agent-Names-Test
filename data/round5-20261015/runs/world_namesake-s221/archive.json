@@ -1,0 +1,266 @@
+[
+  {
+    "_ref": "f0",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 6,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 92.5,
+      "deeds": [
+        "had the highest standing in generation 1 (15.8)",
+        "gathered the most energy in generation 2 (15.86)",
+        "gathered the most energy in generation 3 (16.23)"
+      ]
+    },
+    "name": "Ash"
+  },
+  {
+    "_ref": "f1",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 139.03,
+      "deeds": [
+        "gathered the most food in generation 1 (14.97)",
+        "gathered the most food in generation 2 (22.86)",
+        "had the highest standing in generation 2 (22.9)",
+        "gathered the most food in generation 3 (21)",
+        "gave away the most in generation 3 (7)",
+        "had the highest standing in generation 3 (17.5)",
+        "gathered the most food in generation 4 (23.91)",
+        "had the highest standing in generation 4 (23.1)",
+        "gathered the most food in generation 5 (25.38)",
+        "had the highest standing in generation 5 (26.9)",
+        "gathered the most food in generation 7 (16.06)",
+        "gathered the most food in generation 8 (7.77)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Brook"
+  },
+  {
+    "_ref": "f3",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 116.57,
+      "deeds": [
+        "gave away the most in generation 4 (5)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Dune"
+  },
+  {
+    "_ref": "g1b0",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 4,
+      "lifetime_gathered": 103.56,
+      "deeds": [
+        "gathered the most energy in generation 4 (16.4)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet II"
+  },
+  {
+    "_ref": "g3b0",
+    "works": {
+      "born_in": 3,
+      "founder": false,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 36.61,
+      "deeds": [
+        "gathered the most food in generation 6 (7.52)",
+        "gave away the most in generation 7 (12.4)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Brook II"
+  },
+  {
+    "_ref": "g4b0",
+    "works": {
+      "born_in": 4,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 61.91,
+      "deeds": [
+        "gathered the most energy in generation 5 (16.42)",
+        "gathered the most energy in generation 7 (15.82)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Dune II"
+  },
+  {
+    "_ref": "g6b1",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 30.56,
+      "deeds": [
+        "had the highest standing in generation 6 (39.2)",
+        "gathered the most energy in generation 8 (15.4)",
+        "gave away the most in generation 8 (15.4)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet IV"
+  },
+  {
+    "_ref": "g7b0",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 13.36,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet V"
+  },
+  {
+    "_ref": "g7b1",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 15.12,
+      "deeds": [
+        "had the highest standing in generation 8 (53.2)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet VI"
+  },
+  {
+    "_ref": "g7b2",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": 8,
+      "specialty": "energy",
+      "traits": {
+        "energy": 0.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 3.22,
+      "deeds": [
+        "had the highest standing in generation 7 (49.6)"
+      ]
+    },
+    "name": "Brook III"
+  },
+  {
+    "_ref": "g8b0",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 0.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Brook IV"
+  },
+  {
+    "_ref": "g8b1",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Brook V"
+  }
+]

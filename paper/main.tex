@@ -1,0 +1,495 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{threeparttable}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{placeins}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.18}
+\pgfplotstableset{col sep=semicolon}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage[type={CC},modifier={by},version={4.0}]{doclicense}
+
+\setlist{itemsep=2pt,topsep=4pt}
+\captionsetup{font=small,labelfont=bf}
+\newcommand{\arm}[1]{\texttt{#1}}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcommand{\pholm}{p_{\mathrm{Holm}}}
+\newcommand{\STUDYFOURRUNS}{330}
+\newcommand{\STUDYFOURCOST}{75.07}
+
+\title{What's in a Name?\\[4pt]\large Addressability, Parental Framing and Group Labels in Generational Populations of LLM Agents}
+\author{Vaughan Wynne-Jones\\{\small Independent researcher}}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\input{abstract}
+
+\section{Introduction}
+
+Populations of language-model agents are now used to study cooperation, norms and governance
+\citep{park2023generative,vallinder2024cultural,akkil2026emergence,akkil2026stress}. In most of
+these systems an agent's name is scaffolding: a label the designer attaches so that agents and
+logs can refer to one another. Human names do more than that. A name lets others point at the
+same individual again, which is what reputation and repeated cooperation need. A name is also
+given by someone, usually a parent, and it can carry family meaning: a child named after a parent
+advertises the tie \citep{obasi2016naming}, and in at least one human sample such children receive
+more paternal investment \citep{saffa2021namesake}.
+
+This paper asks whether those two functions can be separated in a population of LLM agents, and
+which behaviours follow which. We built a generational simulation in which agents forage, hunt in
+pairs, guard one another's stores, form couples, have children, decide how much to give each
+newborn, compete with their own children for a place in the next generation, and vote on the
+scoring rule. Every agent is the same model, Claude Haiku~5.5. The only thing that differs
+between the arms of the experiment is the handle each agent carries and how it is described: a
+name chosen by the agent's parents, a name or an ID assigned by the world, an ID picked by
+parents, a group label, or nothing at all. Everything else, including the history every agent
+sees of its dealings with every other agent, is identical across arms and driven by common random
+numbers.
+
+We report four pre-registered studies run in sequence, each designed in response to the last:
+
+\begin{enumerate}
+  \item \textbf{Named vs unnamed.} Parent-named populations formed more couples and held about
+        five times as many pair hunts as populations without names.
+  \item \textbf{A stable ID.} A world-assigned ID restored pair hunting to the named level but
+        did nothing for couple formation, which separated \emph{addressability} from
+        \emph{naming}.
+  \item \textbf{A $2\times2$ of who gives the handle by what it is.} Having parents give the
+        handle raised couple formation even when the handle was a meaningless ID; a word name
+        raised it only when the world assigned it; and only names chosen by parents raised
+        investment in newborns.
+  \item \textbf{A novelty round} on fresh seeds with eleven arms. The earlier results replicated,
+        and kill sharing followed parental names. Either the parental act or merely its wording
+        raised couple formation. Naming a child after a parent did not raise that parent's
+        investment. Arbitrary group labels biased pairing and hunting toward the in-group but,
+        added to individual IDs, doubled coordination. Agents put almost nothing into a shared
+        pot.
+\end{enumerate}
+
+Each test in the fourth study was registered with the human finding it is meant to be compared
+with, so that the results can be set beside the human literature (Section~\ref{sec:human}).
+The comparisons are of direction, not magnitude: these are claims about one model under one
+framing, not about people.
+
+\section{Related work}
+\label{sec:related}
+
+\paragraph{Generational and social LLM agent populations.}
+Generative agents showed that LLM-driven characters can sustain plausible social life in a shared
+world \citep{park2023generative}. Long-horizon agent towns with voting and self-amended rules,
+the starting point for this project, are studied on the Emergence World platform
+\citep{akkil2026emergence,akkil2026stress}. \citet{vallinder2024cultural} evolved generational
+populations playing the Donor Game and found that Claude-based societies developed cooperation
+where others did not. Two recent simulations add reproduction: \citet{zhou2026moral} let agents
+with prompted moral types reproduce, and found that kin-focused agents prioritise offspring;
+\citet{pasichnyk2026yerkes} builds reproduction on parental-investment theory, with offspring
+inheriting mutated attributes. Neither varies names.
+
+\paragraph{Identity labels in multi-agent LLM systems.}
+\citet{delgiudice2026identity} found that showing agents a model-family label, or even an
+arbitrary shared label, split them into factions and degraded coordination; withholding the
+labels removed the effect. \citet{chen2026favor} found that a group label alone produces little
+in-group favouritism when giving is costly, and that shared interaction history matters more.
+\citet{hu2026dissociative} argue that reputation mechanisms presuppose persistent identities,
+which LLM agents often lack. Those studies vary \emph{group} labels or the persistence of
+identity across sessions. We vary unique \emph{individual} handles, who gives them and what they
+say, inside one persistent world, and in the fourth study set group labels beside them directly.
+
+\paragraph{Human research.}
+In public-goods experiments, identifying individuals raises contributions, while identifying only
+groups does little \citep{andreoni2004public,christens2019identification}; names alone had no
+direct effect in one recent study \citep{sampaio2023identity}. Standard public-goods games find
+contributions starting around 40--60\% of the endowment and declining with repetition
+\citep{ledyard1995public,chaudhuri2011sustaining,fehr2000cooperation}. Arbitrary group labels are
+enough to produce in-group favouritism \citep{tajfel1971social}. Kin selection and
+parental-investment theory predict investment that tracks relatedness and certainty of parentage
+\citep{hamilton1964genetical,trivers1972parental}, and namesaking has been studied as a signal of
+that tie \citep{obasi2016naming,saffa2021namesake}.
+
+As far as a literature search found, no earlier study varies personal names in a generational,
+reproducing population of LLM agents while holding everything else fixed.
+
+\section{The simulation}
+\label{sec:sim}
+
+The simulator is open source \citep{repo2026agentnames}. Its core holds the rules and knows
+nothing about the model, storage or random source; each arm is a configuration of the same core.
+
+\subsection{World and generation loop}
+
+A run starts with 10 founders, each a pure specialist in one of three resources: energy, food and
+memory. Every agent has three skills from 0 to 1, one per resource. A run lasts 8 generations,
+and each generation proceeds as follows.
+
+\begin{enumerate}
+  \item \textbf{Archivist offer.} Every agent with ancestors or descendants on record is offered an
+        account of them from the archivist, at a cost of 10\% of its first-round yield.
+  \item \textbf{Foraging.} Five rounds. In each round every agent chooses one activity
+        (Table~\ref{tab:activities}), may give resources to others, and may post one public
+        message that everyone sees at their next decision.
+  \item \textbf{The commons} (Study~4 only). Every agent may put resources into a shared pot,
+        which is multiplied by 4 and split equally among the 10 agents. Everyone then sees what
+        each agent put in.
+  \item \textbf{Pairing.} Each agent ranks up to three others. A couple forms only when both chose
+        each other, best combined rank first, up to five couples. Close kin cannot pair.
+  \item \textbf{Birth.} Each couple has one child, who inherits each skill whole from one parent
+        or the other, with a 5\% chance per skill of mutation. Each parent then decides, without
+        seeing the co-parent's choice, how much of its own holdings to give the child, which
+        starts with nothing else.
+  \item \textbf{Scoring and the cut.} Everyone present, newborns included (up to 15), is scored
+        on what they hold. Only the top 10 stay. Parents and children compete in the same
+        scoring, so a parent can be displaced by its own child.
+  \item \textbf{Governance.} Each survivor may propose one change to the scoring rule: the weights
+        on each resource, a \emph{kin weight} that adds relatives' scores weighted by
+        relatedness, a \emph{group weight} that blends an agent's score with the mean, and a
+        credit for net giving. Up to five proposals go to a vote; a majority of survivors passes
+        one.
+\end{enumerate}
+
+Resources reset each generation. Each generation's highest-scoring agent, and the final
+survivors, enter a permanent archive, which every agent is told about from the start.
+
+\begin{table}[t]
+\centering
+\caption{Foraging activities. Every yield varies by $\pm20\%$, and even a skill of 0 gives a fifth
+of the full-skill yield.}
+\label{tab:activities}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Activity & What it does at full skill \\
+\midrule
+\arm{gather\_energy} & 3 energy, alone. \\
+\arm{hunt\_alone} & 1.5 food, alone. \\
+\arm{hunt\_together} & 10 food in total, with an $80\%\times$skill chance of success, but only if
+both partners name each other in the same round. One hunter, drawn by skill, lands the kill and
+holds all of it; whether it is shared is up to that hunter. \\
+\arm{collect\_memory} & 3.5 memory. Collecting does not protect the store. \\
+\arm{guard\_memory} & Nothing for the guard; protects another agent's store. An unguarded store
+loses 30\% of its start-of-round contents each round. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{What agents see}
+
+Each decision is a separate model call. The system prompt describes the world and is identical
+for every call in a run. The user message gives the agent's own skills, holdings and standing;
+what happened since its last decision; the last round's public messages; and a line for every
+other agent present. That line gives the other agent's relation to the decider (``your elder
+parent'', ``your cousin'', ``no known relation''), its skills and holdings, and the decider's
+history with it: what each gave the other, guarding in each direction, and hunts together.
+
+This history is given in every arm. The experiment therefore tests whether handles change
+behaviour when information about others is equal, not whether handles make tracking possible.
+In every arm other agents are listed as \texttt{[1]}\ldots\texttt{[n]}, and the numbers are
+reshuffled at every prompt so that they cannot harden into names. The handle, where there is
+one, is shown after the number.
+
+\subsection{Arms}
+
+Table~\ref{tab:arms} lists the eleven arms. The arm changes only the handle, how it is described,
+how the archivist phrases its answers, and what the archive keeps. Founders in the word-name arms
+carry fixed names (Ash, Brook, Cedar, \ldots); in the ID arms, IDs have the form \texttt{A47},
+drawn from a seed-shuffled pool so that numbers do not reveal age. ID arms are told that an ID is
+kept for life and never shared; name arms are not told this about names.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Arms. Studies 1--3 used the first five; Study~4 used all eleven.}
+\label{tab:arms}
+\begin{tabularx}{\linewidth}{@{}l X c@{}}
+\toprule
+Arm & Handle, and what parents do & Study \\
+\midrule
+\arm{named} & A word name. Both parents propose names for each child; a lot decides whose list is used. & 1--4 \\
+\arm{unnamed} & No handle. & 1--4 \\
+\arm{stable\_id} & An ID assigned by the world. & 2--4 \\
+\arm{world\_name} & A single-word name assigned by the world from a fixed pool. & 3--4 \\
+\arm{parent\_id} & An ID picked by the parents from three the world offers; agents are told parents gave it. & 3--4 \\
+\midrule
+\arm{parent\_id\_plain} & As \arm{parent\_id}, but no prompt says parents gave the ID. & 4 \\
+\arm{stable\_id\_parental} & As \arm{stable\_id}, but agents are told their parents gave them their IDs. & 4 \\
+\arm{world\_name\_shown} & As \arm{world\_name}, with the child's name shown to parents when they decide the endowment. & 4 \\
+\arm{world\_namesake} & The world names each child after one parent, chosen by lot (Fern~II), and tells each parent ``after you'' or ``after your co-parent''. & 4 \\
+\arm{band\_only} & An arbitrary Blue or Green band, assigned by lot, and no individual handle. & 4 \\
+\arm{stable\_id\_banded} & A world-assigned ID plus a band. & 4 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Common random numbers}
+
+Every random draw is a hash of the run's seed and a key that names the draw, such as the
+generation, birth order and skill slot. Draws never depend on call order. Two arms run on the same
+seed therefore get the same inheritance and mutation outcomes for the same birth, even when their
+histories differ, and a scripted agent that ignores handles plays out an identical world in every
+arm. Both properties are covered by the test suite, along with checks that each arm's prompts
+contain no handle of another arm's kind.
+
+\section{Methods}
+\label{sec:methods}
+
+\paragraph{Model.} Every agent in every arm is Claude Haiku~5.5 (\texttt{claude-haiku-5-5}) at
+effort \texttt{low}, called through the Anthropic API with structured JSON output. The system
+prompt is cached. A decision that fails to parse after a retry is replaced by a logged default
+(a \emph{fallback}). A run of 8 generations makes about 700--800 calls and costs about \$0.20--0.25.
+
+\paragraph{Measures.} The registered measures are:
+\begin{itemize}
+  \item \textbf{pair hunts}: pair hunts that took place in a run;
+  \item \textbf{couples per generation}: couples formed, averaged over generations;
+  \item \textbf{endowment fraction}: the share of its holdings a parent gives its newborn, averaged
+        over parents' birth decisions;
+  \item \textbf{gathered per forager}: resources gathered per agent per generation;
+  \item \textbf{shared kills}: successful pair hunts after which the hunter who landed the kill
+        gave its partner food later in the same generation;
+  \item \textbf{commons contribution share}: the share of its holdings an agent puts into the pot;
+  \item \textbf{in-band bias}: for gifts, guards, hunts or couples, the share directed within the
+        actor's own band, minus the share of same-band agents among the actor's living others at
+        the time (zero under no bias);
+  \item \textbf{namesake differences}: in \arm{world\_namesake}, the endowment share, and later
+        gifts, from the parent a child is named after minus those from its co-parent.
+\end{itemize}
+
+\paragraph{Tests.} Every registered test is a two-sided sign-flip test over seeds: paired by seed
+for arm-versus-arm contrasts, against zero for one-sample tests. Up to 20 seeds the test is exact;
+beyond that it uses 100,000 random sign patterns from a fixed seed, with $p=(k+1)/(N+1)$, so the
+smallest reportable $p$ is about $10^{-5}$. Holm--Bonferroni correction is applied within each
+registered family at $\alpha=0.05$. A hypothesis counts as supported when its Holm-adjusted $p$ is
+below 0.05 and the effect goes the predicted way.
+
+\paragraph{Exclusions.} A run is excluded if it fails to complete or if more than 5\% of its
+decisions are fallbacks. In Study~1 an excluded run's seed partner was dropped and the pair
+replaced by a fresh seed; from Study~2 on, an excluded seed is re-run once and, if it fails again,
+dropped from every test that uses that arm.
+
+\paragraph{Pre-registration.} Each study's hypotheses, tests, correction, exclusion rule and
+configuration were committed to the public repository before any run on its seeds
+(Table~\ref{tab:studies}). Analyses outside the registered tests are labelled exploratory and
+reported unadjusted. Three development pilots (32 runs in all) preceded Study~1 and shaped the
+mechanics; none of their data enter the registered tests.
+
+\begin{table}[t]
+\centering
+\small
+\caption{The four studies. Studies 2 and 3 reuse Study~1's seeds and are paired with its runs by
+seed; Study~4 uses fresh seeds and runs all arms in one batch.}
+\label{tab:studies}
+\begin{tabular}{@{}l l r r r l@{}}
+\toprule
+Study & New arms & Seeds & Runs & Cost (USD) & Registered at \\
+\midrule
+1 & \arm{named}, \arm{unnamed} & 30 & 64$^a$ & 12.07 & \texttt{a324dbc} \\
+2 & \arm{stable\_id} & 30 & 30 & 5.88 & \texttt{6136b3e} \\
+3 & \arm{world\_name}, \arm{parent\_id} & 30 & 60 & 12.19 & \texttt{0b92bed} \\
+4 & all eleven arms, plus the commons & 30 & \STUDYFOURRUNS & \STUDYFOURCOST & \texttt{bc83a2e} \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+{\footnotesize $^a$ Four runs stopped at the account's API usage limit; both affected seed pairs
+were replaced as registered.}
+\end{table}
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Study 1: names raise coordination}
+
+Across 30 seed pairs, named populations formed more couples per generation than unnamed ones
+(2.38 vs 1.74; named higher in 23 of 30 pairs; $\pholm=0.00008$) and held about five times as
+many pair hunts (13.4 vs 2.7; 28 of 30; $\pholm=0.00003$). The third registered measure,
+gathering per forager, leaned the same way but was not significant (14.01 vs 13.80; $\pholm=0.11$).
+
+Exploratory measures suggested that named parents invested more in their children: they gave a
+larger share of their holdings at birth (0.55 vs 0.47, $p=0.003$), more of their newborns
+survived the first cut, and more of them were displaced by their own child. The design doc's
+tribalism prediction, that names plus visible lineage would concentrate help inside families,
+was not borne out: unnamed agents gave 84\% of their gift amounts to kin, named agents 44\%.
+
+A name, however, is also a stable handle. Named agents can say ``Brook, let's hunt this round''
+and mean the same agent next round; unnamed agents can only use bracket numbers that are
+reshuffled before the next decision. Study~1 cannot say whether the effects come from being named
+by a parent or from having any stable handle. (On Study~4's fresh seeds the couples difference
+between named and unnamed populations was smaller and not significant; see
+Section~\ref{sec:study4}.)
+
+\subsection{Study 2: addressability and naming come apart}
+
+A world-assigned stable ID restored pair hunting to the named level (stable ID vs unnamed: 13.1
+vs 2.7; 26 of 30; $\pholm=0.00004$; named vs stable ID: 13.4 vs 13.1; $\pholm=0.87$). It did
+nothing for couples: named populations formed far more couples than stable-ID ones (2.38 vs 1.44;
+27 of 30; $\pholm=0.00004$), and stable IDs gave no lift over no handle at all (1.44 vs 1.74;
+$\pholm=0.092$). Being able to point at the same agent again is what lets agents coordinate a
+hunt. Choosing partners and investing in children depend on something a parent-given name has and
+a bare ID lacks.
+
+\subsection{Study 3: who gives the handle, and what it is}
+
+Study~3 completed a $2\times2$ of who chooses the handle (parents or world) by what it is (a word
+or an ID). Eight contrasts were registered with one Holm family (Table~\ref{tab:twobytwo}).
+
+\begin{table}[t]
+\centering
+\small
+\caption{Study 3: registered contrasts, paired over 30 seeds, Holm-corrected across all eight.}
+\label{tab:twobytwo}
+\begin{tabular}{@{}l l c c c c@{}}
+\toprule
+Contrast & Measure & Means & First higher & $\pholm$ & Supported \\
+\midrule
+Parent ID vs stable ID & Couples & 2.53 vs 1.44 & 29/30 & 0.00008 & yes \\
+World name vs stable ID & Couples & 2.01 vs 1.44 & 23/30 & 0.0005 & yes \\
+Named vs parent ID & Endowment & 0.55 vs 0.47 & 19/30 & 0.037 & yes \\
+Named vs world name & Couples & 2.38 vs 2.01 & 21/30 & 0.039 & yes \\
+Named vs world name & Endowment & 0.55 vs 0.46 & 19/30 & 0.058 & no \\
+Named vs parent ID & Couples & 2.38 vs 2.53 & 11/30 & 0.50 & no \\
+Parent ID vs stable ID & Endowment & 0.47 vs 0.43 & 19/30 & 0.50 & no \\
+World name vs stable ID & Endowment & 0.46 vs 0.43 & 17/30 & 0.50 & no \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three things stand out (Figure~\ref{fig:early}).
+\begin{itemize}
+  \item \textbf{Parents giving the handle raised couple formation, whatever the handle.} The
+        largest effect in the study was parent-picked IDs against world-assigned IDs. The
+        ``choice'' was nominal: parents took the first of the three offered IDs 96\% of the time,
+        and both parents picked the same one in 94\% of births. The lift comes from the parental
+        role, which agents are told about from the start and enact at every birth, not from
+        deliberating over a label.
+  \item \textbf{A word name helped only when the world assigned it.} Among world-assigned handles,
+        names formed more couples than IDs; among parent-given handles, names added nothing.
+  \item \textbf{Investment in newborns rose only with names chosen by parents.} Named-arm parents
+        gave about 0.55 of their holdings; every other arm gave 0.43--0.47, including unnamed.
+\end{itemize}
+
+Pair hunting, an exploratory measure here, was high in all four handle arms (10.8--13.4) and low
+only without a handle (2.7), confirming Study~2.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={group size=3 by 1, horizontal sep=1.6cm},
+  width=0.345\linewidth, height=5.2cm,
+  ybar, /pgf/bar width=9pt, ymin=0,
+  xtick=data, xticklabels from table={figdata/early.csv}{label},
+  xticklabel style={rotate=45, anchor=east, font=\footnotesize},
+  yticklabel style={font=\footnotesize},
+  title style={font=\small},
+  enlarge x limits=0.15,
+  error bars/y dir=both, error bars/y explicit,
+  cycle list={{fill=black!30, draw=black!80}},
+]
+\nextgroupplot[title={Pair hunts per run}]
+\addplot table[x=x, y=pair_hunts, y error=pair_hunts_se] {figdata/early.csv};
+\nextgroupplot[title={Couples per generation}]
+\addplot table[x=x, y=couples, y error=couples_se] {figdata/early.csv};
+\nextgroupplot[title={Share given to a newborn}, ymax=0.65]
+\addplot table[x=x, y=endowment, y error=endowment_se] {figdata/early.csv};
+\end{groupplot}
+\end{tikzpicture}
+\caption{Studies 1--3, five arms on the same 30 seeds: means over seeds with standard errors.
+Pair hunting follows any stable handle; couple formation follows a parent-given handle or a word
+name; investment in newborns stands out only with parent-chosen names.}
+\label{fig:early}
+\end{figure}
+
+\paragraph{Leads carried into Study 4.} After Study~3 we tabulated every action by arm
+(exploratory). Two patterns were new. First, hunters in the word-name arms shared their kills
+more often: the hunter who landed a pair-hunt kill later gave its partner food after about 21\%
+of successful hunts in \arm{named} and 20\% in \arm{world\_name}, against 10\% in
+\arm{parent\_id}, 6\% in \arm{stable\_id} and 5\% in \arm{unnamed}. Second, unnamed agents,
+when they gave at all, gave mostly to kin. Study~4 registers the first as a test.
+
+\FloatBarrier
+\input{study4}
+
+\section{Comparison with human research}
+\label{sec:human}
+
+\input{human}
+
+\section{Discussion}
+\label{sec:discussion}
+
+\input{discussion}
+
+\section{Limitations}
+\label{sec:limits}
+
+\begin{itemize}
+  \item \textbf{One model, one framing, one world.} Every agent is Claude Haiku~5.5 at low effort,
+        and every arm shares one system prompt apart from its handle clauses. The results are
+        claims about that model under that framing. Whether they hold for other models, larger
+        efforts or other wordings is untested.
+  \item \textbf{The comparisons with people are of direction only.} The simulation has no stakes
+        for the agents, and its quantities (couples, endowments, contribution shares) are not
+        calibrated to any human measure.
+  \item \textbf{Prompt asymmetry.} ID arms are told that an ID is kept for life and never shared;
+        name arms are not told this about names. The word-versus-ID contrasts carry that
+        sentence.
+  \item \textbf{Timing in Studies 2 and 3.} Their runs happened hours after the Study~1 runs they
+        are paired with. Study~4 runs every arm of a seed in one window.
+  \item \textbf{Correlated measures.} Couples, endowments, newborn survival and displacement are
+        measured on the same populations and partly drive one another.
+  \item \textbf{The commons is a tournament.} Survival is decided by rank, so contributing to the
+        pot always lowers an agent's standing relative to agents who hold back. The near-zero
+        contributions may reflect that, not a general reluctance to contribute.
+  \item \textbf{Unregistered effects.} The namesake effect on couple formation, the band effect
+        on endowments and the comparison of world-assigned IDs with no handle are exploratory.
+        They need their own registered test before being relied on.
+  \item \textbf{Rare behaviours are underpowered.} Gifts were rare in the band arms, so the
+        registered in-band gift test (D2) rested on six seeds. Kill sharing had many seeds with no
+        shared kill in either arm.
+  \item \textbf{Shared history in every arm.} Because every agent sees its full history with
+        every other agent, the experiment cannot show whether handles make reputation possible,
+        only whether they change behaviour when information is equal.
+\end{itemize}
+
+\section{Conclusion}
+
+\input{conclusion}
+
+\section*{Acknowledgments}
+
+The simulator, the analysis code, the pre-registration drafts and a first draft of this paper
+were written with Claude Opus~5.5 (Anthropic), used as a coding and writing assistant under the
+author's direction. The author set the research questions and the original design, approved each
+pre-registration before its data were collected, and reviewed and is responsible for the final
+text. The agents in the simulation are Claude Haiku~5.5. All API costs were paid by the author.
+
+\section*{Data and code availability}
+
+The simulator, configurations, pre-registrations, event logs of every run and the analysis
+outputs are at \url{https://github.com/Vaughanwj/Agent-Names-Test}. Each pre-registration is
+identified by the commit at which it was registered (Table~\ref{tab:studies}). The figures are
+generated from the event logs by \texttt{paper/make\_figures.py}. Study~4's registered analysis
+is \texttt{scripts/analyze\_round5.py}, and its exploratory analyses are
+\texttt{scripts/explore\_round5.py}.
+
+\section*{License}
+
+\doclicenseThis
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document}

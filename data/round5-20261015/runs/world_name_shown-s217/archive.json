@@ -1,0 +1,301 @@
+[
+  {
+    "_ref": "f3",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 6,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 91.29,
+      "deeds": [
+        "had the highest standing in generation 1 (15.4)",
+        "gathered the most energy in generation 4 (16.32)"
+      ]
+    },
+    "name": "Dune"
+  },
+  {
+    "_ref": "f9",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 7,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 6,
+      "lifetime_gathered": 104.35,
+      "deeds": [
+        "gathered the most energy in generation 1 (15.48)",
+        "had the highest standing in generation 2 (14.8)",
+        "gave away the most in generation 5 (14.6)"
+      ]
+    },
+    "name": "Juniper"
+  },
+  {
+    "_ref": "g1b1",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": 5,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 74.33,
+      "deeds": [
+        "gathered the most food in generation 2 (15.2)",
+        "gave away the most in generation 2 (6)",
+        "gathered the most food in generation 4 (34.23)",
+        "gave away the most in generation 4 (5.52)",
+        "had the highest standing in generation 4 (31.5)",
+        "gathered the most food in generation 5 (19.44)"
+      ]
+    },
+    "name": "Ridge"
+  },
+  {
+    "_ref": "g1b2",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 4,
+      "lifetime_gathered": 98.66,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Pebble"
+  },
+  {
+    "_ref": "g2b0",
+    "works": {
+      "born_in": 2,
+      "founder": false,
+      "left_in": 5,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 27.67,
+      "deeds": [
+        "gathered the most food in generation 3 (17.36)",
+        "had the highest standing in generation 3 (16.6)"
+      ]
+    },
+    "name": "Indigo"
+  },
+  {
+    "_ref": "g2b1",
+    "works": {
+      "born_in": 2,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.021
+      },
+      "children": 5,
+      "lifetime_gathered": 92.7,
+      "deeds": [
+        "gathered the most energy in generation 3 (15.14)",
+        "gathered the most energy in generation 5 (16.96)",
+        "had the highest standing in generation 5 (44.8)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Quartz"
+  },
+  {
+    "_ref": "g3b0",
+    "works": {
+      "born_in": 3,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 73.43,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Delta"
+  },
+  {
+    "_ref": "g5b1",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.102,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 44.81,
+      "deeds": [
+        "gathered the most energy in generation 6 (16.24)",
+        "gave away the most in generation 6 (24.26)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Calla"
+  },
+  {
+    "_ref": "g6b0",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 30.02,
+      "deeds": [
+        "gave away the most in generation 7 (12)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Thistle"
+  },
+  {
+    "_ref": "g6b1",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 29.47,
+      "deeds": [
+        "had the highest standing in generation 6 (104.5)",
+        "had the highest standing in generation 7 (113.4)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Kestrel"
+  },
+  {
+    "_ref": "g6b3",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.102,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 29.82,
+      "deeds": [
+        "gathered the most energy in generation 8 (15.65)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Glen"
+  },
+  {
+    "_ref": "g7b0",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 15.06,
+      "deeds": [
+        "had the highest standing in generation 8 (139.5)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Sage"
+  },
+  {
+    "_ref": "g7b1",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.102,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 13.88,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Willow"
+  },
+  {
+    "_ref": "g8b0",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.102,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Zephyr"
+  }
+]

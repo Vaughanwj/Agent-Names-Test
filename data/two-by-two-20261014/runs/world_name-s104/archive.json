@@ -1,0 +1,265 @@
+[
+  {
+    "_ref": "f0",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 4,
+      "lifetime_gathered": 121.72,
+      "deeds": [
+        "gave away the most in generation 1 (7)",
+        "gave away the most in generation 2 (5)",
+        "gathered the most energy in generation 4 (16.42)",
+        "gathered the most energy in generation 5 (15.89)",
+        "had the highest standing in generation 5 (23.8)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Ash"
+  },
+  {
+    "_ref": "f1",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 2,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 20.39,
+      "deeds": [
+        "gathered the most food in generation 1 (15.76)",
+        "had the highest standing in generation 1 (15.8)"
+      ]
+    },
+    "name": "Brook"
+  },
+  {
+    "_ref": "f3",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 117.15,
+      "deeds": [
+        "gave away the most in generation 7 (5)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Dune"
+  },
+  {
+    "_ref": "f6",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 124.97,
+      "deeds": [
+        "gathered the most energy in generation 1 (15.23)",
+        "gathered the most energy in generation 6 (16.47)",
+        "had the highest standing in generation 6 (32.9)",
+        "gathered the most energy in generation 7 (16.18)",
+        "had the highest standing in generation 7 (32.4)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet"
+  },
+  {
+    "_ref": "f7",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 6,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 102.33,
+      "deeds": [
+        "gathered the most food in generation 2 (25.34)",
+        "had the highest standing in generation 2 (25.3)",
+        "gathered the most food in generation 3 (25.72)",
+        "gave away the most in generation 3 (13)",
+        "had the highest standing in generation 3 (19.2)",
+        "gathered the most food in generation 4 (31.65)",
+        "gave away the most in generation 4 (10)",
+        "had the highest standing in generation 4 (29.6)"
+      ]
+    },
+    "name": "Heath"
+  },
+  {
+    "_ref": "f9",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 120.89,
+      "deeds": [
+        "gathered the most energy in generation 3 (16.47)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Juniper"
+  },
+  {
+    "_ref": "g1b0",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 104.01,
+      "deeds": [
+        "gathered the most energy in generation 2 (15.56)",
+        "gathered the most energy in generation 8 (16.06)",
+        "had the highest standing in generation 8 (48.2)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Sage"
+  },
+  {
+    "_ref": "g2b0",
+    "works": {
+      "born_in": 2,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 88.38,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Vale"
+  },
+  {
+    "_ref": "g4b0",
+    "works": {
+      "born_in": 4,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 60.41,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Quill"
+  },
+  {
+    "_ref": "g6b0",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 28.79,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Nettle"
+  },
+  {
+    "_ref": "g7b0",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 14.15,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Glen"
+  },
+  {
+    "_ref": "g7b1",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 15.17,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Birch"
+  }
+]

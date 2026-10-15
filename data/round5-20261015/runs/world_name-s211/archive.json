@@ -1,0 +1,220 @@
+[
+  {
+    "_ref": "f0",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 4,
+      "lifetime_gathered": 119.4,
+      "deeds": [
+        "gathered the most energy in generation 1 (14.75)",
+        "gave away the most in generation 1 (7)",
+        "gave away the most in generation 2 (8)",
+        "gathered the most energy in generation 4 (15.53)",
+        "had the highest standing in generation 4 (46.6)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Ash"
+  },
+  {
+    "_ref": "f3",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 120.71,
+      "deeds": [
+        "had the highest standing in generation 1 (14.2)",
+        "gathered the most energy in generation 2 (15.89)",
+        "had the highest standing in generation 2 (15.9)",
+        "gathered the most energy in generation 3 (15.8)",
+        "had the highest standing in generation 3 (31.6)",
+        "gathered the most energy in generation 8 (16.26)",
+        "had the highest standing in generation 8 (48.8)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Dune"
+  },
+  {
+    "_ref": "f6",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 4,
+      "lifetime_gathered": 115.22,
+      "deeds": [
+        "gave away the most in generation 3 (4.5)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet"
+  },
+  {
+    "_ref": "g1b1",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.374
+      },
+      "children": 0,
+      "lifetime_gathered": 103.41,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Gale"
+  },
+  {
+    "_ref": "g2b0",
+    "works": {
+      "born_in": 2,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 90.19,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Teal"
+  },
+  {
+    "_ref": "g3b0",
+    "works": {
+      "born_in": 3,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 75.49,
+      "deeds": [
+        "gathered the most energy in generation 6 (15.92)",
+        "had the highest standing in generation 6 (47.8)",
+        "gathered the most energy in generation 7 (16.1)",
+        "had the highest standing in generation 7 (48.3)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Kelp"
+  },
+  {
+    "_ref": "g5b0",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 44.29,
+      "deeds": [
+        "had the highest standing in generation 5 (67.0)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Dahlia"
+  },
+  {
+    "_ref": "g5b1",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 44.93,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Cobalt"
+  },
+  {
+    "_ref": "g5b2",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 45.49,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Birch"
+  },
+  {
+    "_ref": "g7b0",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 14.63,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Slate"
+  }
+]

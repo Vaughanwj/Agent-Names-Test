@@ -1,0 +1,269 @@
+[
+  {
+    "_ref": "f0",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 119.4,
+      "deeds": [
+        "gathered the most energy in generation 1 (14.75)",
+        "had the highest standing in generation 2 (15.2)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A31"
+  },
+  {
+    "_ref": "f4",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 7,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 86.1,
+      "deeds": [
+        "gathered the most food in generation 3 (19.55)",
+        "had the highest standing in generation 3 (22.4)",
+        "gave away the most in generation 4 (9)",
+        "gathered the most food in generation 5 (32.69)",
+        "had the highest standing in generation 5 (36.2)"
+      ]
+    },
+    "id": "A20"
+  },
+  {
+    "_ref": "f7",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 8,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 147.11,
+      "deeds": [
+        "gathered the most food in generation 1 (14.85)",
+        "gathered the most food in generation 2 (14.74)",
+        "gathered the most food in generation 4 (20.42)",
+        "had the highest standing in generation 4 (23.2)",
+        "gathered the most food in generation 6 (35.09)",
+        "gathered the most food in generation 7 (31.71)",
+        "gave away the most in generation 7 (31)"
+      ]
+    },
+    "id": "A79"
+  },
+  {
+    "_ref": "g1b0",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 5,
+      "lifetime_gathered": 106.9,
+      "deeds": [
+        "gathered the most energy in generation 2 (15.55)",
+        "gave away the most in generation 2 (7)",
+        "gathered the most energy in generation 4 (15.85)",
+        "gathered the most energy in generation 5 (14.83)",
+        "gathered the most energy in generation 6 (16.13)",
+        "gathered the most energy in generation 7 (15.33)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A89"
+  },
+  {
+    "_ref": "g1b1",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.374
+      },
+      "children": 5,
+      "lifetime_gathered": 100.67,
+      "deeds": [
+        "had the highest standing in generation 1 (22.5)",
+        "gave away the most in generation 3 (8)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A74"
+  },
+  {
+    "_ref": "g2b0",
+    "works": {
+      "born_in": 2,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.374
+      },
+      "children": 3,
+      "lifetime_gathered": 90.19,
+      "deeds": [
+        "gathered the most energy in generation 8 (16.12)",
+        "gave away the most in generation 8 (32.62)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A39"
+  },
+  {
+    "_ref": "g4b0",
+    "works": {
+      "born_in": 4,
+      "founder": false,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 30.53,
+      "deeds": [
+        "gathered the most food in generation 8 (7.97)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A50"
+  },
+  {
+    "_ref": "g5b1",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.374
+      },
+      "children": 1,
+      "lifetime_gathered": 45.49,
+      "deeds": [
+        "gave away the most in generation 6 (14)",
+        "had the highest standing in generation 6 (61.4)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A10"
+  },
+  {
+    "_ref": "g6b0",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.374
+      },
+      "children": 0,
+      "lifetime_gathered": 28.49,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A99"
+  },
+  {
+    "_ref": "g6b3",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.514
+      },
+      "children": 1,
+      "lifetime_gathered": 27.05,
+      "deeds": [
+        "had the highest standing in generation 7 (52.0)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A64"
+  },
+  {
+    "_ref": "g8b0",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.374
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "had the highest standing in generation 8 (76.2)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A22"
+  },
+  {
+    "_ref": "g8b1",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.374
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A35"
+  }
+]

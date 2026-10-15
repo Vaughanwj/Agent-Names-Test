@@ -1,0 +1,103 @@
+{
+  "seeds": [
+    201,
+    202,
+    203,
+    204,
+    205,
+    206,
+    207,
+    208,
+    209,
+    210,
+    211,
+    212,
+    213,
+    214,
+    215,
+    216,
+    217,
+    218,
+    219,
+    220,
+    221,
+    222,
+    223,
+    224,
+    225,
+    226,
+    227,
+    228,
+    229,
+    230
+  ],
+  "arms": [
+    "named",
+    "parent_id",
+    "world_name",
+    "stable_id",
+    "unnamed",
+    "parent_id_plain",
+    "stable_id_parental",
+    "world_name_shown",
+    "world_namesake",
+    "band_only",
+    "stable_id_banded"
+  ],
+  "population": 10,
+  "peak": 15,
+  "max_couples": 5,
+  "generations": 8,
+  "rounds": 5,
+  "inheritance": {
+    "mutation_rate": 0.05,
+    "mutation_sd": 0.25
+  },
+  "foraging": {
+    "skill_floor": 0.2,
+    "energy_yield": 3.0,
+    "solo_hunt_yield": 1.5,
+    "pair_hunt_yield": 10.0,
+    "pair_hunt_success": 0.8,
+    "memory_yield": 3.5,
+    "memory_decay": 0.3,
+    "noise": 0.2,
+    "archivist_cost": 0.1
+  },
+  "reveal": {
+    "hint": null,
+    "full": 1
+  },
+  "commons": {
+    "enabled": true,
+    "mpcr": 0.4
+  },
+  "governance": {
+    "enabled": true,
+    "max_proposals": 5,
+    "pass_fraction": 0.5
+  },
+  "scoring": {
+    "energy_weight": 1.0,
+    "food_weight": 1.0,
+    "memory_weight": 1.0,
+    "kin_weight": 0.0,
+    "group_weight": 0.0,
+    "gift_credit": 0.0
+  },
+  "mind": {
+    "kind": "anthropic",
+    "model": "claude-haiku-5-5",
+    "effort": "low",
+    "max_tokens": 8000,
+    "concurrency": 10,
+    "budget_usd": 0.45
+  },
+  "pricing": {
+    "claude-haiku-5-5": {
+      "input": 0.1,
+      "output": 0.5
+    }
+  },
+  "output_dir": "runs"
+}

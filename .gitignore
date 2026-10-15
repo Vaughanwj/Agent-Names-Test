@@ -1,5 +1,5 @@
 .env
-runs/
+/runs/
 __pycache__/
 *.pyc
 *.egg-info/

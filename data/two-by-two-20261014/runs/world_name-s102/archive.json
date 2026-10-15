@@ -1,0 +1,265 @@
+[
+  {
+    "_ref": "f0",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 5,
+      "lifetime_gathered": 123.16,
+      "deeds": [
+        "gathered the most energy in generation 6 (16.16)",
+        "gave away the most in generation 6 (5)",
+        "gathered the most energy in generation 8 (15.9)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Ash"
+  },
+  {
+    "_ref": "f2",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 4,
+      "specialty": "memory",
+      "traits": {
+        "energy": 0.0,
+        "food": 0.0,
+        "memory": 1.0
+      },
+      "children": 1,
+      "lifetime_gathered": 69.64,
+      "deeds": [
+        "gathered the most memory in generation 1 (16.74)",
+        "had the highest standing in generation 2 (17.9)",
+        "gathered the most memory in generation 3 (18.03)",
+        "gathered the most memory in generation 4 (17)",
+        "gave away the most in generation 4 (9.87)"
+      ]
+    },
+    "name": "Cedar"
+  },
+  {
+    "_ref": "f3",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 122.97,
+      "deeds": [
+        "gathered the most energy in generation 1 (15.37)",
+        "gave away the most in generation 1 (8)",
+        "gathered the most energy in generation 3 (16.55)",
+        "gathered the most energy in generation 7 (16.35)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Dune"
+  },
+  {
+    "_ref": "f6",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 4,
+      "lifetime_gathered": 116.86,
+      "deeds": [
+        "gathered the most energy in generation 2 (16.39)",
+        "gave away the most in generation 2 (12)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet"
+  },
+  {
+    "_ref": "f9",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 7,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 100.31,
+      "deeds": [
+        "had the highest standing in generation 4 (23.6)"
+      ]
+    },
+    "name": "Juniper"
+  },
+  {
+    "_ref": "g1b1",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 104.1,
+      "deeds": [
+        "had the highest standing in generation 1 (15.5)",
+        "gave away the most in generation 3 (8)",
+        "gathered the most energy in generation 4 (16.1)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Yarrow"
+  },
+  {
+    "_ref": "g2b0",
+    "works": {
+      "born_in": 2,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 92.92,
+      "deeds": [
+        "had the highest standing in generation 3 (22.4)",
+        "gathered the most energy in generation 5 (16.69)",
+        "had the highest standing in generation 5 (41.7)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Laurel"
+  },
+  {
+    "_ref": "g3b1",
+    "works": {
+      "born_in": 3,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 75.49,
+      "deeds": [
+        "gave away the most in generation 5 (7)",
+        "had the highest standing in generation 7 (81.4)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Slate"
+  },
+  {
+    "_ref": "g4b1",
+    "works": {
+      "born_in": 4,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 59.55,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Aspen"
+  },
+  {
+    "_ref": "g5b0",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 44.29,
+      "deeds": [
+        "had the highest standing in generation 6 (69.7)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Pebble"
+  },
+  {
+    "_ref": "g6b0",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 28.09,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Holly"
+  },
+  {
+    "_ref": "g7b0",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 15.4,
+      "deeds": [
+        "had the highest standing in generation 8 (117.7)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Fennel"
+  }
+]

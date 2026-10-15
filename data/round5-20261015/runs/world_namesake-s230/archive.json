@@ -1,0 +1,253 @@
+[
+  {
+    "_ref": "f0",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 119.75,
+      "deeds": [
+        "gathered the most energy in generation 4 (15.37)",
+        "gathered the most energy in generation 5 (16.17)",
+        "gave away the most in generation 5 (18.67)",
+        "had the highest standing in generation 5 (34.2)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Ash"
+  },
+  {
+    "_ref": "f1",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 3,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 52.06,
+      "deeds": [
+        "gathered the most food in generation 1 (16.65)",
+        "had the highest standing in generation 1 (16.6)",
+        "gathered the most food in generation 2 (30.74)",
+        "gave away the most in generation 2 (11)",
+        "had the highest standing in generation 2 (25.2)"
+      ]
+    },
+    "name": "Brook"
+  },
+  {
+    "_ref": "f4",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 75.9,
+      "deeds": [
+        "gathered the most food in generation 3 (22.15)",
+        "gathered the most food in generation 5 (7.81)",
+        "gathered the most food in generation 6 (7.58)",
+        "gathered the most food in generation 7 (7.09)",
+        "gathered the most food in generation 8 (7.52)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Ember"
+  },
+  {
+    "_ref": "f6",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 118.85,
+      "deeds": [
+        "gathered the most energy in generation 6 (16.38)",
+        "had the highest standing in generation 6 (33.1)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet"
+  },
+  {
+    "_ref": "f8",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "memory",
+      "traits": {
+        "energy": 0.0,
+        "food": 0.0,
+        "memory": 1.0
+      },
+      "children": 1,
+      "lifetime_gathered": 133.51,
+      "deeds": [
+        "gathered the most memory in generation 1 (14.98)",
+        "gathered the most memory in generation 5 (18.05)",
+        "gathered the most memory in generation 6 (16.75)",
+        "gathered the most memory in generation 7 (18.78)",
+        "gathered the most memory in generation 8 (18.33)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Iris"
+  },
+  {
+    "_ref": "f9",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 123.61,
+      "deeds": [
+        "gathered the most energy in generation 1 (15.63)",
+        "gathered the most energy in generation 2 (16.14)",
+        "gave away the most in generation 3 (38.67)",
+        "gave away the most in generation 4 (20.31)",
+        "had the highest standing in generation 4 (24.3)",
+        "gathered the most energy in generation 8 (16.32)",
+        "had the highest standing in generation 8 (30.4)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Juniper"
+  },
+  {
+    "_ref": "g3b0",
+    "works": {
+      "born_in": 3,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 74.87,
+      "deeds": [
+        "had the highest standing in generation 3 (54.3)",
+        "gave away the most in generation 6 (13)",
+        "gathered the most energy in generation 7 (16.19)",
+        "had the highest standing in generation 7 (22.8)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Juniper II"
+  },
+  {
+    "_ref": "g3b1",
+    "works": {
+      "born_in": 3,
+      "founder": false,
+      "left_in": null,
+      "specialty": "memory",
+      "traits": {
+        "energy": 0.0,
+        "food": 0.0,
+        "memory": 1.0
+      },
+      "children": 0,
+      "lifetime_gathered": 73.05,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Iris II"
+  },
+  {
+    "_ref": "g4b0",
+    "works": {
+      "born_in": 4,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 59.03,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Juniper III"
+  },
+  {
+    "_ref": "g5b0",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 44.52,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Juniper IV"
+  },
+  {
+    "_ref": "g6b0",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 30.73,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Juniper V"
+  }
+]

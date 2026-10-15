@@ -1,0 +1,283 @@
+[
+  {
+    "_ref": "f0",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 5,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 74.43,
+      "deeds": [
+        "gathered the most energy in generation 1 (15.45)",
+        "had the highest standing in generation 1 (15.4)",
+        "gathered the most energy in generation 2 (14.98)",
+        "had the highest standing in generation 2 (15.0)"
+      ]
+    },
+    "name": "Ash"
+  },
+  {
+    "_ref": "f1",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 5,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 63.4,
+      "deeds": [
+        "gathered the most food in generation 2 (11.37)",
+        "gathered the most food in generation 3 (24.11)",
+        "had the highest standing in generation 3 (19.1)",
+        "gathered the most food in generation 4 (20.5)",
+        "gave away the most in generation 4 (10)"
+      ]
+    },
+    "name": "Brook"
+  },
+  {
+    "_ref": "f3",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 5,
+      "lifetime_gathered": 113.99,
+      "deeds": [
+        "gave away the most in generation 2 (4)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Dune"
+  },
+  {
+    "_ref": "f6",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 5,
+      "lifetime_gathered": 117.47,
+      "deeds": [
+        "gave away the most in generation 6 (11.3)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet"
+  },
+  {
+    "_ref": "f9",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 6,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 88.09,
+      "deeds": [
+        "gathered the most energy in generation 4 (14.5)",
+        "had the highest standing in generation 4 (14.5)",
+        "gathered the most energy in generation 6 (16.41)"
+      ]
+    },
+    "name": "Juniper"
+  },
+  {
+    "_ref": "g2b0",
+    "works": {
+      "born_in": 2,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 86.39,
+      "deeds": [
+        "gathered the most energy in generation 3 (14.94)",
+        "gave away the most in generation 5 (12)",
+        "had the highest standing in generation 7 (65.5)",
+        "had the highest standing in generation 8 (109.0)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Dune II"
+  },
+  {
+    "_ref": "g4b1",
+    "works": {
+      "born_in": 4,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 58.65,
+      "deeds": [
+        "gathered the most energy in generation 5 (15.68)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet II"
+  },
+  {
+    "_ref": "g5b1",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 46.42,
+      "deeds": [
+        "gathered the most energy in generation 8 (16.13)",
+        "gave away the most in generation 8 (6)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Dune III"
+  },
+  {
+    "_ref": "g5b2",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.118
+      },
+      "children": 0,
+      "lifetime_gathered": 46.41,
+      "deeds": [
+        "had the highest standing in generation 5 (35.6)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Dune IV"
+  },
+  {
+    "_ref": "g6b1",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 31.1,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Dune V"
+  },
+  {
+    "_ref": "g6b2",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 30.93,
+      "deeds": [
+        "had the highest standing in generation 6 (57.4)",
+        "gathered the most energy in generation 7 (15.87)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet IV"
+  },
+  {
+    "_ref": "g8b0",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet VI"
+  },
+  {
+    "_ref": "g8b1",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Dune VI"
+  }
+]

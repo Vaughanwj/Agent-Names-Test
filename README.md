@@ -14,6 +14,9 @@ Beyond named and unnamed there are three more arms, each with a different kind o
 - **`world_name` and `parent_id`:** together with named and stable_id, they complete a 2 × 2 of
   who chooses the handle by what it is (see choice 13 below). Both have been run on Claude
   ([docs/two-by-two-results.md](docs/two-by-two-results.md)).
+- **Six round-5 arms:** these split the parental act from its wording, test naming a child after
+  a parent, and add arbitrary group bands (see choice 14 below). All eleven arms were run on Claude
+  in round 5 ([docs/round5-results.md](docs/round5-results.md)).
 
 Every agent runs on **Claude Haiku 5.5** (`claude-haiku-5-5`, effort `low`). Every arm uses the same model.
 
@@ -310,6 +313,19 @@ adds nothing. Details and alternatives are in [docs/cost-estimate.md](docs/cost-
 - **Stable-ID arm** (pre-registered in [docs/preregistration-stable-id.md](docs/preregistration-stable-id.md), 30 runs on the confirmatory seeds): **names do two jobs**. Stable world-assigned IDs restored pair hunting to the named level (vs unnamed, Holm p = 0.00004), so coordinating with others needs only a stable handle. Couples were much higher with parent-given names than with IDs (Holm p = 0.00004), and IDs gave no lift over no handle, so forming families needs the name itself. Results are in [docs/stable-id-results.md](docs/stable-id-results.md), data in [data/stable-id-20261014/](data/stable-id-20261014/), cost $5.88.
 
 - **2 × 2 run** (pre-registered in [docs/preregistration-two-by-two.md](docs/preregistration-two-by-two.md), 60 runs of world_name and parent_id on the confirmatory seeds): **parents giving the handle is what raises couple formation**, even when it is a meaningless ID picked perfunctorily (parent ID vs stable ID, Holm p = 0.00008). A word name helps only when the world assigns it (world name vs stable ID, Holm p = 0.0005). Investment in newborns rose only with names chosen by parents (named vs parent ID, Holm p = 0.037). Results are in [docs/two-by-two-results.md](docs/two-by-two-results.md), data in [data/two-by-two-20261014/](data/two-by-two-20261014/), cost $12.19.
+
+- **Round 5** (pre-registered in [docs/preregistration-round5.md](docs/preregistration-round5.md), all eleven arms on 30 fresh seeds, 330 runs, with the commons). The full write-up is in [docs/round5-results.md](docs/round5-results.md), data in [data/round5-20261015/](data/round5-20261015/), cost $75.07. Results:
+  - **Replication:** the earlier results held on fresh seeds.
+  - **Kill sharing:** named hunters shared their kills more often than parent-ID hunters.
+  - **Parental framing:** either the parental act or its wording alone raised couple formation (Holm p = 0.0006 and 0.0005).
+  - **Namesaking:** it did not raise the namesake parent's investment.
+  - **Group labels:** arbitrary bands produced in-group pairing and hunting, but added to an ID they *doubled* pair hunting.
+  - **The commons:** agents put almost nothing in (about 3%).
+  - **Unregistered:** one sentence about namesakes halved couple formation.
+
+## The paper
+
+[paper/main.pdf](paper/main.pdf) is a paper on all four pre-registered studies, built from the LaTeX in [paper/](paper/) (see [paper/README.md](paper/README.md)). It is a draft for the author's review.
 
 To pool batches and run the paired tests yourself:
 

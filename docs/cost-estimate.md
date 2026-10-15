@@ -73,4 +73,6 @@ for different lengths and count tokens slightly differently.
 | Confirmatory run (64 runs, 44,174 calls) | $12.072 |
 | Stable-ID arm (30 runs, 20,898 calls) | $5.880 |
 | 2 × 2 run (60 runs, 43,007 calls) | $12.195 |
-| **Total** | **$37.16** |
+| Round-5 smoke test (11 arms, 1,160 calls) | $0.350 |
+| Round 5 (330 runs, 258,808 calls) | $75.069 |
+| **Total** | **$112.58** |

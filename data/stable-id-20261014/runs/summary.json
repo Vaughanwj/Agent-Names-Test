@@ -1,0 +1,137 @@
+{
+  "runs": {},
+  "excluded": {},
+  "runs_seen": 0,
+  "pairs": 0,
+  "comparison": {
+    "gathered per forager per generation": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "pair hunts": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "guards": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "guards to a past helper": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "gift amount": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "gift amount while giving still cost something": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "gift share to kin": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "gift share to past helpers": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "archivist take-up (share of offers accepted)": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "rules passed": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "final kin weight": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "mean endowment fraction": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "parents displaced by own child": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "newborns surviving first cull": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "couples per generation": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    },
+    "fallback decisions": {
+      "named": null,
+      "unnamed": null,
+      "pairs": 0,
+      "named_higher": 0,
+      "ties": 0,
+      "p": null
+    }
+  },
+  "archivist_ladder": {}
+}

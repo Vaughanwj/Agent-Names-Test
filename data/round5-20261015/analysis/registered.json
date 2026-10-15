@@ -1,0 +1,356 @@
+{
+  "batches": [
+    "runs\\confirm-round5-20261015-031539"
+  ],
+  "pair_by": "batch",
+  "runs": 330,
+  "fallbacks": 0,
+  "decisions": 258808,
+  "incomplete": [],
+  "families": {
+    "A": {
+      "A1": {
+        "kind": "pair",
+        "arms": [
+          "named",
+          "unnamed"
+        ],
+        "measure": "pair hunts",
+        "prediction": "higher",
+        "first_mean": 12.733,
+        "second_mean": 3.5,
+        "seeds": 30,
+        "first_higher": 26,
+        "ties": 0,
+        "p": 3e-05,
+        "excluded": {},
+        "p_holm": 0.00018,
+        "verdict": "supported"
+      },
+      "A2": {
+        "kind": "pair",
+        "arms": [
+          "stable_id",
+          "unnamed"
+        ],
+        "measure": "pair hunts",
+        "prediction": "higher",
+        "first_mean": 8.4,
+        "second_mean": 3.5,
+        "seeds": 30,
+        "first_higher": 23,
+        "ties": 4,
+        "p": 0.00092,
+        "excluded": {},
+        "p_holm": 0.00368,
+        "verdict": "supported"
+      },
+      "A3": {
+        "kind": "pair",
+        "arms": [
+          "parent_id",
+          "stable_id"
+        ],
+        "measure": "couples per generation",
+        "prediction": "higher",
+        "first_mean": 2.221,
+        "second_mean": 1.396,
+        "seeds": 30,
+        "first_higher": 23,
+        "ties": 1,
+        "p": 4e-05,
+        "excluded": {},
+        "p_holm": 0.0002,
+        "verdict": "supported"
+      },
+      "A4": {
+        "kind": "pair",
+        "arms": [
+          "named",
+          "parent_id"
+        ],
+        "measure": "mean endowment fraction",
+        "prediction": "higher",
+        "first_mean": 0.499,
+        "second_mean": 0.412,
+        "seeds": 30,
+        "first_higher": 22,
+        "ties": 0,
+        "p": 0.00455,
+        "excluded": {},
+        "p_holm": 0.01365,
+        "verdict": "supported"
+      },
+      "A5": {
+        "kind": "pair",
+        "arms": [
+          "named",
+          "parent_id"
+        ],
+        "measure": "shared kills",
+        "prediction": "higher",
+        "first_mean": 1.933,
+        "second_mean": 0.967,
+        "seeds": 30,
+        "first_higher": 15,
+        "ties": 9,
+        "p": 0.00976,
+        "excluded": {},
+        "p_holm": 0.01952,
+        "verdict": "supported"
+      },
+      "A6": {
+        "kind": "pair",
+        "arms": [
+          "world_name",
+          "stable_id"
+        ],
+        "measure": "shared kills",
+        "prediction": "higher",
+        "first_mean": 0.967,
+        "second_mean": 0.367,
+        "seeds": 30,
+        "first_higher": 13,
+        "ties": 12,
+        "p": 0.04977,
+        "excluded": {},
+        "p_holm": 0.04977,
+        "verdict": "supported"
+      }
+    },
+    "B": {
+      "B1": {
+        "kind": "pair",
+        "arms": [
+          "parent_id_plain",
+          "stable_id"
+        ],
+        "measure": "couples per generation",
+        "prediction": "higher",
+        "first_mean": 2.025,
+        "second_mean": 1.396,
+        "seeds": 30,
+        "first_higher": 22,
+        "ties": 1,
+        "p": 0.00059,
+        "excluded": {},
+        "p_holm": 0.00059,
+        "verdict": "supported"
+      },
+      "B2": {
+        "kind": "pair",
+        "arms": [
+          "stable_id_parental",
+          "stable_id"
+        ],
+        "measure": "couples per generation",
+        "prediction": "higher",
+        "first_mean": 2.079,
+        "second_mean": 1.396,
+        "seeds": 30,
+        "first_higher": 22,
+        "ties": 1,
+        "p": 0.00023,
+        "excluded": {},
+        "p_holm": 0.00046,
+        "verdict": "supported"
+      }
+    },
+    "C": {
+      "C1": {
+        "kind": "one",
+        "arms": [
+          "world_namesake"
+        ],
+        "measure": "namesake minus co-parent endowment share",
+        "prediction": "higher",
+        "mean": -0.015,
+        "seeds": 30,
+        "positive": 15,
+        "negative": 15,
+        "p": 0.54287,
+        "excluded": [],
+        "p_holm": 0.54287,
+        "verdict": "not supported"
+      },
+      "C2": {
+        "kind": "pair",
+        "arms": [
+          "world_namesake",
+          "world_name_shown"
+        ],
+        "measure": "mean endowment fraction",
+        "prediction": "higher",
+        "first_mean": 0.431,
+        "second_mean": 0.341,
+        "seeds": 30,
+        "first_higher": 21,
+        "ties": 0,
+        "p": 0.02122,
+        "excluded": {},
+        "p_holm": 0.06366,
+        "verdict": "not supported"
+      },
+      "C3": {
+        "kind": "one",
+        "arms": [
+          "world_namesake"
+        ],
+        "measure": "namesake minus co-parent later gifts",
+        "prediction": "higher",
+        "mean": 0.729,
+        "seeds": 30,
+        "positive": 8,
+        "negative": 3,
+        "p": 0.03465,
+        "excluded": [],
+        "p_holm": 0.0693,
+        "verdict": "not supported"
+      }
+    },
+    "D": {
+      "D1": {
+        "kind": "one",
+        "arms": [
+          "band_only",
+          "stable_id_banded"
+        ],
+        "measure": "in-band couple bias",
+        "prediction": "higher",
+        "mean": 0.131,
+        "seeds": 30,
+        "positive": 26,
+        "negative": 4,
+        "p": 2e-05,
+        "excluded": [],
+        "p_holm": 0.0001,
+        "verdict": "supported"
+      },
+      "D2": {
+        "kind": "one",
+        "arms": [
+          "band_only",
+          "stable_id_banded"
+        ],
+        "measure": "in-band gift bias",
+        "prediction": "higher",
+        "mean": 0.162,
+        "seeds": 6,
+        "positive": 5,
+        "negative": 1,
+        "p": 0.0938,
+        "excluded": [],
+        "p_holm": 0.1876,
+        "verdict": "not supported"
+      },
+      "D3": {
+        "kind": "one",
+        "arms": [
+          "stable_id_banded"
+        ],
+        "measure": "in-band hunt bias",
+        "prediction": "higher",
+        "mean": 0.203,
+        "seeds": 30,
+        "positive": 21,
+        "negative": 9,
+        "p": 0.00526,
+        "excluded": [],
+        "p_holm": 0.01578,
+        "verdict": "supported"
+      },
+      "D4": {
+        "kind": "pair",
+        "arms": [
+          "stable_id_banded",
+          "stable_id"
+        ],
+        "measure": "pair hunts",
+        "prediction": "different",
+        "first_mean": 16.733,
+        "second_mean": 8.4,
+        "seeds": 30,
+        "first_higher": 22,
+        "ties": 0,
+        "p": 0.00058,
+        "excluded": {},
+        "p_holm": 0.00232,
+        "verdict": "difference found"
+      },
+      "D5": {
+        "kind": "pair",
+        "arms": [
+          "band_only",
+          "unnamed"
+        ],
+        "measure": "pair hunts",
+        "prediction": "different",
+        "first_mean": 3.1,
+        "second_mean": 3.5,
+        "seeds": 30,
+        "first_higher": 11,
+        "ties": 5,
+        "p": 0.70569,
+        "excluded": {},
+        "p_holm": 0.70569,
+        "verdict": "no difference found"
+      }
+    },
+    "E": {
+      "E1": {
+        "kind": "pair",
+        "arms": [
+          "stable_id",
+          "unnamed"
+        ],
+        "measure": "commons contribution share",
+        "prediction": "higher",
+        "first_mean": 0.033,
+        "second_mean": 0.028,
+        "seeds": 30,
+        "first_higher": 11,
+        "ties": 0,
+        "p": 0.65513,
+        "excluded": {},
+        "p_holm": 1.0,
+        "verdict": "not supported"
+      },
+      "E2": {
+        "kind": "pair",
+        "arms": [
+          "band_only",
+          "unnamed"
+        ],
+        "measure": "commons contribution share",
+        "prediction": "different",
+        "first_mean": 0.029,
+        "second_mean": 0.028,
+        "seeds": 30,
+        "first_higher": 14,
+        "ties": 0,
+        "p": 0.89795,
+        "excluded": {},
+        "p_holm": 1.0,
+        "verdict": "no difference found"
+      },
+      "E3": {
+        "kind": "pair",
+        "arms": [
+          "named",
+          "stable_id"
+        ],
+        "measure": "commons contribution share",
+        "prediction": "different",
+        "first_mean": 0.043,
+        "second_mean": 0.033,
+        "seeds": 30,
+        "first_higher": 15,
+        "ties": 1,
+        "p": 0.52905,
+        "excluded": {},
+        "p_holm": 1.0,
+        "verdict": "no difference found"
+      }
+    }
+  }
+}

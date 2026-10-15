@@ -1,0 +1,54 @@
+% Study 4: the main measures in all eleven arms, from figdata/round5.csv.
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={group size=4 by 1, horizontal sep=0.35cm, yticklabels at=edge left},
+  width=0.275\linewidth, height=7.2cm,
+  xbar, /pgf/bar width=6pt, xmin=0,
+  y dir=reverse, ytick=data, yticklabels from table={figdata/round5.csv}{label},
+  yticklabel style={font=\footnotesize},
+  xticklabel style={font=\footnotesize, /pgf/number format/fixed},
+  scaled x ticks=false,
+  title style={font=\small, align=center},
+  enlarge y limits=0.06,
+  error bars/x dir=both, error bars/x explicit,
+  cycle list={{fill=black!30, draw=black!80}},
+]
+\nextgroupplot[title={Pair hunts\\per run}]
+\addplot table[y=x, x=pair_hunts, x error=pair_hunts_se] {figdata/round5.csv};
+\nextgroupplot[title={Couples per\\generation}]
+\addplot table[y=x, x=couples, x error=couples_se] {figdata/round5.csv};
+\nextgroupplot[title={Share given\\to a newborn}]
+\addplot table[y=x, x=endowment, x error=endowment_se] {figdata/round5.csv};
+\nextgroupplot[title={Share of kills\\shared}]
+\addplot table[y=x, x=kill_share, x error=kill_share_se] {figdata/round5.csv};
+\end{groupplot}
+\end{tikzpicture}
+\caption{Study 4, eleven arms on the same 30 fresh seeds: means over seeds with standard errors.
+``Share of kills shared'' is the share of successful pair hunts after which the hunter who landed
+the kill fed its partner, over runs with at least one successful pair hunt.}
+\label{fig:round5}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.62\linewidth, height=5.2cm,
+  xlabel={Generation}, ylabel={Share of holdings put in},
+  xmin=0.5, xmax=8.5, ymin=0, ymax=0.65, xtick={1,...,8},
+  ticklabel style={font=\footnotesize}, label style={font=\small},
+  legend style={font=\footnotesize, draw=none, fill=none, at={(0.98,0.03)}, anchor=south east},
+]
+\fill[black!10] (axis cs:0.5,0.4) rectangle (axis cs:8.5,0.6);
+\node[font=\footnotesize, anchor=west] at (axis cs:0.6,0.5) {typical human first-round range};
+\addplot[thick, mark=*] table[x=generation, y=all] {figdata/commons_by_generation.csv};
+\end{axis}
+\end{tikzpicture}
+\caption{Study 4: the share of holdings put into the commons in each generation, averaged over
+all 330 runs. The shaded band is
+the 40--60\% of the endowment that human participants typically contribute in the first round of
+a standard public-goods game \citep{ledyard1995public,chaudhuri2011sustaining}.}
+\label{fig:commons}
+\end{figure}

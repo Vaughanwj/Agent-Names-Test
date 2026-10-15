@@ -1,0 +1,225 @@
+{
+  "note": "Exploratory, unadjusted. See scripts/explore_round5.py.",
+  "per_arm": {
+    "opt_in_g1": {
+      "named": 7.266666666666667,
+      "parent_id": 8.3,
+      "parent_id_plain": 8.366666666666667,
+      "world_name": 6.833333333333333,
+      "world_name_shown": 6.633333333333334,
+      "world_namesake": 4.966666666666667,
+      "stable_id_parental": 7.233333333333333,
+      "stable_id_banded": 5.266666666666667,
+      "stable_id": 6.3,
+      "band_only": 8.6,
+      "unnamed": 8.5
+    },
+    "opt_in_later": {
+      "named": 7.733333333333333,
+      "parent_id": 8.023809523809524,
+      "parent_id_plain": 7.480952380952382,
+      "world_name": 6.914285714285714,
+      "world_name_shown": 7.580952380952381,
+      "world_namesake": 4.976190476190476,
+      "stable_id_parental": 7.6,
+      "stable_id_banded": 6.685714285714286,
+      "stable_id": 6.104761904761904,
+      "band_only": 6.933333333333334,
+      "unnamed": 6.8428571428571425
+    },
+    "couples_g1": {
+      "named": 2.033333333333333,
+      "parent_id": 2.2,
+      "parent_id_plain": 2.2,
+      "world_name": 1.8,
+      "world_name_shown": 1.9666666666666666,
+      "world_namesake": 1.1333333333333333,
+      "stable_id_parental": 1.8666666666666667,
+      "stable_id_banded": 1.2666666666666666,
+      "stable_id": 1.6666666666666667,
+      "band_only": 2.3,
+      "unnamed": 2.1666666666666665
+    },
+    "couples_later": {
+      "named": 1.9904761904761905,
+      "parent_id": 2.2238095238095235,
+      "parent_id_plain": 2.0,
+      "world_name": 1.6857142857142857,
+      "world_name_shown": 2.1714285714285713,
+      "world_namesake": 0.9809523809523809,
+      "stable_id_parental": 2.1095238095238096,
+      "stable_id_banded": 1.495238095238095,
+      "stable_id": 1.3571428571428572,
+      "band_only": 1.880952380952381,
+      "unnamed": 1.7095238095238094
+    },
+    "pair_intent_name": {
+      "named": 0.0,
+      "parent_id": 0.0,
+      "parent_id_plain": 0.0,
+      "world_name": 0.0,
+      "world_name_shown": 0.0,
+      "world_namesake": 0.0,
+      "stable_id_parental": 0.0,
+      "stable_id_banded": 0.0,
+      "stable_id": 0.0,
+      "band_only": 0.0,
+      "unnamed": 0.0
+    },
+    "pair_intent_line": {
+      "named": 0.03875,
+      "parent_id": 0.035,
+      "parent_id_plain": 0.037083333333333336,
+      "world_name": 0.037083333333333336,
+      "world_name_shown": 0.03291666666666667,
+      "world_namesake": 0.034166666666666665,
+      "stable_id_parental": 0.03833333333333333,
+      "stable_id_banded": 0.035833333333333335,
+      "stable_id": 0.03208333333333333,
+      "band_only": 0.033749999999999995,
+      "unnamed": 0.03291666666666667
+    },
+    "pair_intent_band": {
+      "named": 0.0,
+      "parent_id": 0.0,
+      "parent_id_plain": 0.0,
+      "world_name": 0.0,
+      "world_name_shown": 0.0,
+      "world_namesake": 0.0,
+      "stable_id_parental": 0.0,
+      "stable_id_banded": 0.065,
+      "stable_id": 0.0,
+      "band_only": 0.1375,
+      "unnamed": 0.0
+    },
+    "message_band": {
+      "named": 0.0,
+      "parent_id": 0.0,
+      "parent_id_plain": 0.0,
+      "world_name": 0.0,
+      "world_name_shown": 0.0,
+      "world_namesake": 0.0,
+      "stable_id_parental": 0.0,
+      "stable_id_banded": 0.0003333333333333333,
+      "stable_id": 0.0,
+      "band_only": 0.0032514619883040937,
+      "unnamed": 0.0
+    },
+    "same_base_pick_share": {
+      "named": null,
+      "parent_id": null,
+      "parent_id_plain": null,
+      "world_name": null,
+      "world_name_shown": null,
+      "world_namesake": 0.011732428721736788,
+      "stable_id_parental": null,
+      "stable_id_banded": null,
+      "stable_id": null,
+      "band_only": null,
+      "unnamed": null
+    },
+    "same_base_avail_share": {
+      "named": null,
+      "parent_id": null,
+      "parent_id_plain": null,
+      "world_name": null,
+      "world_name_shown": null,
+      "world_namesake": 0.014133567434847298,
+      "stable_id_parental": null,
+      "stable_id_banded": null,
+      "stable_id": null,
+      "band_only": null,
+      "unnamed": null
+    },
+    "endow_own_band": {
+      "named": null,
+      "parent_id": null,
+      "parent_id_plain": null,
+      "world_name": null,
+      "world_name_shown": null,
+      "world_namesake": null,
+      "stable_id_parental": null,
+      "stable_id_banded": 0.3520728666272811,
+      "stable_id": null,
+      "band_only": 0.3591491831801769,
+      "unnamed": null
+    },
+    "endow_other_band": {
+      "named": null,
+      "parent_id": null,
+      "parent_id_plain": null,
+      "world_name": null,
+      "world_name_shown": null,
+      "world_namesake": null,
+      "stable_id_parental": null,
+      "stable_id_banded": 0.36865733594817923,
+      "stable_id": null,
+      "band_only": 0.3137671792550315,
+      "unnamed": null
+    }
+  },
+  "commons_by_generation": {
+    "1": 0.01049090909090909,
+    "2": 0.014048575757575758,
+    "3": 0.02563872727272727,
+    "4": 0.03523690909090909,
+    "5": 0.03813730303030303,
+    "6": 0.042143848484848485,
+    "7": 0.03896048484848485,
+    "8": 0.052574878787878795
+  },
+  "tests": {
+    "namesake vs shown: couples in generation 1": {
+      "seeds": 30,
+      "mean_diff": -0.8333333333333334,
+      "first_higher": 3,
+      "p": 0.00051
+    },
+    "namesake vs shown: couples in generations 2-8": {
+      "seeds": 30,
+      "mean_diff": -1.1904761904761905,
+      "first_higher": 1,
+      "p": 1e-05
+    },
+    "namesake vs shown: opt-ins in generation 1": {
+      "seeds": 30,
+      "mean_diff": -1.6666666666666667,
+      "first_higher": 5,
+      "p": 0.00058
+    },
+    "namesake vs shown: opt-ins in generations 2-8": {
+      "seeds": 30,
+      "mean_diff": -2.604761904761905,
+      "first_higher": 3,
+      "p": 1e-05
+    },
+    "shown vs world name: couples in generations 2-8": {
+      "seeds": 30,
+      "mean_diff": 0.4857142857142857,
+      "first_higher": 21,
+      "p": 0.0033
+    },
+    "namesake: same-base share of picks minus of available partners": {
+      "seeds": 30,
+      "mean_diff": -0.0024011387131105096,
+      "positive": 4,
+      "p": 0.41106
+    },
+    "band only: own-band minus other-band endowment": {
+      "seeds": 30,
+      "mean_diff": 0.04538200392514536,
+      "positive": 21,
+      "p": 0.00615
+    },
+    "stable ID with band: own-band minus other-band endowment": {
+      "seeds": 30,
+      "mean_diff": -0.01658446932089811,
+      "positive": 14,
+      "p": 0.45645
+    },
+    "commons: generation 1 minus generation 8 (all arms)": {
+      "gen1": 0.01049090909090909,
+      "gen8": 0.052574878787878795
+    }
+  }
+}

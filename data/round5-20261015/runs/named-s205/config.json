@@ -1,0 +1,106 @@
+{
+  "arm": "named",
+  "seed": 205,
+  "run_id": "confirm-round5-20261015-031539-named-s205",
+  "population": 10,
+  "peak": 15,
+  "max_couples": 5,
+  "generations": 8,
+  "rounds": 5,
+  "founder_specialties": [
+    "energy",
+    "food",
+    "memory",
+    "energy",
+    "food",
+    "memory",
+    "energy",
+    "food",
+    "memory",
+    "energy"
+  ],
+  "founder_names": [
+    "Ash",
+    "Brook",
+    "Cedar",
+    "Dune",
+    "Ember",
+    "Fern",
+    "Garnet",
+    "Heath",
+    "Iris",
+    "Juniper"
+  ],
+  "fallback_names": [
+    "Kestrel",
+    "Linden",
+    "Moss",
+    "Nettle",
+    "Onyx",
+    "Pebble",
+    "Quill",
+    "Rowan",
+    "Sorrel",
+    "Thistle",
+    "Umber",
+    "Vale",
+    "Willow",
+    "Yarrow",
+    "Zephyr",
+    "Alder",
+    "Birch",
+    "Clover",
+    "Drift",
+    "Elm"
+  ],
+  "inheritance": {
+    "mutation_rate": 0.05,
+    "mutation_sd": 0.25
+  },
+  "foraging": {
+    "skill_floor": 0.2,
+    "energy_yield": 3.0,
+    "solo_hunt_yield": 1.5,
+    "pair_hunt_yield": 10.0,
+    "pair_hunt_success": 0.8,
+    "memory_yield": 3.5,
+    "memory_decay": 0.3,
+    "noise": 0.2,
+    "archivist_cost": 0.1
+  },
+  "reveal_hint": null,
+  "reveal_full": 1,
+  "governance": {
+    "enabled": true,
+    "max_proposals": 5,
+    "pass_fraction": 0.5
+  },
+  "commons": {
+    "enabled": true,
+    "mpcr": 0.4
+  },
+  "initial_rule": {
+    "energy_weight": 1.0,
+    "food_weight": 1.0,
+    "memory_weight": 1.0,
+    "kin_weight": 0.0,
+    "group_weight": 0.0,
+    "gift_credit": 0.0
+  },
+  "message_max_chars": 240,
+  "mind": {
+    "kind": "anthropic",
+    "model": "claude-haiku-5-5",
+    "effort": "low",
+    "max_tokens": 8000,
+    "concurrency": 10,
+    "budget_usd": 0.45
+  },
+  "pricing": {
+    "claude-haiku-5-5": {
+      "input": 0.1,
+      "output": 0.5
+    }
+  },
+  "output_dir": "runs"
+}

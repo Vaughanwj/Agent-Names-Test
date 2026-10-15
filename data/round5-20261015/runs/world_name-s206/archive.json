@@ -1,0 +1,228 @@
+[
+  {
+    "_ref": "f0",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 120.16,
+      "deeds": [
+        "had the highest standing in generation 1 (16.7)",
+        "gathered the most energy in generation 4 (15.46)",
+        "gathered the most energy in generation 7 (16.58)",
+        "gathered the most energy in generation 8 (15.74)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Ash"
+  },
+  {
+    "_ref": "f1",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 137.74,
+      "deeds": [
+        "gave away the most in generation 5 (1)",
+        "gathered the most food in generation 6 (28.22)",
+        "gave away the most in generation 6 (8)",
+        "had the highest standing in generation 6 (30.3)",
+        "gathered the most food in generation 7 (15.97)",
+        "had the highest standing in generation 7 (21.0)",
+        "gathered the most food in generation 8 (42.84)",
+        "had the highest standing in generation 8 (74.5)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Brook"
+  },
+  {
+    "_ref": "f4",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 107.76,
+      "deeds": [
+        "gathered the most food in generation 2 (42.11)",
+        "had the highest standing in generation 2 (31.3)",
+        "gathered the most food in generation 3 (7.77)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Ember"
+  },
+  {
+    "_ref": "f6",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 4,
+      "lifetime_gathered": 124.54,
+      "deeds": [
+        "gathered the most energy in generation 1 (15.88)",
+        "gathered the most energy in generation 2 (16.48)",
+        "gathered the most energy in generation 3 (16.06)",
+        "had the highest standing in generation 3 (16.1)",
+        "gathered the most energy in generation 5 (15.16)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Garnet"
+  },
+  {
+    "_ref": "f9",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 119.2,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Juniper"
+  },
+  {
+    "_ref": "g1b0",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 3,
+      "lifetime_gathered": 88.65,
+      "deeds": [
+        "gathered the most food in generation 4 (16.32)",
+        "had the highest standing in generation 4 (16.3)",
+        "gathered the most food in generation 5 (21.19)",
+        "had the highest standing in generation 5 (33.3)",
+        "gave away the most in generation 7 (6)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Jasper"
+  },
+  {
+    "_ref": "g2b1",
+    "works": {
+      "born_in": 2,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 90.19,
+      "deeds": [
+        "gathered the most energy in generation 6 (16.01)",
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Ivy"
+  },
+  {
+    "_ref": "g6b0",
+    "works": {
+      "born_in": 6,
+      "founder": false,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 14.05,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Zephyr"
+  },
+  {
+    "_ref": "g7b0",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 7.85,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Drift"
+  },
+  {
+    "_ref": "g8b0",
+    "works": {
+      "born_in": 8,
+      "founder": false,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 0.0,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "name": "Reed"
+  }
+]

@@ -1,0 +1,252 @@
+[
+  {
+    "_ref": "f0",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 123.32,
+      "deeds": [
+        "gathered the most energy in generation 2 (15.75)",
+        "had the highest standing in generation 3 (15.2)",
+        "gathered the most energy in generation 5 (16.25)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A41"
+  },
+  {
+    "_ref": "f1",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 106.37,
+      "deeds": [
+        "gathered the most food in generation 3 (23.12)",
+        "gave away the most in generation 3 (12)",
+        "gathered the most food in generation 6 (21.11)",
+        "had the highest standing in generation 6 (25.6)",
+        "gathered the most food in generation 7 (14.38)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A60"
+  },
+  {
+    "_ref": "f3",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 122.33,
+      "deeds": [
+        "gathered the most energy in generation 1 (17.11)",
+        "gathered the most energy in generation 7 (16.42)",
+        "had the highest standing in generation 7 (16.4)",
+        "gathered the most energy in generation 8 (15.98)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A83"
+  },
+  {
+    "_ref": "f5",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "memory",
+      "traits": {
+        "energy": 0.0,
+        "food": 0.0,
+        "memory": 1.0
+      },
+      "children": 1,
+      "lifetime_gathered": 126.82,
+      "deeds": [
+        "gathered the most memory in generation 1 (15.13)",
+        "gathered the most memory in generation 7 (12.69)",
+        "gathered the most memory in generation 8 (18.37)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A93"
+  },
+  {
+    "_ref": "f6",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 121.87,
+      "deeds": [
+        "gathered the most energy in generation 3 (17.06)",
+        "gathered the most energy in generation 4 (16.53)",
+        "gave away the most in generation 7 (4)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A66"
+  },
+  {
+    "_ref": "f7",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 3,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 33.85,
+      "deeds": [
+        "gathered the most food in generation 2 (25.57)",
+        "had the highest standing in generation 2 (25.6)"
+      ]
+    },
+    "id": "A82"
+  },
+  {
+    "_ref": "g1b0",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": null,
+      "specialty": "memory",
+      "traits": {
+        "energy": 0.0,
+        "food": 0.0,
+        "memory": 1.0
+      },
+      "children": 1,
+      "lifetime_gathered": 97.69,
+      "deeds": [
+        "gave away the most in generation 2 (5)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A34"
+  },
+  {
+    "_ref": "g1b1",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 2,
+      "lifetime_gathered": 105.03,
+      "deeds": [
+        "had the highest standing in generation 1 (20.0)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A57"
+  },
+  {
+    "_ref": "g3b0",
+    "works": {
+      "born_in": 3,
+      "founder": false,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 80.03,
+      "deeds": [
+        "gathered the most food in generation 4 (22.41)",
+        "gave away the most in generation 4 (5.43)",
+        "had the highest standing in generation 4 (17.0)",
+        "gathered the most food in generation 5 (18.15)",
+        "had the highest standing in generation 5 (18.1)",
+        "gathered the most food in generation 8 (14.88)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A84"
+  },
+  {
+    "_ref": "g3b1",
+    "works": {
+      "born_in": 3,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 77.57,
+      "deeds": [
+        "gathered the most energy in generation 6 (16.33)",
+        "gave away the most in generation 6 (8)",
+        "had the highest standing in generation 8 (46.2)",
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A45"
+  },
+  {
+    "_ref": "g7b0",
+    "works": {
+      "born_in": 7,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 14.52,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    },
+    "id": "A65"
+  }
+]

@@ -1,0 +1,119 @@
+\subsection{Study 4: the novelty round}
+\label{sec:study4}
+
+Study~4 ran all eleven arms on 30 fresh seeds (201--230) in one batch, so every comparison is
+within one run window. It added the commons to every arm. All 330 runs completed without a single
+fallback decision in 258,808 calls, so nothing was excluded. Nineteen tests were registered in
+five families, each corrected separately (Table~\ref{tab:round5}); Figure~\ref{fig:round5} shows
+the main measures in every arm.
+
+\begin{table}[tbp]
+\centering
+\footnotesize
+\caption{Study 4: registered tests over 30 fresh seeds, Holm-corrected within each family. For
+arm-versus-arm tests, ``Result'' gives the two means and the number of seeds on which the first
+arm was higher; for one-sample tests, the mean over seeds and the number above zero. Tests marked
+``different'' were registered without a predicted direction.}
+\label{tab:round5}
+\begin{tabularx}{\linewidth}{@{}l L l l l l@{}}
+\toprule
+& Comparison and measure & Result & $p$ & $\pholm$ & Verdict \\
+\midrule
+\multicolumn{6}{@{}l}{\textit{A. Replication and kill sharing}} \\
+A1 & Named vs unnamed: pair hunts & 12.7 vs 3.5; 26/30 & 0.00003 & 0.0002 & supported \\
+A2 & Stable ID vs unnamed: pair hunts & 8.4 vs 3.5; 23/30 & 0.0009 & 0.004 & supported \\
+A3 & Parent ID vs stable ID: couples & 2.22 vs 1.40; 23/30 & 0.00004 & 0.0002 & supported \\
+A4 & Named vs parent ID: endowment & 0.50 vs 0.41; 22/30 & 0.005 & 0.014 & supported \\
+A5 & Named vs parent ID: shared kills & 1.93 vs 0.97; 15/30$^a$ & 0.010 & 0.020 & supported \\
+A6 & World name vs stable ID: shared kills & 0.97 vs 0.37; 13/30$^a$ & 0.0498 & 0.0498 & supported$^b$ \\
+\midrule
+\multicolumn{6}{@{}l}{\textit{B. The parental act or its wording}} \\
+B1 & Parent ID, plain wording vs stable ID: couples & 2.02 vs 1.40; 22/30 & 0.0006 & 0.0006 & supported \\
+B2 & Stable ID, parental wording vs stable ID: couples & 2.08 vs 1.40; 22/30 & 0.0002 & 0.0005 & supported \\
+\midrule
+\multicolumn{6}{@{}l}{\textit{C. Namesaking}} \\
+C1 & Namesake parent minus co-parent: endowment & $-0.015$; 15/30 & 0.54 & 0.54 & not supported \\
+C2 & Namesake vs world name shown: endowment & 0.43 vs 0.34; 21/30 & 0.021 & 0.064 & not supported \\
+C3 & Namesake parent minus co-parent: later gifts & $+0.73$; 8 above, 3 below & 0.035 & 0.069 & not supported \\
+\midrule
+\multicolumn{6}{@{}l}{\textit{D. Group labels and individual handles}} \\
+D1 & Both band arms: in-band couple bias & $+0.13$; 26/30 & 0.00002 & 0.0001 & supported \\
+D2 & Both band arms: in-band gift bias & $+0.16$; 5/6$^c$ & 0.094 & 0.19 & not supported \\
+D3 & ID with band: in-band hunt bias & $+0.20$; 21/30 & 0.005 & 0.016 & supported \\
+D4 & ID with band vs stable ID: pair hunts & 16.7 vs 8.4; 22/30 & 0.0006 & 0.002 & different \\
+D5 & Band only vs unnamed: pair hunts & 3.1 vs 3.5; 11/30 & 0.71 & 0.71 & no difference \\
+\midrule
+\multicolumn{6}{@{}l}{\textit{E. The commons}} \\
+E1 & Stable ID vs unnamed: contribution share & 0.033 vs 0.028; 11/30 & 0.66 & 1.0 & not supported \\
+E2 & Band only vs unnamed: contribution share & 0.029 vs 0.028; 14/30 & 0.90 & 1.0 & no difference \\
+E3 & Named vs stable ID: contribution share & 0.043 vs 0.033; 15/30 & 0.53 & 1.0 & no difference \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+{\footnotesize $^a$ Nine (A5) and twelve (A6) seeds had no shared kill in either arm.
+$^b$ The margin below 0.05 is smaller than the Monte Carlo error of $p$ (about $\pm0.0007$).
+$^c$ Only six seeds had gifts in both band arms.}
+\end{table}
+
+\paragraph{The earlier results replicate.} On fresh seeds, any stable handle again raised pair
+hunting (A1, A2), parent-picked IDs again formed more couples than world-assigned IDs (A3), and
+named-arm parents again gave the largest share of their holdings to newborns (A4). Kill sharing,
+an exploratory lead from Studies 1--3, was confirmed for both registered contrasts, although A6
+only narrowly. Per successful pair hunt, the hunter who landed the kill later fed its partner in
+20\% of hunts in \arm{named}, about 10\% in \arm{parent\_id} and \arm{world\_name}, 3\% in
+\arm{stable\_id} and 1\% in \arm{unnamed}, so the counts reflect more sharing, not just more
+kills.
+
+\input{fig_round5}
+
+\paragraph{Either half of the parental framing is enough.} Study~3 found that parent-picked IDs
+raised couple formation, but in that arm parents both performed the act and every agent was told
+that parents had given the IDs. Study~4 separated the two. Parents who picked IDs under a prompt
+that never said parents gave them (B1), and agents told that their world-assigned IDs came from
+their parents (B2), each formed about as many couples as the full parental arm (2.02 and 2.08,
+against 2.22, and 1.40 for plain world-assigned IDs). In the registered reading, either suffices.
+
+\paragraph{Namesaking did not raise investment.} Within each couple in \arm{world\_namesake}, the
+parent a child was named after gave no more at birth than its co-parent (C1: 15 seeds each way).
+Two weaker leads, a higher endowment than in the control arm (C2) and more later gifts from the
+namesake parent (C3), did not survive correction.
+
+\paragraph{Group labels produce in-group choices, and add to individual handles.} Agents paired
+(D1) and hunted (D3) within their own arbitrary band more than chance, the minimal-group pattern.
+Gifts were too rare in the band arms for D2 to decide. The factionalism hypothesis predicted that a
+band would reduce coordination; instead, adding a band to a world-assigned ID doubled pair hunting
+(D4: 16.7 vs 8.4), with hunts concentrated inside bands. Without an individual handle, a band did
+nothing for coordination (D5: 3.1 vs 3.5 without any label).
+
+\paragraph{The commons sat at a floor.} Agents put 2--6\% of their holdings into the pot in every
+arm, and 88--95\% of contribution decisions were zero. No arm differed (E1--E3). As
+Figure~\ref{fig:commons} shows, contributions rose slightly over the run, from 1\% in
+generation~1 to 5\% in generation~8.
+
+\paragraph{Exploratory findings.} The following are unadjusted and should be read as leads.
+\begin{itemize}
+  \item \textbf{One sentence about namesakes halved couple formation.} \arm{world\_namesake}
+        formed 1.00 couples per generation, against 2.15 in \arm{world\_name\_shown} (lower on
+        29 of 30 seeds, $p\le10^{-5}$) and 1.77 without any handle. The drop was already present
+        in generation~1, before any child had been born or named: 5.0 of 10 agents asked for a
+        partner, against 6.6 ($p=0.0006$). The only difference at that point is one sentence of
+        the system prompt saying that the world names every newborn after one of its parents.
+        It is not avoidance of partners who share a name: agents listed partners sharing their
+        name's base as often as chance predicts ($p=0.41$). The intents of agents who opted out
+        read the same in both arms (keep holdings, do not add a rival at the cut), and none
+        mentions names.
+  \item \textbf{World-assigned IDs lower couple formation below no handle at all.} Stable-ID
+        populations formed fewer couples than unnamed ones (1.40 vs 1.77, $p=0.006$), as in
+        Study~2 (1.44 vs 1.74, $p=0.046$). Parent-picked IDs formed more (2.22, $p=0.005$).
+  \item \textbf{Study~1's named-versus-unnamed couples effect was smaller here} (2.00 vs 1.77,
+        $p=0.14$). The contrast that held in every study is a parent-given handle against a
+        world-assigned ID.
+  \item \textbf{Bands reached into the family.} In \arm{band\_only}, a child's band was drawn by
+        lot, independent of its parents. Parents gave a child drawn into the other band less
+        than one drawn into their own (0.31 vs 0.36 of holdings; own band higher in 21 of 30
+        seeds; $p=0.006$). Both band arms gave less to newborns than their unbanded counterparts
+        (0.34 vs 0.40, $p=0.009$; 0.36 vs 0.42, $p=0.027$). Bands appeared in 14\% of
+        band-only pairing intents, but almost never in public messages.
+  \item \textbf{Kin remained the main target of gifts without names.} Unnamed agents directed
+        90\% of their gift amounts to kin, against 52\% in \arm{named} ($p=0.004$), as in Study~1.
+\end{itemize}

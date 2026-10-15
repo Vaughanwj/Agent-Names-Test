@@ -1,0 +1,244 @@
+[
+  {
+    "_ref": "f0",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 5,
+      "lifetime_gathered": 120.92,
+      "deeds": [
+        "gathered the most energy in generation 2 (16.21)",
+        "gathered the most energy in generation 7 (15.99)",
+        "had the highest standing in generation 7 (21.4)",
+        "survived to the end of the world"
+      ]
+    }
+  },
+  {
+    "_ref": "f2",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "memory",
+      "traits": {
+        "energy": 0.0,
+        "food": 0.0,
+        "memory": 1.0
+      },
+      "children": 0,
+      "lifetime_gathered": 121.3,
+      "deeds": [
+        "gathered the most memory in generation 1 (18.92)",
+        "gathered the most memory in generation 4 (15.07)",
+        "gathered the most memory in generation 5 (18.02)",
+        "gathered the most memory in generation 7 (16.51)",
+        "survived to the end of the world"
+      ]
+    }
+  },
+  {
+    "_ref": "f3",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 5,
+      "lifetime_gathered": 122.08,
+      "deeds": [
+        "gave away the most in generation 4 (6)",
+        "gave away the most in generation 5 (7)",
+        "gathered the most energy in generation 6 (15.75)",
+        "had the highest standing in generation 6 (15.8)",
+        "survived to the end of the world"
+      ]
+    }
+  },
+  {
+    "_ref": "f4",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": 5,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 57.17,
+      "deeds": [
+        "gathered the most food in generation 2 (7.99)",
+        "gathered the most food in generation 3 (21.83)",
+        "gave away the most in generation 3 (11)",
+        "gathered the most food in generation 4 (14.95)",
+        "had the highest standing in generation 4 (17.4)"
+      ]
+    }
+  },
+  {
+    "_ref": "f5",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "memory",
+      "traits": {
+        "energy": 0.0,
+        "food": 0.0,
+        "memory": 1.0
+      },
+      "children": 0,
+      "lifetime_gathered": 127.11,
+      "deeds": [
+        "gathered the most memory in generation 2 (18.64)",
+        "gathered the most memory in generation 3 (11.6)",
+        "gathered the most memory in generation 6 (18.99)",
+        "gathered the most memory in generation 8 (17.72)",
+        "survived to the end of the world"
+      ]
+    }
+  },
+  {
+    "_ref": "f7",
+    "works": {
+      "born_in": 0,
+      "founder": true,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 61.02,
+      "deeds": [
+        "gathered the most food in generation 1 (8.02)",
+        "survived to the end of the world"
+      ]
+    }
+  },
+  {
+    "_ref": "g1b0",
+    "works": {
+      "born_in": 1,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 1,
+      "lifetime_gathered": 105.08,
+      "deeds": [
+        "had the highest standing in generation 1 (17.0)",
+        "survived to the end of the world"
+      ]
+    }
+  },
+  {
+    "_ref": "g2b0",
+    "works": {
+      "born_in": 2,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 92.17,
+      "deeds": [
+        "had the highest standing in generation 2 (16.0)",
+        "gathered the most energy in generation 3 (15.69)",
+        "had the highest standing in generation 3 (22.5)",
+        "survived to the end of the world"
+      ]
+    }
+  },
+  {
+    "_ref": "g2b1",
+    "works": {
+      "born_in": 2,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 94.49,
+      "deeds": [
+        "gathered the most energy in generation 4 (16.36)",
+        "gathered the most energy in generation 5 (15.11)",
+        "gathered the most energy in generation 8 (16.78)",
+        "had the highest standing in generation 8 (19.8)",
+        "survived to the end of the world"
+      ]
+    }
+  },
+  {
+    "_ref": "g3b0",
+    "works": {
+      "born_in": 3,
+      "founder": false,
+      "left_in": null,
+      "specialty": "food",
+      "traits": {
+        "energy": 0.0,
+        "food": 1.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 44.83,
+      "deeds": [
+        "gathered the most food in generation 5 (15.68)",
+        "had the highest standing in generation 5 (15.7)",
+        "gathered the most food in generation 6 (7.69)",
+        "gathered the most food in generation 7 (7.93)",
+        "gathered the most food in generation 8 (7.55)",
+        "survived to the end of the world"
+      ]
+    }
+  },
+  {
+    "_ref": "g5b0",
+    "works": {
+      "born_in": 5,
+      "founder": false,
+      "left_in": null,
+      "specialty": "energy",
+      "traits": {
+        "energy": 1.0,
+        "food": 0.0,
+        "memory": 0.0
+      },
+      "children": 0,
+      "lifetime_gathered": 43.37,
+      "deeds": [
+        "survived to the end of the world"
+      ]
+    }
+  }
+]

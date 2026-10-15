@@ -1,0 +1,1198 @@
+{
+  "gathered per forager per generation": {
+    "named": {
+      "mean": 14.17,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 14.241,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 14.345,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 14.114,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 14.094,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 14.45,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 14.227,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 14.414,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 14.263,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 14.041,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 14.112,
+      "n": 30
+    }
+  },
+  "pair hunts": {
+    "named": {
+      "mean": 12.733,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 11.7,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 12.1,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 11.633,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 13.867,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 14.967,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 11.6,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 16.733,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 8.4,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 3.1,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 3.5,
+      "n": 30
+    }
+  },
+  "guards": {
+    "named": {
+      "mean": 8.033,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 6.533,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 6.933,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 8.167,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 7.0,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 7.867,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 7.567,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 6.467,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 7.3,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 6.633,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 7.033,
+      "n": 30
+    }
+  },
+  "guards to a past helper": {
+    "named": {
+      "mean": 4.167,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 3.333,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 3.7,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 4.233,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 3.433,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 4.9,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 4.167,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 3.267,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 4.167,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 3.0,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 3.3,
+      "n": 30
+    }
+  },
+  "gift amount": {
+    "named": {
+      "mean": 34.132,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 14.678,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 5.224,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 13.58,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 14.219,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 31.12,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 34.366,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 13.011,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 21.46,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 13.392,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 11.417,
+      "n": 30
+    }
+  },
+  "gift amount while giving still cost something": {
+    "named": {
+      "mean": 12.155,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 8.338,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 5.224,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 7.513,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 12.676,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 14.16,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 15.324,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 5.013,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 3.018,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 1.587,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 6.612,
+      "n": 30
+    }
+  },
+  "gift share to kin": {
+    "named": {
+      "mean": 0.524,
+      "n": 26
+    },
+    "parent_id": {
+      "mean": 0.418,
+      "n": 21
+    },
+    "parent_id_plain": {
+      "mean": 0.271,
+      "n": 15
+    },
+    "world_name": {
+      "mean": 0.413,
+      "n": 20
+    },
+    "world_name_shown": {
+      "mean": 0.585,
+      "n": 22
+    },
+    "world_namesake": {
+      "mean": 0.376,
+      "n": 25
+    },
+    "stable_id_parental": {
+      "mean": 0.623,
+      "n": 22
+    },
+    "stable_id_banded": {
+      "mean": 0.463,
+      "n": 21
+    },
+    "stable_id": {
+      "mean": 0.556,
+      "n": 12
+    },
+    "band_only": {
+      "mean": 0.473,
+      "n": 6
+    },
+    "unnamed": {
+      "mean": 0.903,
+      "n": 10
+    }
+  },
+  "gift share to past helpers": {
+    "named": {
+      "mean": 0.106,
+      "n": 26
+    },
+    "parent_id": {
+      "mean": 0.034,
+      "n": 21
+    },
+    "parent_id_plain": {
+      "mean": 0.129,
+      "n": 15
+    },
+    "world_name": {
+      "mean": 0.08,
+      "n": 20
+    },
+    "world_name_shown": {
+      "mean": 0.104,
+      "n": 22
+    },
+    "world_namesake": {
+      "mean": 0.096,
+      "n": 25
+    },
+    "stable_id_parental": {
+      "mean": 0.041,
+      "n": 22
+    },
+    "stable_id_banded": {
+      "mean": 0.068,
+      "n": 21
+    },
+    "stable_id": {
+      "mean": 0.159,
+      "n": 12
+    },
+    "band_only": {
+      "mean": 0.137,
+      "n": 6
+    },
+    "unnamed": {
+      "mean": 0.13,
+      "n": 10
+    }
+  },
+  "archivist take-up (share of offers accepted)": {
+    "named": {
+      "mean": 0.003,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 0.001,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 0.001,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 0.016,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 0.01,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 0.003,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 0.002,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 0.0,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 0.001,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 0.001,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 0.007,
+      "n": 30
+    }
+  },
+  "rules passed": {
+    "named": {
+      "mean": 5.767,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 5.567,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 4.567,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 6.267,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 6.2,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 4.3,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 7.167,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 4.5,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 5.133,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 5.767,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 6.267,
+      "n": 30
+    }
+  },
+  "final kin weight": {
+    "named": {
+      "mean": 0.337,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 0.29,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 0.183,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 0.403,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 0.513,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 0.24,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 0.513,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 0.173,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 0.267,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 0.277,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 0.457,
+      "n": 30
+    }
+  },
+  "mean endowment fraction": {
+    "named": {
+      "mean": 0.499,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 0.412,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 0.421,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 0.405,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 0.341,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 0.431,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 0.432,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 0.362,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 0.425,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 0.337,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 0.395,
+      "n": 30
+    }
+  },
+  "parents displaced by own child": {
+    "named": {
+      "mean": 6.833,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 8.167,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 8.467,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 4.333,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 4.833,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 2.067,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 5.7,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 3.733,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 3.967,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 5.067,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 5.1,
+      "n": 30
+    }
+  },
+  "newborns surviving first cull": {
+    "named": {
+      "mean": 14.1,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 14.5,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 13.9,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 11.367,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 12.633,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 6.6,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 13.533,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 9.3,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 9.667,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 10.933,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 11.833,
+      "n": 30
+    }
+  },
+  "couples per generation": {
+    "named": {
+      "mean": 1.996,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 2.221,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 2.025,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 1.7,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 2.146,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 1.0,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 2.079,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 1.467,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 1.396,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 1.933,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 1.767,
+      "n": 30
+    }
+  },
+  "shared kills": {
+    "named": {
+      "mean": 1.933,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 0.967,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 1.2,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 0.967,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 1.467,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 1.667,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 0.867,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 1.5,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 0.367,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 0.267,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 0.033,
+      "n": 30
+    }
+  },
+  "share of kills shared": {
+    "named": {
+      "mean": 0.205,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 0.103,
+      "n": 29
+    },
+    "parent_id_plain": {
+      "mean": 0.097,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 0.092,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 0.127,
+      "n": 29
+    },
+    "world_namesake": {
+      "mean": 0.144,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 0.077,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 0.102,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 0.029,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 0.064,
+      "n": 20
+    },
+    "unnamed": {
+      "mean": 0.008,
+      "n": 24
+    }
+  },
+  "commons contribution share": {
+    "named": {
+      "mean": 0.043,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 0.036,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 0.022,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 0.022,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 0.03,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 0.027,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 0.056,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 0.029,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 0.033,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 0.029,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 0.028,
+      "n": 30
+    }
+  },
+  "commons contributors giving nothing": {
+    "named": {
+      "mean": 0.908,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 0.905,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 0.947,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 0.946,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 0.94,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 0.954,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 0.882,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 0.947,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 0.938,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 0.929,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 0.92,
+      "n": 30
+    }
+  },
+  "in-band gift bias": {
+    "named": {
+      "mean": null,
+      "n": 0
+    },
+    "parent_id": {
+      "mean": null,
+      "n": 0
+    },
+    "parent_id_plain": {
+      "mean": null,
+      "n": 0
+    },
+    "world_name": {
+      "mean": null,
+      "n": 0
+    },
+    "world_name_shown": {
+      "mean": null,
+      "n": 0
+    },
+    "world_namesake": {
+      "mean": null,
+      "n": 0
+    },
+    "stable_id_parental": {
+      "mean": null,
+      "n": 0
+    },
+    "stable_id_banded": {
+      "mean": 0.197,
+      "n": 21
+    },
+    "stable_id": {
+      "mean": null,
+      "n": 0
+    },
+    "band_only": {
+      "mean": 0.067,
+      "n": 6
+    },
+    "unnamed": {
+      "mean": null,
+      "n": 0
+    }
+  },
+  "in-band guard bias": {
+    "named": {
+      "mean": null,
+      "n": 0
+    },
+    "parent_id": {
+      "mean": null,
+      "n": 0
+    },
+    "parent_id_plain": {
+      "mean": null,
+      "n": 0
+    },
+    "world_name": {
+      "mean": null,
+      "n": 0
+    },
+    "world_name_shown": {
+      "mean": null,
+      "n": 0
+    },
+    "world_namesake": {
+      "mean": null,
+      "n": 0
+    },
+    "stable_id_parental": {
+      "mean": null,
+      "n": 0
+    },
+    "stable_id_banded": {
+      "mean": 0.03,
+      "n": 29
+    },
+    "stable_id": {
+      "mean": null,
+      "n": 0
+    },
+    "band_only": {
+      "mean": 0.222,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": null,
+      "n": 0
+    }
+  },
+  "in-band hunt bias": {
+    "named": {
+      "mean": null,
+      "n": 0
+    },
+    "parent_id": {
+      "mean": null,
+      "n": 0
+    },
+    "parent_id_plain": {
+      "mean": null,
+      "n": 0
+    },
+    "world_name": {
+      "mean": null,
+      "n": 0
+    },
+    "world_name_shown": {
+      "mean": null,
+      "n": 0
+    },
+    "world_namesake": {
+      "mean": null,
+      "n": 0
+    },
+    "stable_id_parental": {
+      "mean": null,
+      "n": 0
+    },
+    "stable_id_banded": {
+      "mean": 0.203,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": null,
+      "n": 0
+    },
+    "band_only": {
+      "mean": 0.173,
+      "n": 23
+    },
+    "unnamed": {
+      "mean": null,
+      "n": 0
+    }
+  },
+  "in-band couple bias": {
+    "named": {
+      "mean": null,
+      "n": 0
+    },
+    "parent_id": {
+      "mean": null,
+      "n": 0
+    },
+    "parent_id_plain": {
+      "mean": null,
+      "n": 0
+    },
+    "world_name": {
+      "mean": null,
+      "n": 0
+    },
+    "world_name_shown": {
+      "mean": null,
+      "n": 0
+    },
+    "world_namesake": {
+      "mean": null,
+      "n": 0
+    },
+    "stable_id_parental": {
+      "mean": null,
+      "n": 0
+    },
+    "stable_id_banded": {
+      "mean": 0.1,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": null,
+      "n": 0
+    },
+    "band_only": {
+      "mean": 0.161,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": null,
+      "n": 0
+    }
+  },
+  "namesake minus co-parent endowment share": {
+    "named": {
+      "mean": null,
+      "n": 0
+    },
+    "parent_id": {
+      "mean": null,
+      "n": 0
+    },
+    "parent_id_plain": {
+      "mean": null,
+      "n": 0
+    },
+    "world_name": {
+      "mean": null,
+      "n": 0
+    },
+    "world_name_shown": {
+      "mean": null,
+      "n": 0
+    },
+    "world_namesake": {
+      "mean": -0.015,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": null,
+      "n": 0
+    },
+    "stable_id_banded": {
+      "mean": null,
+      "n": 0
+    },
+    "stable_id": {
+      "mean": null,
+      "n": 0
+    },
+    "band_only": {
+      "mean": null,
+      "n": 0
+    },
+    "unnamed": {
+      "mean": null,
+      "n": 0
+    }
+  },
+  "namesake minus co-parent later gifts": {
+    "named": {
+      "mean": null,
+      "n": 0
+    },
+    "parent_id": {
+      "mean": null,
+      "n": 0
+    },
+    "parent_id_plain": {
+      "mean": null,
+      "n": 0
+    },
+    "world_name": {
+      "mean": null,
+      "n": 0
+    },
+    "world_name_shown": {
+      "mean": null,
+      "n": 0
+    },
+    "world_namesake": {
+      "mean": 0.729,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": null,
+      "n": 0
+    },
+    "stable_id_banded": {
+      "mean": null,
+      "n": 0
+    },
+    "stable_id": {
+      "mean": null,
+      "n": 0
+    },
+    "band_only": {
+      "mean": null,
+      "n": 0
+    },
+    "unnamed": {
+      "mean": null,
+      "n": 0
+    }
+  },
+  "fallback decisions": {
+    "named": {
+      "mean": 0.0,
+      "n": 30
+    },
+    "parent_id": {
+      "mean": 0.0,
+      "n": 30
+    },
+    "parent_id_plain": {
+      "mean": 0.0,
+      "n": 30
+    },
+    "world_name": {
+      "mean": 0.0,
+      "n": 30
+    },
+    "world_name_shown": {
+      "mean": 0.0,
+      "n": 30
+    },
+    "world_namesake": {
+      "mean": 0.0,
+      "n": 30
+    },
+    "stable_id_parental": {
+      "mean": 0.0,
+      "n": 30
+    },
+    "stable_id_banded": {
+      "mean": 0.0,
+      "n": 30
+    },
+    "stable_id": {
+      "mean": 0.0,
+      "n": 30
+    },
+    "band_only": {
+      "mean": 0.0,
+      "n": 30
+    },
+    "unnamed": {
+      "mean": 0.0,
+      "n": 30
+    }
+  }
+}
